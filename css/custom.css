@@ -45,27 +45,31 @@
 
 /* Base styles */
 * { font-family:'Merriweather'; }
-html, body { margin:0; padding:0; background-color:#ffffee; }
+html, body { margin:0; padding:0; background:#ee7733 url('/img/bg.png'); }
 a { color:#ee7733; }
 pre, code { font-family:'SourceCodePro'; }
+.container { padding:20px; background-color:#ffffee; }
 
 /* Github ribbon */
 #github-ribbon { position:absolute; top:0; right:0; border:0; }
 
 /* Header */
-header { color:#777777; }
-#logo-type { font-family:'Courgette'; text-align:center; font-size:5em; color:#fff;
-	text-shadow:
-		 0.02em  0.02em #000000,
-		-0.02em  0.02em #000000,
-		 0.02em -0.02em #000000,
-		-0.02em -0.02em #000000;
-}
+header { color:#777; }
+#logo-type { font-family:'Courgette'; text-align:center; font-size:5em; }
 #links { text-align:center;  }
 #links ul { list-style:none; margin:0; padding:0; font-size:1.1em; }
 #links ul li { display:inline-block; margin:0 0.5em; line-height:1.5em; }
+#links ul li small { font-size:1.1em; }
 
 /* Main Section */
-section { margin-top:30px; color:#000000; }
+section { color:#000; }
+
 /* Footer */
-footer { text-align:center; color:#777777; }
+footer { text-align:center; color:#777; }
+footer a { color:#777; }
+footer a:hover { color:#777; }
+
+/* Media Queries */
+@media (min-width: 1200px) {
+    .container { max-width:750px; }
+}

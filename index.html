@@ -15,7 +15,7 @@
 
 		<header class="container">
 			<div class="row">
-				<div class="col-md-offset-2 col-md-8">
+				<div class="col-md-12">
 					<div id="logo-type">match/stick</div>
 				</div>
 			</div>
@@ -23,12 +23,12 @@
 
 		<section class="container">
 			<div class="row">
-				<div class="col-md-offset-2 col-md-8">
+				<div class="col-md-12">
 					<p>A small library for conveting various string patterns into regular expressions. It can also tokenize a string and can perform replacement from a data object. It's especially useful for route handling.</p>
 				</div>
 			</div>
 			<div class="row">
-				<div class="col-md-offset-2 col-md-8">
+				<div class="col-md-12">
 					<pre><code>
 var matchstick = require('matchstick');
 					</code></pre>
@@ -39,7 +39,7 @@ var ms = matchstick('/project/:pid/task/:tid', 'symbolic');
 
 					<pre><code>
 ms.match('/project/123/task/abc');
-// Returns true
+// Returns `true`
 					</code></pre>
 
 					<pre><code>
@@ -47,7 +47,7 @@ ms.stick({
 	pid : '123',
 	tid : 'abc'
 });
-// Returns /project/123/task/abc
+// Returns '/project/123/task/abc'
 					</code></pre>
 				</div>
 			</div>
