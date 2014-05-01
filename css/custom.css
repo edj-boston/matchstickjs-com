@@ -1,0 +1,71 @@
+/* Color pallete
+@dark-gray:  #777777;
+@orange:     #ee7733;
+@tan:        #ffffee;
+@light-gray: #ddddcc;
+@peach:      #eeccaa;
+*/
+
+/* Fonts */
+@font-face {
+	font-family: 'Courgette';
+	src: url('/fonts/Courgette.eot');
+	src:
+		url('/fonts/Courgette.eot?#iefix') format('embedded-opentype'),
+		url('/fonts/Courgette.woff') format('woff'),
+		url('/fonts/Courgette.ttf') format('truetype');
+}
+
+@font-face {
+	font-family: 'SourceCodePro';
+	src: url('/fonts/SourceCodePro.eot');
+	src:
+		url('/fonts/SourceCodePro.eot?#iefix') format('embedded-opentype'),
+		url('/fonts/SourceCodePro.woff') format('woff'),
+		url('/fonts/SourceCodePro.ttf') format('truetype');
+}
+
+@font-face {
+	font-family: 'Merriweather';
+	src: url('/fonts/Merriweather.eot');
+	src:
+		url('/fonts/Merriweather.eot?#iefix') format('embedded-opentype'),
+		url('/fonts/Merriweather.woff') format('woff'),
+		url('/fonts/Merriweather.ttf') format('truetype');
+}
+
+@font-face {
+	font-family: 'Merriweather-Bold';
+	src: url('/fonts/Merriweather-Bold.eot');
+	src:
+		url('/fonts/Merriweather-Bold.eot?#iefix') format('embedded-opentype'),
+		url('/fonts/Merriweather-Bold.woff') format('woff'),
+		url('/fonts/Merriweather-Bold.ttf') format('truetype');
+}
+
+/* Base styles */
+* { font-family:'Merriweather'; }
+html, body { margin:0; padding:0; background-color:#ffffee; }
+a { color:#ee7733; }
+pre, code { font-family:'SourceCodePro'; }
+
+/* Github ribbon */
+#github-ribbon { position:absolute; top:0; right:0; border:0; }
+
+/* Header */
+header { color:#777777; }
+#logo-type { font-family:'Courgette'; text-align:center; font-size:5em; color:#fff;
+	text-shadow:
+		 0.02em  0.02em #000000,
+		-0.02em  0.02em #000000,
+		 0.02em -0.02em #000000,
+		-0.02em -0.02em #000000;
+}
+#links { text-align:center;  }
+#links ul { list-style:none; margin:0; padding:0; font-size:1.1em; }
+#links ul li { display:inline-block; margin:0 0.5em; line-height:1.5em; }
+
+/* Main Section */
+section { margin-top:30px; color:#000000; }
+/* Footer */
+footer { text-align:center; color:#777777; }

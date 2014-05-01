@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<title>matchstick / JS</title>
+
+		<link href="/css/bootstrap.min.css" rel="stylesheet">
+		<link href="/css/custom.css" rel="stylesheet">
+		<link href="/css/font-awesome.min.css" rel="stylesheet">
+	</head>
+	<body>
+		<a id="github-ribbon" class="external" href="https://github.com/edj-boston/matchstick">
+			<img src="/img/github-ribbon-orange.png" alt="Fork me on GitHub">
+		</a>
+
+		<header class="container">
+			<div class="row">
+				<div class="col-md-offset-2 col-md-8">
+					<div id="logo-type">match/stick</div>
+				</div>
+			</div>
+		</header>
+
+		<section class="container">
+			<div class="row">
+				<div class="col-md-offset-2 col-md-8">
+					<p>A small library for conveting various string patterns into regular expressions. It can also tokenize a string and can perform replacement from a data object. It's especially useful for route handling.</p>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-offset-2 col-md-8">
+					<pre><code>
+var matchstick = require('matchstick');
+					</code></pre>
+
+					<pre><code>
+var ms = matchstick('/project/:pid/task/:tid', 'symbolic');
+					</code></pre>
+
+					<pre><code>
+ms.match('/project/123/task/abc');
+// Returns true
+					</code></pre>
+
+					<pre><code>
+ms.stick({
+	pid : '123',
+	tid : 'abc'
+});
+// Returns /project/123/task/abc
+					</code></pre>
+				</div>
+			</div>
+		</section>
+
+		<footer class="container">
+			<div class="row">
+				<div class="col-md-offset-2 col-md-8" id="links">
+					<ul>
+						<li><small>&copy; 2014 <a class="external" href="https://github.com/edj-boston">edj</a><small></li>
+						<li><i class="fa fa-github"></i> <a class="external" href="https://github.com/edj-boston">source</a> on Github</li>
+					</ul>
+				</div>
+			</div>
+		</footer>
+
+		<script src="/js/jquery-1.11.0.min.js"></script>
+		<script src="/js/bootstrap.min.js"></script>
+		<script src="/js/custom.js"></script>
+	</body>
+</html>
