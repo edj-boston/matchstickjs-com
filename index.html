@@ -2,7 +2,7 @@
 <html lang="en">
 	<head>
 		<meta charset="utf-8">
-		<title>matchstick / JS</title>
+		<title>STAGE: matchstick / JS</title>
 
 		<link href="/css/bootstrap.min.css" rel="stylesheet">
 		<link href="/css/custom.css" rel="stylesheet">
@@ -13,42 +13,109 @@
 			<img src="/img/github-ribbon-orange.png" alt="Fork me on GitHub">
 		</a>
 
-		<header class="container">
-			<div class="row">
-				<div class="col-md-12">
-					<div id="logo-type">match/stick</div>
-				</div>
-			</div>
-		</header>
-
 		<section class="container">
 			<div class="row">
 				<div class="col-md-12">
-					<p>A small library for conveting various string patterns into regular expressions. It can also tokenize a string and can perform replacement from a data object. It's especially useful for route handling.</p>
-				</div>
-			</div>
-			<div class="row">
-				<div class="col-md-12">
-					<pre><code>
-var matchstick = require('matchstick');
-					</code></pre>
+					<h1>Matchstick <a href="https://travis-ci.org/edj-boston/matchstick"><img src="https://travis-ci.org/edj-boston/matchstick.svg?branch=master" alt="Build Status" /></a></h1>
+					<p>A NodeJS module that converts string patterns into regular expressions. It can also tokenize and perform string replacement. It's useful for route handling or simlple template systems.</p>
 
-					<pre><code>
-var ms = matchstick('/project/:pid/task/:tid', 'symbolic');
-					</code></pre>
+					<h2>Installation</h2>
+					<pre><code>$ npm install matchstick</code></pre>
 
-					<pre><code>
-ms.match('/project/123/task/abc');
-// Returns `true`
-					</code></pre>
+					<h2>Usage</h2>
+					<p>Require matchstick at the top of your script.</p>
 
-					<pre><code>
+					<pre><code>var matchstick = require('matchstick');</code></pre>
+					<p>Matchstick is a constructor that returns a fresh instance so you don't need the <em>new</em> keyword. It takes three arguments:</p>
+					<ul>
+						<li><strong>pattern</strong> is a string representing a search</li>
+						<li><strong>mode</strong> is a string that tells matchstick how to interpret the pattern
+							<ul>
+								<li><em>strict:</em> Exact match</li>
+								<li><em>static:</em> Exact match with optional trailing slash (for URLs)</li>
+								<li><em>wildcard:</em> Asterisks match any character(s) <em>e.g.</em> <code>/path/*/</code></li>
+								<li><em>template:</em> Curly brace tokens match any character(s) <em>e.g.</em> <code>/path/{token}/</code></li>
+								<li><em>symbolic:</em> Ruby-style symbols with leading colons match any character(s) <em>e.g.</em> <code>/path/:token/</code></li>
+								<li><em>regexp:</em> Convert into a true RegExp Object <em>e.g.</em> <code>^\/path\/$</code></li>
+							</ul>
+						</li>
+						<li><strong>modifiers</strong> is a string containing one (or none) of any of the following characters
+							<ul>
+								<li><em>i:</em> Case insensitive</li>
+								<li><em>g:</em> Global match</li>
+								<li><em>m:</em> Multiline matching</li>
+							</ul>
+						</li>
+					</ul>
+
+					<h3>Example</h3>
+					<pre><code>&gt; matchstick('/project/{projectid}/task/{taskid}', 'template');</code></pre>
+					<p>Returns:</p>
+					<pre><code>{
+    pattern  : '/project/{projectid}/task/{taskid}',
+    mode     : 'template',
+    tokens   : [
+        'projectid',
+        'taskid'
+    ],
+    regexp  : /^\/project\/(.*)\/task\/(.*)$/,
+    match   : function() {},
+    stick : function() {}
+}</code></pre>
+					<p>Set it to a variable and use the match method to return true or false</p>
+					<pre><code>var ms = matchstick('/path', 'static');
+ms.match('/path/');</code></pre>
+					<p>Returns: <code>true</code></p>
+					<p>...or evaluate it directly.</p>
+					<pre><code>var path = '/path/';
+if( matchstick('/path', 'static', 'i').match(str) ) {
+    // Do something
+}</code></pre>
+
+					<h2>Examples</h2>
+					<h3>Regexp property</h3>
+					<p>All patterns result in a regexp property which you can access directly.</p>
+					<pre><code>matchstick('^\/path\/$', 'regexp', 'g').regexp;</code></pre>
+					<p>Returns: <code>/^/path/$/gi</code></p>
+
+					<h3>match() method</h3>
+					<h4>Static mode</h4>
+					<pre><code>matchstick('/path/', 'static').match'('/PATH/');</code></pre>
+					<p>Returns: <code>true</code></p>
+
+					<h4>Wildcard mode</h4>
+					<pre><code>matchstick('/path/*/', 'wildcard').match('/path/something/');</code></pre>
+					<p>Returns: <code>true</code></p>
+
+					<h4>Regexp mode</h4>
+					<pre><code>matchstick('^\/path\/$', 'regexp').match('/path/');</code></pre>
+					<p>Returns: <code>true</code></p>
+
+					<h3>stick() method</h3>
+
+					<h4>Template mode</h4>
+					<pre><code>var ms = matchstick('/project/{projectid}/task/{taskid}', 'pattern');
 ms.stick({
-	pid : '123',
-	tid : 'abc'
-});
-// Returns '/project/123/task/abc'
-					</code></pre>
+    projectid : '123', 
+    taskid : 'abc'
+});</code></pre>
+					<p>Returns: <code>/project/123/task/abc</code></p>
+
+					<h4>Symbolic mode</h4>
+					<pre><code>var ms = matchstick('/project/:pid/task/:tid/action/:aid', 'pattern');
+ms.stick({
+    projectid : '123', 
+    taskid : 'abc'
+});</code></pre>
+					<p>Returns: <code>/project/123/task/abc/action/</code> (unused tokens are removed)</p>
+
+					<h2>Tests</h2>
+					<p>Install the global dependancies with sudo permissions.</p>
+					<pre><code>$ sudo npm install -g mocha
+$ sudo npm install -g should</code></pre>
+					<p>Run mocha directly to see the test results.</p>
+					<pre><code>$ cd matchstick
+$ mocha</code></pre>
 				</div>
 			</div>
 		</section>
