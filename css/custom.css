@@ -47,7 +47,8 @@
 * { font-family:'Merriweather'; }
 html, body { margin:0; padding:0; background:#ee7733 url('/img/bg.png'); }
 a { color:#ee7733; }
-pre, code { font-family:'SourceCodePro'; }
+pre { font-family:'SourceCodePro'; }
+code { font-family:'SourceCodePro'; color:#ee7733; background-color:#f5f5f5; }
 .container { padding:20px; background-color:#ffffee; }
 
 /* Github ribbon */
