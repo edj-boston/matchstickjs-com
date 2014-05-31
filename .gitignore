@@ -2,3 +2,5 @@
 .elasticbeanstalk/
 
 /node_modules/
+
+/build/
