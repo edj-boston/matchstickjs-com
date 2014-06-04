@@ -62,6 +62,10 @@ header { color:#777; }
 #links ul li { display:inline-block; margin:0 0.5em; line-height:1.5em; }
 #links ul li small { font-size:1.1em; }
 
+/* Share buttons */
+ul#share { list-style:none; text-align:center; }
+ul#share li { display:inline-block; margin-bottom:0.5em;}
+
 /* Main Section */
 section { color:#000; }
 h1 { text-transform:lowercase; font-size:5em; text-align:center; }
