@@ -1,63 +1,113 @@
 // External dependancies
+var fs = require('fs');
 var gulp = require('gulp');
 var uglify = require('gulp-uglify');
+var minify = require('gulp-minify-css');
 var concat = require('gulp-concat');
-var rename = require('gulp-rename');
 var clean = require('gulp-clean');
+var hb = require('gulp-compile-handlebars');
+var matchstick = require('matchstick');
+var md = require('marked');
 
-// Minify and combine all JavaScript
-gulp.task('scripts', function() {
-	gulp.src('js/custom.js')
-		.pipe(rename('custom.min.js'))
-		.pipe(uglify())
-		.pipe(gulp.dest('js'));
 
-	gulp.src([
-		'js/boostrap.min.js',
-		'js/jquery-1.11.0.min.js',
-		'js/custom.min.js'
-	]).pipe(concat('all.min.js'))
-    	.pipe(gulp.dest('build'))
+/* *
+ * Initialize data for reuse
+ */
+
+// CSS files to concat and minify
+var css = [
+	'static/css/bootstrap.css',
+	'static/css/custom.css',
+	'static/css/font-awesome.css'
+];
+
+// JS files to concat and minify
+var js = [
+	'static/js/boostrap.js',
+	'static/js/jquery-2.1.1.js',
+	'static/js/custom.js'
+];
+
+// Build steps (gulp task names)
+var build = [
+	'clean',
+	'static',
+	'styles',
+	'scripts',
+	'templates'
+];
+
+
+/* *
+ * Helper tasks
+ */
+
+// Clean the build dir
+gulp.task('clean', function() {
+	return gulp.src('build/**/*', {
+		read : false
+	}).pipe(clean());
 });
 
-// Minify and combine all CSS
-gulp.task('css', function() {
-	gulp.src([
-		'css/bootstrap.min.css',
-		'css/custom.css',
-		'css/font-awesome.min.css'
-	]).pipe(concat('all.min.css'))
-    	.pipe(gulp.dest('build'))
-});
-
-// Minify and combine all CSS
-gulp.task('static', function() {
-	gulp.src('fonts/*')
-		.pipe(gulp.dest('build/fonts'));
-	gulp.src('inc/*')
-		.pipe(gulp.dest('build/inc'));
-	gulp.src('img/*')
-		.pipe(gulp.dest('build/img'));
-	gulp.src([
-		'index.html',
-		'favicon.ico',
-		'robots.txt'
-	])
+// Copy static files to build
+gulp.task('static', ['clean'], function() {
+	gulp.src('static/**')
 		.pipe(gulp.dest('build'));
 });
 
-// Default task
-gulp.task('default', function() {
-	gulp.src('build/*', {
-		read : false
-	}).pipe(clean());
-
-	gulp.run('scripts');
-	gulp.run('css');
-	gulp.run('static');
-
-	// Watch files and run tasks if they change
-	gulp.watch('js/*', function(event) {
-		gulp.run('scripts');
-	});
+// Minify and combine all JavaScript
+gulp.task('scripts', ['clean'], function() {
+	gulp.src(js)
+		.pipe(uglify())
+		.pipe(concat('all.min.js'))
+		.pipe(gulp.dest('build/js'));
 });
+
+// Minify and combine all CSS
+gulp.task('styles', ['clean'], function() {
+	gulp.src(css)
+		.pipe(minify())
+		.pipe(concat('all.min.css'))
+		.pipe(gulp.dest('build/css'));
+});
+
+// Compile HB template
+gulp.task('templates', ['clean'], function() {
+
+	md.setOptions({
+		renderer: new md.Renderer(),
+		gfm: true
+	});
+
+	var data = {
+		title: 'MatchstickJS',
+		readme: md.parse(fs.readFileSync('node_modules/matchstick/README.md', 'utf-8'))
+	};
+
+	var opts = {
+		partials : {
+			header : fs.readFileSync('views/partials/header.html', 'utf-8'),
+			footer : fs.readFileSync('views/partials/footer.html', 'utf-8')
+		}
+	}
+
+	gulp.src('views/*.html')
+		.pipe(hb(data, opts))
+		.pipe(gulp.dest('build'));
+});
+
+
+/* *
+ * Default tasks
+ */
+
+// Watch certain files
+gulp.task('watch', function() {
+	gulp.watch([
+		'static/**',
+		'views/**'
+	], build);
+});
+
+// What to do when you run `$ gulp`
+gulp.task('default', build.concat('watch'));
