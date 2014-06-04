@@ -1,1 +1,0 @@
-aws s3 sync . s3://matchstickjs-com --exclude "*" --include "*.html" --include "*.css" --include "*.js" --include "*.png" --include "*.eot" --include "*.ttf" --include "*.woff" --include "*.svg" --include "*.ico" --include "*.txt" --delete
