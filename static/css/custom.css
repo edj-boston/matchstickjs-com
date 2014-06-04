@@ -64,13 +64,11 @@ header { color:#777; }
 
 /* Share buttons */
 ul#share { list-style:none; text-align:center; }
-ul#share li { display:inline-block; margin-bottom:0.5em;}
+ul#share li { display:inline-block; }
 
 /* Main Section */
 section { color:#000; }
-h1 { text-transform:lowercase; font-size:5em; text-align:center; }
-h1 .match { margin-right:-0.3em; font-family:'Courgette'; }
-h1 img { margin-top:-30px; }
+h1 { display:none; }
 h1 .stick { margin-left:-0.5em; font-family:'Courgette'; }
 h2 { background-color:#777; solid #000; color:#fff; padding:10px 35px; margin-top:40px; margin-left:-35px; margin-right:-20px; position:relative; }
 h2:after { content:""; display:block; color:#fff; bottom:-15px; left:0; position:absolute;
