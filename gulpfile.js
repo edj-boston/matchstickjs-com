@@ -11,34 +11,6 @@ var md = require('marked');
 
 
 /* *
- * Initialize data for reuse
- */
-
-// CSS files to concat and minify
-var css = [
-	'static/css/bootstrap.css',
-	'static/css/custom.css',
-	'static/css/font-awesome.css'
-];
-
-// JS files to concat and minify
-var js = [
-	'static/js/boostrap.js',
-	'static/js/jquery-2.1.1.js',
-	'static/js/custom.js'
-];
-
-// Build steps (gulp task names)
-var build = [
-	'clean',
-	'static',
-	'styles',
-	'scripts',
-	'templates'
-];
-
-
-/* *
  * Helper tasks
  */
 
@@ -57,16 +29,23 @@ gulp.task('static', ['clean'], function() {
 
 // Minify and combine all JavaScript
 gulp.task('scripts', ['clean'], function() {
-	gulp.src(js)
-		.pipe(uglify())
+	gulp.src([
+		'static/js/boostrap.js',
+		'static/js/jquery-2.1.1.js',
+		'static/js/custom.js',
+		'static/js/google-analytics.js'
+	]).pipe(uglify())
 		.pipe(concat('all.min.js'))
 		.pipe(gulp.dest('build/js'));
 });
 
 // Minify and combine all CSS
 gulp.task('styles', ['clean'], function() {
-	gulp.src(css)
-		.pipe(minify())
+	gulp.src([
+		'static/css/bootstrap.css',
+		'static/css/custom.css',
+		'static/css/font-awesome.css'
+	]).pipe(minify())
 		.pipe(concat('all.min.css'))
 		.pipe(gulp.dest('build/css'));
 });
@@ -100,6 +79,15 @@ gulp.task('templates', ['clean'], function() {
 /* *
  * Default tasks
  */
+
+// Build steps (gulp task names)
+var build = [
+	'clean',
+	'static',
+	'styles',
+	'scripts',
+	'templates'
+];
 
 // Watch certain files
 gulp.task('watch', function() {
