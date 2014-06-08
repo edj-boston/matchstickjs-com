@@ -1,3 +1,7 @@
+/*!
+ * Custom JavaScript
+ */
+
 // jQuery behaviors
 $(document).ready(function() {
 
