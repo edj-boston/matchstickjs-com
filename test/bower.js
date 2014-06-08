@@ -8,7 +8,7 @@ var fs = require('fs');
 describe('The assets copied from the assets/bower directory...', function() {
 
 	/* *
-	 * Fonts
+	 * Fontawesome
 	 */
 
 	it('Should include Fontawesome files', function() {
