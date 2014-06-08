@@ -11,6 +11,7 @@
     "gulp-concat": "^2.2.0",
     "gulp-awspublish": "0.0.16",
     "gulp-compile-handlebars": "^0.2.0",
+    "gulp-mocha": "^0.4.1",
     "marked": "^0.3.2",
     "matchstick": "^0.7.1",
     "should": "^4.0.1"
