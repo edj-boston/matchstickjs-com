@@ -16,7 +16,7 @@
     "should": "^4.0.1"
   },
   "scripts": {
-    "test": "mocha"
+    "test": "mocha --reporter spec"
   },
   "repository": {
     "type": "git",
@@ -32,5 +32,5 @@
   "bugs": {
     "url": "https://github.com/edj-boston/matchstickjs-com/issues"
   },
-  "homepage": "https://github.com/edj-boston/matchstickjs-com"
+  "homepage": "https://matchstickjs.com"
 }
