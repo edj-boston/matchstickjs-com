@@ -5,10 +5,17 @@ var uglify = require('gulp-uglify');
 var minify = require('gulp-minify-css');
 var concat = require('gulp-concat');
 var clean = require('gulp-clean');
+var awspublish = require('gulp-awspublish');
 var hb = require('gulp-compile-handlebars');
-var matchstick = require('matchstick');
 var md = require('marked');
+var matchstick = require('matchstick');
 
+// Variables
+var awsCreds = JSON.parse(fs.readFileSync('aws.json', 'utf-8'));
+var bucketLive = 'matchstickjs-com';
+var bucketStage = 'stage-matchstickjs-com';
+var TTLClient = 86400; // Client cache, in seconds
+var TTLEdge = 86400; // Edge cache, in seconds
 
 /* *
  * Helper tasks
@@ -23,17 +30,17 @@ gulp.task('clean', function() {
 
 // Copy static files to build
 gulp.task('static', ['clean'], function() {
-	gulp.src('static/**')
+	gulp.src('assets/static/**')
 		.pipe(gulp.dest('build'));
 });
 
 // Minify and combine all JavaScript
 gulp.task('scripts', ['clean'], function() {
 	gulp.src([
-		'static/js/boostrap.js',
-		'static/js/jquery-2.1.1.js',
-		'static/js/custom.js',
-		'static/js/google-analytics.js'
+		'bower_components/jquery/dist/jquery.js',
+		'bower_components/boostrap/dist/js/boostrap.js',
+		'assets/static/js/custom.js',
+		'assets/static/js/google-analytics.js'
 	]).pipe(uglify())
 		.pipe(concat('all.min.js'))
 		.pipe(gulp.dest('build/js'));
@@ -42,9 +49,9 @@ gulp.task('scripts', ['clean'], function() {
 // Minify and combine all CSS
 gulp.task('styles', ['clean'], function() {
 	gulp.src([
-		'static/css/bootstrap.css',
-		'static/css/custom.css',
-		'static/css/font-awesome.css'
+		'bower_components/boostrap/dist/css/bootstrap.css',
+		'assets/static/css/custom.css',
+		'bower_components/fontawesome/css/font-awesome.css'
 	]).pipe(minify())
 		.pipe(concat('all.min.css'))
 		.pipe(gulp.dest('build/css'));
@@ -75,6 +82,20 @@ gulp.task('templates', ['clean'], function() {
 		.pipe(gulp.dest('build'));
 });
 
+gulp.task('deploy-stage', function() {
+
+	awsCreds.bucket = bucketStage;
+	var publisher = awspublish.create(awsCreds);
+
+	var headers = {
+		'Cache-Control': 's-maxage=' + TTLEdge + ', max-age=' + TTLClient;
+	};
+
+	return gulp.src('build/**')
+		.pipe(publisher.publish())
+		.pipe(publisher.sync())
+		.pipe(awspublish.reporter());
+});
 
 /* *
  * Default tasks
