@@ -12,7 +12,8 @@
     "gulp-awspublish": "0.0.16",
     "gulp-compile-handlebars": "^0.2.0",
     "marked": "^0.3.2",
-    "matchstick": "^0.7.0"
+    "matchstick": "^0.7.0",
+    "should": "^4.0.1"
   },
   "scripts": {
     "test": "mocha"
