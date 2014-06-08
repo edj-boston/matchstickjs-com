@@ -1,8 +1,6 @@
 .DS_Store
-
-/node_modules/
-
-/build/
 aws.json
 
-bower_components
+/assets/bower/
+/build/
+/node_modules/
