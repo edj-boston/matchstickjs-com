@@ -11,7 +11,7 @@ describe('The assets copied from the assets/bower directory...', function() {
 	 * Fontawesome
 	 */
 
-	it('Should include Fontawesome files', function() {
+	it('Should include Font Awesome files', function() {
 		if( !fs.existsSync('build/fonts/fontawesome-webfont.eot') ) {
 			throw Error('/fonts/fontawesome-webfont.eot does not exist');
 		}
