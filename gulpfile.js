@@ -28,30 +28,41 @@ gulp.task('clean', function() {
 	}).pipe(clean());
 });
 
-// Copy static files to build
+// Catchall to copy static files to build
 gulp.task('static', ['clean'], function() {
 	gulp.src('assets/static/**')
 		.pipe(gulp.dest('build'));
 });
 
+// Copy fonts from bower packages
+gulp.task('fonts', ['clean'], function() {
+	gulp.src([
+		'assets/bower/fontawesome/fonts/fontawesome-webfont.eot',
+		'assets/bower/fontawesome/fonts/fontawesome-webfont.svg',
+		'assets/bower/fontawesome/fonts/fontawesome-webfont.ttf',
+		'assets/bower/fontawesome/fonts/fontawesome-webfont.woff'
+	]).pipe(gulp.dest('build/fonts'));
+});
+
 // Minify and combine all JavaScript
 gulp.task('scripts', ['clean'], function() {
 	gulp.src([
-		'bower_components/jquery/dist/jquery.js',
-		'bower_components/boostrap/dist/js/boostrap.js',
-		'assets/static/js/custom.js',
-		'assets/static/js/google-analytics.js'
-	]).pipe(uglify())
-		.pipe(concat('all.min.js'))
+		'assets/bower/jquery/dist/jquery.js',
+		'assets/bower/bootstrap/dist/js/bootstrap.js',
+		'assets/js/custom.js',
+		'assets/js/google-analytics.js'
+	]).pipe(uglify({
+		preserveComments : 'some'
+	})).pipe(concat('all.min.js'))
 		.pipe(gulp.dest('build/js'));
 });
 
 // Minify and combine all CSS
 gulp.task('styles', ['clean'], function() {
 	gulp.src([
-		'bower_components/boostrap/dist/css/bootstrap.css',
-		'assets/static/css/custom.css',
-		'bower_components/fontawesome/css/font-awesome.css'
+		'assets/bower/bootstrap/dist/css/bootstrap.css',
+		'assets/css/custom.css',
+		'assets/bower/fontawesome/css/font-awesome.css'
 	]).pipe(minify())
 		.pipe(concat('all.min.css'))
 		.pipe(gulp.dest('build/css'));
@@ -88,7 +99,7 @@ gulp.task('deploy-stage', function() {
 	var publisher = awspublish.create(awsCreds);
 
 	var headers = {
-		'Cache-Control': 's-maxage=' + TTLEdge + ', max-age=' + TTLClient;
+		'Cache-Control': 's-maxage=' + TTLEdge + ', max-age=' + TTLClient
 	};
 
 	return gulp.src('build/**')
@@ -105,6 +116,7 @@ gulp.task('deploy-stage', function() {
 var build = [
 	'clean',
 	'static',
+	'fonts',
 	'styles',
 	'scripts',
 	'templates'
