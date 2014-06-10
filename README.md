@@ -1,6 +1,8 @@
 MatchstickJS.com
 ================
 
+[![Build Status](https://travis-ci.org/edj-boston/matchstickjs-com.svg?branch=gulp)](https://travis-ci.org/edj-boston/matchstickjs-com)
+
 The homepage for the [Matchstick](https://www.npmjs.org/package/matchstick) NodeJS library. See the site live at [https://matchstickjs.com](https://matchstickjs.com).
 
 ![Screen Shot](/assets/img/screen-shot.png)
