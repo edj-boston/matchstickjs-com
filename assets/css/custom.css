@@ -69,8 +69,8 @@ h2:after { content:""; display:block; color:#fff; bottom:-15px; left:0; position
 		width: 0; z-index:0; height: 0; 
 		border-bottom:15px solid transparent;
 		border-right:15px solid #333; }
-h3 { margin-top:28px; }
-h4 { margin-top:28px; }
+h3 { margin-top:28px; font-weight:bold; }
+h4 { margin-top:28px; font-weight:bold; }
 
 /* Footer */
 footer { text-align:center; color:#777; border-top:dashed 1px #ccc; margin:auto 1em; }

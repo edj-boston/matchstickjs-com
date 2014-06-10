@@ -156,7 +156,10 @@ gulp.task('build', [
 
 // Watch certain files
 gulp.task('watch', ['build'], function() {
-	gulp.watch('assets/**', ['build']);
+	gulp.watch([
+		'assets/**',
+		'node_modules/matchstick/**'
+	], ['build']);
 });
 
 // What to do when you run `$ gulp`
