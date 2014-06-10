@@ -122,6 +122,7 @@ gulp.task('deploy', ['test'], function() {
 					.pipe(s3.publish(headers))
 					.pipe(s3.sync())
 					.pipe(awsPub.reporter());
+					// TBD CloudFront pipe
 	        } else {
 				aws.bucket = bucketStage;
 				var s3 = awsPub.create(aws);
