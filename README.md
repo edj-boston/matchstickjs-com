@@ -52,7 +52,7 @@ The site is designed to be deployed to AWS S3, which serves as an origin for AWS
 {
 	"key" : "...",
 	"secret" : "...",
-    "distributionId" : "..."
+    "dist" : "..."
 }
 ```
 
