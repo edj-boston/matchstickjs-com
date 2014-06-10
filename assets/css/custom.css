@@ -62,8 +62,8 @@ ul#share { list-style:none; text-align:center; }
 ul#share li { display:inline-block; }
 
 /* Main Section */
-main { color:#000; }
-h1 { display:none; }
+main.container { color:#000; padding-top:0; }
+h1 { text-align:center; margin-top:0; }
 h2, h3 { font-family:'Open-Sans',sans-serif; }
 h2 { background-color:#777; solid #000; color:#fff; padding:10px 35px; margin-top:40px; margin-left:-35px; margin-right:-20px; position:relative; }
 h2:after { content:""; display:block; color:#fff; bottom:-15px; left:0; position:absolute;

@@ -12,4 +12,19 @@ $(document).ready(function() {
 		return false;
 	});
 
+	// Replace <h1> text with image
+	var img = $('<img/>').attr({
+		src : '/img/logotype.png',
+		class : 'img-responsive',
+		width : 710,
+		height : 132,
+		alt : 'Matchstick'
+	});
+	$('h1').html(img);
+
+	// Hide Travis icon
+	$('a[href="https://travis-ci.org/edj-boston/matchstick"]')
+		.parent('p')
+		.css('display', 'none');
+
 });
