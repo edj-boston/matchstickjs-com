@@ -3,11 +3,12 @@
  */
 
 /* Color pallete
-@dark-gray:  #777777;
-@orange:     #ee7733;
-@tan:        #ffffee;
-@light-gray: #ddddcc;
-@peach:      #eeccaa;
+@dark-gray:   #777777;
+@orange:      #ee7733;
+@orange-dark: #cc6633;
+@tan:         #ffffee;
+@light-gray:  #ddddcc;
+@peach:       #eeccaa;
 */
 
 /* Fonts */
@@ -42,13 +43,10 @@
 * { font-family:'Merriweather'; }
 html, body { margin:0; padding:0; background:#ee7733 url('/img/bg.png'); }
 a { color:#ee7733; }
-pre { font-family:'SourceCodePro'; }
+a:hover { color:#cc6633; text-decoration:underline; }
+pre code { font-family:'SourceCodePro'; border:0; }
 code { font-family:'SourceCodePro'; color:#ee7733; background-color:#f5f5f5; border:1px solid #ccc; }
-pre code { border:0; }
 .container { padding:20px; background-color:#ffffee; }
-
-/* Github ribbon */
-#github-ribbon { position:absolute; top:0; right:0; border:0; }
 
 /* Header */
 header { color:#777; }
@@ -58,26 +56,24 @@ header { color:#777; }
 #links ul li small { font-size:1.1em; }
 
 /* Share buttons */
-ul#share { list-style:none; text-align:center; }
+ul#share { list-style:none; text-align:center; margin-top:2em; }
 ul#share li { display:inline-block; }
 
 /* Main Section */
 main.container { color:#000; padding-top:0; }
 h1 { text-align:center; margin-top:0; }
+h1#page-not-found { margin-top:2em; }
 h2, h3 { font-family:'Open-Sans',sans-serif; }
 h2 { background-color:#777; solid #000; color:#fff; padding:10px 35px; margin-top:40px; margin-left:-35px; margin-right:-20px; position:relative; }
 h2:after { content:""; display:block; color:#fff; bottom:-15px; left:0; position:absolute;
-		width: 0; z-index:0;
-		height: 0; 
+		width: 0; z-index:0; height: 0; 
 		border-bottom:15px solid transparent;
 		border-right:15px solid #333; }
 h3 { margin-top:28px; }
 h4 { margin-top:28px; }
 
 /* Footer */
-footer { text-align:center; color:#777; }
-footer a { color:#777; }
-footer a:hover { color:#777; }
+footer { text-align:center; color:#777; border-top:dashed 1px #ccc; margin:auto 1em; }
 
 /* Media Queries */
 @media (min-width: 1200px) {

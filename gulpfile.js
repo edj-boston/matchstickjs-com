@@ -90,7 +90,8 @@ gulp.task('views', ['clean'], function() {
 	var opts = {
 		partials : {
 			header : fs.readFileSync('assets/views/partials/header.html', 'utf-8'),
-			footer : fs.readFileSync('assets/views/partials/footer.html', 'utf-8')
+			footer : fs.readFileSync('assets/views/partials/footer.html', 'utf-8'),
+			share : fs.readFileSync('assets/views/partials/share.html', 'utf-8')
 		}
 	}
 
@@ -102,7 +103,9 @@ gulp.task('views', ['clean'], function() {
 // Test
 gulp.task('test', ['build'], function () {
     return gulp.src('test/*')
-        .pipe(mocha({reporter: 'spec'}));
+        .pipe(mocha({
+        	reporter : 'spec'
+        }));
 });
 
 // Deploy

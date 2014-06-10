@@ -20,7 +20,7 @@ $(document).ready(function() {
 		height : 132,
 		alt : 'Matchstick'
 	});
-	$('h1').html(img);
+	$('h1#matchstick').html(img);
 
 	// Hide Travis icon
 	$('a[href="https://travis-ci.org/edj-boston/matchstick"]')
