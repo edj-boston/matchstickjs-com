@@ -4,6 +4,7 @@ node_js:
 - '0.10'
 before_script:
 - echo -e '{"key":"'$key'","secret":"'$secret'","dist":"'$dist'"}' > aws.json
+- npm install -g bower
 - bower install
 - gulp
 env:
