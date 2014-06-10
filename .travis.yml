@@ -1,4 +1,11 @@
 language: node_js
 node_js:
-  - "0.11"
-  - "0.10"
+- '0.11'
+- '0.10'
+before_script:
+- echo -e '{"key":"'$key'","secret":"'$secret'","dist":"'$dist'"}' > aws.json
+env:
+  global:
+  - secure: vaaMJ4lKVihhnPlRQ0/qvBlcxFPadvQbPLhKgrOVblLgr6FGZiIH4TrQG9gkQbMJZENgY0nJlGgSz0hheF0qmJS7MtZajSuw1ELAzi2MRkUgHkJ/PoSC9QqIRnt+yIaXV69F4mqJ7l7aTw58abtkhcl5zP/DQ+y+Pun2bDQAp0c=
+  - secure: vWob9i8whgY91L8LGycjmFFJCoLeqZ8qLQ5+UowsRO7UWzY42B9Nhs8OCHUlA1NpIBBr6lQbgSW75oGyGpKODv6TJ6t1xOEr38nGOJsmYvRhALva9bArSyj1r1SZktElxOQP38LMIU5KwziuBytlLixRLz+Bzz+mT5gOk/n47K4=
+  - secure: bI6EWog1teHZmfS66xSypLKaoA+oVpr1KPKfi5GDlhvdhztAX4wdLg6jGXYEjTE6FmeGdhSonXSsZhBWdKILIvePqcwVnh90S3UMyAP6AM6wVPpISODsBMh7xw/2f8i1jSOKDG9meqbgASGb/uHMbak3U5vSFf/XxE7UL65yXYc=
