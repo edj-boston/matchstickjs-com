@@ -1,7 +1,7 @@
 // External dependencies
-var assert = require('assert');
-var should = require('should');
-var fs = require('fs');
+var assert = require('assert'),
+	should = require('should'),
+	fs     = require('fs');
 
 
 // Test to see if files copied from assets/bower made it okay
