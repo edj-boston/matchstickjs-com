@@ -2,6 +2,7 @@
 var fs     = require('fs'),
 	md     = require('marked'),
 	ms     = require('matchstick'),
+	moment = require('moment'),
 	gulp   = require('gulp'),
 	clean  = require('gulp-clean'),
 	concat = require('gulp-concat'),
@@ -13,6 +14,7 @@ var fs     = require('fs'),
 	s3     = require('gulp-s3'),
 	moment = require('moment'),
 	prompt = require('gulp-prompt'),
+	sass   = require('gulp-sass'),
 	uglify = require('gulp-uglify');
 
 
@@ -64,11 +66,12 @@ gulp.task('scripts', ['clean'], function() {
 // Minify and combine all CSS
 gulp.task('styles', ['clean'], function() {
 	return gulp.src([
+		'assets/scss/*.scss',
 		'assets/bower/bootstrap/dist/css/bootstrap.css',
-		'assets/css/custom.css',
 		'assets/bower/fontawesome/css/font-awesome.css'
-	]).pipe(concat('all.min.css'))
+	]).pipe(gulpif(/[.]scss$/, sass()))
 		.pipe(minify())
+		.pipe(concat('all.min.css'))
 		.pipe(gulp.dest('build/css'));
 });
 
