@@ -9,6 +9,7 @@ var fs     = require('fs'),
 	hb     = require('gulp-compile-handlebars'),
 	minify = require('gulp-minify-css'),
 	mocha  = require('gulp-mocha'),
+	moment = require('moment'),
 	prompt = require('gulp-prompt'),
 	uglify = require('gulp-uglify');
 
@@ -75,13 +76,14 @@ gulp.task('styles', ['clean'], function() {
 gulp.task('views', ['clean'], function() {
 
 	md.setOptions({
-		renderer: new md.Renderer(),
-		gfm: true
+		renderer : new md.Renderer(),
+		gfm : true
 	});
 
 	var data = {
-		title: 'MatchstickJS',
-		readme: md.parse(fs.readFileSync('node_modules/matchstick/README.md', 'utf-8'))
+		title : 'MatchstickJS',
+		year : moment().format('YYYY'),
+		readme : md.parse(fs.readFileSync('node_modules/matchstick/README.md', 'utf-8'))
 	};
 
 	var opts = {
