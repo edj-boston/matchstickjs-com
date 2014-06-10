@@ -77,7 +77,11 @@ Run the custom gulp "deploy" task. It will automatically run the tests and stop 
 To Do
 -----
 
-1. More tests
-2. Wrap my Void module in a stream-friendly gulp module to perform Cloudfront cache ivalidation
-3. Serve via Express (rather than NGINX) locally
-4. Live reload in browser
+* ~~Build~~
+* ~~Watch~~
+* ~~Deploy~~
+* ~~Tests~~
+* Wrap my Void module in a stream-friendly gulp module to perform Cloudfront cache ivalidation
+* Serve via Express (rather than NGINX) locally
+* Live reload in browser
+* More tests
