@@ -5,28 +5,31 @@
   "main": "gulpfile.js",
   "dependencies": {
     "gulp": "^3.6.2",
-    "gulp-uglify": "^0.3.0",
-    "gulp-minify-css": "^0.3.4",
     "gulp-clean": "^0.3.0",
     "gulp-concat": "^2.2.0",
     "gulp-awspublish": "0.0.16",
     "gulp-compile-handlebars": "^0.2.0",
+    "gulp-minify-css": "^0.3.4",
     "gulp-mocha": "^0.4.1",
+    "gulp-prompt": "^0.1.1",
+    "gulp-uglify": "^0.3.0",
     "marked": "^0.3.2",
-    "matchstick": "^0.7.1",
+    "matchstick": "^0.7.2",
     "should": "^4.0.1"
   },
   "scripts": {
-    "test": "mocha --reporter spec"
+    "test": "gulp test"
   },
   "repository": {
     "type": "git",
     "url": "https://github.com/edj-boston/matchstickjs-com"
   },
   "keywords": [
+    "matchstick",
     "site",
     "gulp",
-    "matchstick"
+    "s3",
+    "cloudfront"
   ],
   "author": "Eric Johnson",
   "license": "MIT",
