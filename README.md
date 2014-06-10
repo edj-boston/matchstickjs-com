@@ -103,6 +103,7 @@ To Do
 * ~~Deploy~~
 * ~~Tests~~
 * ~~Travis CI~~
+* 404 page
 * Convert CSS to SASS
 * Wrap my Void module in a stream-friendly gulp module to perform Cloudfront cache ivalidation
 * Serve via Express (rather than NGINX) locally
