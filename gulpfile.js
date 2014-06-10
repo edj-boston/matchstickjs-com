@@ -88,18 +88,18 @@ gulp.task('views', ['clean'], function() {
 
 	var opts = {
 		partials : {
-			header : fs.readFileSync('views/partials/header.html', 'utf-8'),
-			footer : fs.readFileSync('views/partials/footer.html', 'utf-8')
+			header : fs.readFileSync('assets/views/partials/header.html', 'utf-8'),
+			footer : fs.readFileSync('assets/views/partials/footer.html', 'utf-8')
 		}
 	}
 
-	return gulp.src('views/*.html')
+	return gulp.src('assets/views/*.html')
 		.pipe(hb(data, opts))
 		.pipe(gulp.dest('build'));
 });
 
 // Test
-gulp.task('test', build, function () {
+gulp.task('test', ['build'], function () {
     return gulp.src('test/*')
         .pipe(mocha({reporter: 'spec'}));
 });
@@ -140,26 +140,20 @@ gulp.task('deploy', ['test'], function() {
  * Default tasks
  */
 
-// Build steps (gulp task names)
-var build = [
+// Perform a build
+gulp.task('build', [
 	'clean',
 	'static',
 	'fonts',
 	'styles',
 	'scripts',
 	'views'
-];
-
-// Perform a build
-gulp.task('build', build);
+]);
 
 // Watch certain files
-gulp.task('watch', function() {
-	return gulp.watch([
-		'assets/**',
-		'views/**'
-	], build);
+gulp.task('watch', ['build'], function() {
+	gulp.watch('assets/**', ['build']);
 });
 
 // What to do when you run `$ gulp`
-gulp.task('default', build.concat('watch'));
+gulp.task('default', ['watch']);
