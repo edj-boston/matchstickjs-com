@@ -157,7 +157,7 @@ gulp.task('watch', function() {
 	return gulp.watch([
 		'assets/**',
 		'views/**'
-	], 'build');
+	], build);
 });
 
 // What to do when you run `$ gulp`
