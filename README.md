@@ -78,4 +78,6 @@ To Do
 -----
 
 1. More tests
-2. Cloudfront Invalidation via TBD gulp-void module
+2. Wrap my Void module in a stream-friendly gulp module to perform Cloudfront cache ivalidation
+3. Serve via Express (rather than NGINX) locally
+4. Live reload in browser
