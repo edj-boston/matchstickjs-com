@@ -44,8 +44,8 @@ describe('The assets copied from the assets/static directory...', function() {
 	});
 
 	it('Should include a logotype image', function() {
-		if( !fs.existsSync('build/img/matchstick.png') ) {
-			throw Error('/img/matchstick.png does not exist');
+		if( !fs.existsSync('build/img/logotype.png') ) {
+			throw Error('/img/logotype.png does not exist');
 		}
 	});
 
