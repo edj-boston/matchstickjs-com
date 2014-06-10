@@ -83,6 +83,7 @@ gulp.task('views', ['clean'], function() {
 	var data = {
 		title : 'MatchstickJS',
 		year : moment().format('YYYY'),
+		timestamp : moment().format('YYYY-MM-DD-HH-mm-ss'),
 		readme : md.parse(fs.readFileSync('node_modules/matchstick/README.md', 'utf-8'))
 	};
 
