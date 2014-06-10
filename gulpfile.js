@@ -149,12 +149,15 @@ var build = [
 	'views'
 ];
 
+// Perform a build
+gulp.task('build', build);
+
 // Watch certain files
 gulp.task('watch', function() {
 	return gulp.watch([
 		'assets/**',
 		'views/**'
-	], build);
+	], 'build');
 });
 
 // What to do when you run `$ gulp`
