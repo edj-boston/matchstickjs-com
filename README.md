@@ -5,7 +5,7 @@ MatchstickJS.com
 
 The homepage for the [Matchstick](https://www.npmjs.org/package/matchstick) NodeJS library. See the site live at [https://matchstickjs.com](https://matchstickjs.com).
 
-![Screen Shot](/assets/img/screen-shot.png)
+![Screen Shot](/assets/misc/screen-shot.png)
 
 
 Installation
@@ -84,7 +84,7 @@ $ gulp test
 
 You should see output like the following:
 
-![Gulp Test](/assets/img/gulp-test.png)
+![Gulp Test](/assets/misc/gulp-test.png)
 
 
 Deploy
@@ -92,7 +92,7 @@ Deploy
 
 Run the custom gulp "deploy" task. It will automatically run the tests and stop of one fails. If the tests pass successfully you will be prompted to choose and environment to deploy to.
 
-![Gulp Deploy](/assets/img/gulp-deploy.png)
+![Gulp Deploy](/assets/misc/gulp-deploy.png)
 
 
 To Do
