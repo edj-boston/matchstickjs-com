@@ -57,6 +57,22 @@ The site is designed to be deployed to AWS S3, which serves as an origin for AWS
 ```
 
 
+Tasks
+-----
+
+Run the default gulp task to watch source files and dynamically rebuild the site.
+
+```sh
+$ gulp
+```
+
+Run the "build" task to do a one-time build. This task is also used by Travis CI for continuous integration.
+
+```sh
+$ gulp build
+```
+
+
 Test
 ----
 
