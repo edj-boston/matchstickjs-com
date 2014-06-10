@@ -1,21 +1,24 @@
-// External dependancies
-var fs = require('fs');
-var gulp = require('gulp');
-var uglify = require('gulp-uglify');
-var minify = require('gulp-minify-css');
-var concat = require('gulp-concat');
-var clean = require('gulp-clean');
-var awspublish = require('gulp-awspublish');
-var hb = require('gulp-compile-handlebars');
-var md = require('marked');
-var matchstick = require('matchstick');
+// External dependencies
+var fs     = require('fs'),
+	md     = require('marked'),
+	ms     = require('matchstick'),
+	gulp   = require('gulp'),
+	awsPub = require('gulp-awspublish'),
+	clean  = require('gulp-clean'),
+	concat = require('gulp-concat'),
+	hb     = require('gulp-compile-handlebars'),
+	minify = require('gulp-minify-css'),
+	mocha  = require('gulp-mocha'),
+	prompt = require('gulp-prompt'),
+	uglify = require('gulp-uglify');
 
 // Variables
-var awsCreds = JSON.parse(fs.readFileSync('aws.json', 'utf-8'));
+var aws = JSON.parse(fs.readFileSync('aws.json', 'utf-8'));
 var bucketLive = 'matchstickjs-com';
 var bucketStage = 'stage-matchstickjs-com';
-var TTLClient = 86400; // Client cache, in seconds
-var TTLEdge = 86400; // Edge cache, in seconds
+var ttlClient = 3600; // Client cache: 1 hour in seconds
+var ttlEdge = 86400; // Edge cache: 1 day in seconds
+
 
 /* *
  * Helper tasks
@@ -30,13 +33,13 @@ gulp.task('clean', function() {
 
 // Catchall to copy static files to build
 gulp.task('static', ['clean'], function() {
-	gulp.src('assets/static/**')
+	return gulp.src('assets/static/**')
 		.pipe(gulp.dest('build'));
 });
 
 // Copy fonts from bower packages
 gulp.task('fonts', ['clean'], function() {
-	gulp.src([
+	return gulp.src([
 		'assets/bower/fontawesome/fonts/fontawesome-webfont.eot',
 		'assets/bower/fontawesome/fonts/fontawesome-webfont.svg',
 		'assets/bower/fontawesome/fonts/fontawesome-webfont.ttf',
@@ -46,7 +49,7 @@ gulp.task('fonts', ['clean'], function() {
 
 // Minify and combine all JavaScript
 gulp.task('scripts', ['clean'], function() {
-	gulp.src([
+	return gulp.src([
 		'assets/bower/jquery/dist/jquery.js',
 		'assets/bower/bootstrap/dist/js/bootstrap.js',
 		'assets/js/custom.js',
@@ -59,7 +62,7 @@ gulp.task('scripts', ['clean'], function() {
 
 // Minify and combine all CSS
 gulp.task('styles', ['clean'], function() {
-	gulp.src([
+	return gulp.src([
 		'assets/bower/bootstrap/dist/css/bootstrap.css',
 		'assets/css/custom.css',
 		'assets/bower/fontawesome/css/font-awesome.css'
@@ -69,7 +72,7 @@ gulp.task('styles', ['clean'], function() {
 });
 
 // Compile HB template
-gulp.task('templates', ['clean'], function() {
+gulp.task('views', ['clean'], function() {
 
 	md.setOptions({
 		renderer: new md.Renderer(),
@@ -88,25 +91,47 @@ gulp.task('templates', ['clean'], function() {
 		}
 	}
 
-	gulp.src('views/*.html')
+	return gulp.src('views/*.html')
 		.pipe(hb(data, opts))
 		.pipe(gulp.dest('build'));
 });
 
-gulp.task('deploy-stage', function() {
-
-	awsCreds.bucket = bucketStage;
-	var publisher = awspublish.create(awsCreds);
-
-	var headers = {
-		'Cache-Control': 's-maxage=' + TTLEdge + ', max-age=' + TTLClient
-	};
-
-	return gulp.src('build/**')
-		.pipe(publisher.publish())
-		.pipe(publisher.sync())
-		.pipe(awspublish.reporter());
+// Test
+gulp.task('test', build, function () {
+    return gulp.src('test/*')
+        .pipe(mocha({reporter: 'spec'}));
 });
+
+// Deploy
+gulp.task('deploy', ['test'], function() {
+	return gulp.src('build')
+		.pipe(prompt.prompt({
+			type: 'list',
+			name: 'env',
+			message: 'Which environment would you like to deploy to?',
+			choices: ['Stage', 'Live']
+	    }, function(res) {
+			var headers = { 'Cache-Control': 's-maxage='+ttlEdge+', max-age='+ttlClient };
+			if(res.env == 'Live') {
+				aws.bucket = bucketLive;
+				var s3 = awsPub.create(aws);
+				gulp.src('build/**')
+					.pipe(awsPub.gzip())
+					.pipe(s3.publish(headers))
+					.pipe(s3.sync())
+					.pipe(awsPub.reporter());
+	        } else {
+				aws.bucket = bucketStage;
+				var s3 = awsPub.create(aws);
+				gulp.src('build/**')
+					.pipe(awsPub.gzip())
+					.pipe(s3.publish(headers))
+					.pipe(s3.sync())
+					.pipe(awsPub.reporter());
+	        }
+		}));
+});
+
 
 /* *
  * Default tasks
@@ -119,13 +144,13 @@ var build = [
 	'fonts',
 	'styles',
 	'scripts',
-	'templates'
+	'views'
 ];
 
 // Watch certain files
 gulp.task('watch', function() {
-	gulp.watch([
-		'static/**',
+	return gulp.watch([
+		'assets/**',
 		'views/**'
 	], build);
 });
