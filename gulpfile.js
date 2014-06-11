@@ -21,7 +21,7 @@ var fs     = require('fs'),
 
 // Clean the build dir
 gulp.task('clean', function() {
-	return gulp.src('build/**/*', {
+	return gulp.src('build', {
 		read : false
 	}).pipe(clean());
 });
@@ -49,9 +49,10 @@ gulp.task('scripts', ['clean'], function() {
 		'assets/bower/bootstrap/dist/js/bootstrap.js',
 		'assets/js/custom.js',
 		'assets/js/google-analytics.js'
-	]).pipe(uglify({
-		preserveComments : 'some'
-	})).pipe(concat('all.min.js'))
+	]).pipe(concat('all.min.js'))
+		.pipe(uglify({
+			preserveComments : 'some'
+		}))
 		.pipe(gulp.dest('build/js'));
 });
 
@@ -61,8 +62,8 @@ gulp.task('styles', ['clean'], function() {
 		'assets/bower/bootstrap/dist/css/bootstrap.css',
 		'assets/css/custom.css',
 		'assets/bower/fontawesome/css/font-awesome.css'
-	]).pipe(minify())
-		.pipe(concat('all.min.css'))
+	]).pipe(concat('all.min.css'))
+		.pipe(minify())
 		.pipe(gulp.dest('build/css'));
 });
 
