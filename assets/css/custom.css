@@ -56,12 +56,14 @@ header { color:#777; }
 #links ul li small { font-size:1.1em; }
 
 /* Share buttons */
-ul#share { list-style:none; text-align:center; margin-top:2em; }
+ul#share { list-style:none; text-align:center; margin:10px; padding:0; }
 ul#share li { display:inline-block; }
+ul#share li a img { display:block; vertical-align:middle; }
 
 /* Main Section */
 main.container { color:#000; padding-top:0; }
 h1 { text-align:center; margin-top:0; }
+h1#matchstick { display:none; }
 h1#page-not-found { margin-top:2em; }
 h2, h3 { font-family:'Open-Sans',sans-serif; }
 h2 { background-color:#777; solid #000; color:#fff; padding:10px 35px; margin-top:40px; margin-left:-35px; margin-right:-20px; position:relative; }

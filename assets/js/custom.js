@@ -20,7 +20,7 @@ $(document).ready(function() {
 		height : 132,
 		alt : 'Matchstick'
 	});
-	$('h1#matchstick').html(img);
+	$('h1#matchstick').parent().prepend(img);
 
 	// Clickable <h2>'s
 	$('h2').click(function() {
@@ -28,8 +28,7 @@ $(document).ready(function() {
 	});
 
 	// Hide Travis icon
-	$('a[href="https://travis-ci.org/edj-boston/matchstick"]')
-		.parent('p')
-		.css('display', 'none');
-
+	var travis = $('a[href="https://travis-ci.org/edj-boston/matchstick"]');
+	var li = $('<li/>').html(travis);
+	$('#share').append(li);
 });
