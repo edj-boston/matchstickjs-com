@@ -3,22 +3,16 @@ var fs     = require('fs'),
 	md     = require('marked'),
 	ms     = require('matchstick'),
 	gulp   = require('gulp'),
-	awsPub = require('gulp-awspublish'),
 	clean  = require('gulp-clean'),
 	concat = require('gulp-concat'),
+	gzip   = require("gulp-gzip"),
 	hb     = require('gulp-compile-handlebars'),
 	minify = require('gulp-minify-css'),
 	mocha  = require('gulp-mocha'),
+	s3     = require('gulp-s3'),
 	moment = require('moment'),
 	prompt = require('gulp-prompt'),
 	uglify = require('gulp-uglify');
-
-// Variables
-var aws = JSON.parse(fs.readFileSync('aws.json', 'utf-8'));
-var bucketLive = 'matchstickjs-com';
-var bucketStage = 'stage-matchstickjs-com';
-var ttlClient = 3600; // Client cache: 1 hour in seconds
-var ttlEdge = 86400; // Edge cache: 1 day in seconds
 
 
 /* *
@@ -101,44 +95,45 @@ gulp.task('views', ['clean'], function() {
 });
 
 // Test
-gulp.task('test', ['build'], function () {
+gulp.task('test', function () {
     return gulp.src('test/*')
         .pipe(mocha({
         	reporter : 'spec'
         }));
 });
 
-// Deploy
-gulp.task('deploy', ['test'], function() {
-	return gulp.src('build')
+// Prompt
+gulp.task('prompt', ['test'], function() {
+	return gulp.src('build', { read : false })
 		.pipe(prompt.prompt({
-			type: 'list',
-			name: 'env',
-			message: 'Which environment would you like to deploy to?',
-			choices: ['Stage', 'Live']
+			type : 'list',
+			name : 'env',
+			message : 'Which environment would you like to deploy to?',
+			choices : [
+				'Stage',
+				'Live'
+			]
 	    }, function(res) {
-			var headers = { 'Cache-Control': 's-maxage='+ttlEdge+', max-age='+ttlClient };
-			if(res.env == 'Live') {
-				aws.bucket = bucketLive;
-				var s3 = awsPub.create(aws);
-				gulp.src('build/**')
-					.pipe(awsPub.gzip())
-					.pipe(s3.publish(headers))
-					.pipe(s3.sync())
-					.pipe(awsPub.reporter());
-					// TBD CloudFront pipe
-	        } else {
-				aws.bucket = bucketStage;
-				var s3 = awsPub.create(aws);
-				gulp.src('build/**')
-					.pipe(awsPub.gzip())
-					.pipe(s3.publish(headers))
-					.pipe(s3.sync())
-					.pipe(awsPub.reporter());
-	        }
+			aws.bucket = ( res.env == 'Live' ) ? 'matchstickjs-com' : 'stage-matchstickjs-com';
 		}));
 });
 
+// Deploy
+gulp.task('deploy', ['prompt'], function() {
+
+	var aws = JSON.parse(fs.readFileSync('aws.json', 'utf-8'));
+
+	var opts = {
+		gzippedOnly : true,
+		headers : {
+			'Cache-Control': 'max-age=86400, s-maxage=3600, no-transform, public'
+		}
+	};
+
+	return gulp.src('build/**')
+		.pipe(gzip())
+		.pipe(s3(aws, opts));
+});
 
 /* *
  * Default tasks
