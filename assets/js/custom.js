@@ -27,7 +27,6 @@ $(document).ready(function() {
 		window.location = '#' + $(this).attr('id');
 	});
 
-
 	// Hide Travis icon
 	$('a[href="https://travis-ci.org/edj-boston/matchstick"]')
 		.parent('p')
