@@ -15,6 +15,10 @@ var fs     = require('fs'),
 	uglify = require('gulp-uglify');
 
 
+// Initialize
+var aws = JSON.parse(fs.readFileSync('aws.json', 'utf-8'));
+
+
 /* *
  * Helper tasks
  */
@@ -96,7 +100,7 @@ gulp.task('views', ['clean'], function() {
 });
 
 // Test
-gulp.task('test', function () {
+gulp.task('test', ['build'], function () {
     return gulp.src('test/*')
         .pipe(mocha({
         	reporter : 'spec'
@@ -121,20 +125,16 @@ gulp.task('prompt', ['test'], function() {
 
 // Deploy
 gulp.task('deploy', ['prompt'], function() {
-
-	var aws = JSON.parse(fs.readFileSync('aws.json', 'utf-8'));
-
-	var opts = {
-		gzippedOnly : true,
-		headers : {
-			'Cache-Control': 'max-age=86400, s-maxage=3600, no-transform, public'
-		}
-	};
-
 	return gulp.src('build/**')
 		.pipe(gzip())
-		.pipe(s3(aws, opts));
+		.pipe(s3(aws, {
+			gzippedOnly : true,
+			headers : {
+				'Cache-Control': 'max-age=86400, s-maxage=3600, no-transform, public'
+			}
+		}));
 });
+
 
 /* *
  * Default tasks
