@@ -130,7 +130,7 @@ gulp.task('deploy', ['prompt'], function() {
 		.pipe(s3(aws, {
 			gzippedOnly : true,
 			headers : {
-				'Cache-Control': 'max-age=86400, s-maxage=3600, no-transform, public'
+				'Cache-Control': 'max-age=86400, s-maxage=86400, no-transform, public'
 			}
 		}));
 });
