@@ -129,13 +129,13 @@ gulp.task('deploy', ['prompt'], function() {
 	var s3MaxAge = function(maxAge) {
 		return s3(aws, {
 			gzippedOnly : true,
-			headers : { 'Cache-Control': 'max-age=' + maxAge + ', s-maxage=86400, no-transform, public' }
+			headers : { 'Cache-Control': 'max-age=' + maxAge + ', s-maxage=3600' }
 		});
 	};
 
 	return gulp.src('build/**')
 		.pipe(gzip())
-		.pipe(gulpif(/.*(\.html\.gz)$/, s3MaxAge(360), s3MaxAge(31536000)));
+		.pipe(gulpif(/.*(\.html\.gz)$/, s3MaxAge(3600), s3MaxAge(31536000)));
 });
 
 
