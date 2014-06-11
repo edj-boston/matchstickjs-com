@@ -65,10 +65,12 @@ h1 { text-align:center; margin-top:0; }
 h1#page-not-found { margin-top:2em; }
 h2, h3 { font-family:'Open-Sans',sans-serif; }
 h2 { background-color:#777; solid #000; color:#fff; padding:10px 35px; margin-top:40px; margin-left:-35px; margin-right:-20px; position:relative; }
-h2:after { content:""; display:block; color:#fff; bottom:-15px; left:0; position:absolute;
+h2:before { content:''; display:block; color:#fff; bottom:-15px; left:0; position:absolute;
 		width: 0; z-index:0; height: 0; 
 		border-bottom:15px solid transparent;
 		border-right:15px solid #333; }
+h2:hover { color:#eee; text-decoration:none; cursor:pointer; }
+h2:hover:after { content:'\f0c1'; font-family:'FontAwesome'; font-weight:normal; font-size:0.8em; margin-left:10px; color:#eee; }
 h3 { margin-top:28px; font-weight:bold; }
 h4 { margin-top:28px; font-weight:bold; }
 

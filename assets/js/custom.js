@@ -22,6 +22,12 @@ $(document).ready(function() {
 	});
 	$('h1#matchstick').html(img);
 
+	// Clickable <h2>'s
+	$('h2').click(function() {
+		window.location = '#' + $(this).attr('id');
+	});
+
+
 	// Hide Travis icon
 	$('a[href="https://travis-ci.org/edj-boston/matchstick"]')
 		.parent('p')
