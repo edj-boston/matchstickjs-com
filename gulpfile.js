@@ -4,7 +4,7 @@ var fs     = require('fs'),
 	ms     = require('matchstick'),
 	moment = require('moment'),
 	gulp   = require('gulp'),
-	clean  = require('gulp-clean'),
+	del    = require('del'),
 	concat = require('gulp-concat'),
 	gzip   = require('gulp-gzip'),
 	hb     = require('gulp-compile-handlebars'),
@@ -28,9 +28,7 @@ var aws = JSON.parse(fs.readFileSync('aws.json', 'utf-8'));
 
 // Clean the build dir
 gulp.task('clean', function() {
-	return gulp.src('build', {
-		read : false
-	}).pipe(clean());
+	return del('build');
 });
 
 // Catchall to copy static files to build
