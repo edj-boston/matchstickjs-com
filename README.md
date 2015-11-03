@@ -100,15 +100,10 @@ Run the custom gulp "deploy" task. It will automatically run the tests and stop 
 To Do
 -----
 
-* ~~Build~~
-* ~~Watch~~
-* ~~Deploy~~
-* ~~Tests~~
-* ~~Travis CI~~
-* ~~404 page~~
-* Convert CSS to SASS
+* ~~Convert CSS to SASS~~
 * Wrap my Void module in a stream-friendly gulp module to perform Cloudfront cache ivalidation
 * Serve via Express (rather than NGINX) locally
 * Live reload in browser
 * Continuous deployment?
+* Instanbul
 * More tests
