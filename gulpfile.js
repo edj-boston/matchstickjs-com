@@ -1,19 +1,20 @@
 // External dependencies
-var fs     = require('fs'),
-	md     = require('marked'),
-	ms     = require('matchstick'),
-	moment = require('moment'),
-	gulp   = require('gulp'),
+var concat = require('gulp-concat'),
+    coveralls = require('gulp-coveralls'),
 	del    = require('del'),
-	concat = require('gulp-concat'),
-	gzip   = require('gulp-gzip'),
-	hb     = require('gulp-compile-handlebars'),
+    eslint = require('gulp-eslint');
+	fs     = require('fs'),
+	gulp   = require('gulp'),
 	gulpif = require('gulp-if'),
+	gzip   = require('gulp-gzip'),
+    istanbul = require('gulp-istanbul'),
+	hb     = require('gulp-compile-handlebars'),
+	marked = require('marked'),
+	moment = require('moment'),
 	minify = require('gulp-minify-css'),
 	mocha  = require('gulp-mocha'),
-	s3     = require('gulp-s3'),
-	moment = require('moment'),
 	prompt = require('gulp-prompt'),
+	s3     = require('gulp-s3'),
 	sass   = require('gulp-sass'),
 	uglify = require('gulp-uglify');
 
@@ -76,8 +77,8 @@ gulp.task('styles', ['clean'], function() {
 // Compile HB template
 gulp.task('views', ['clean'], function() {
 
-	md.setOptions({
-		renderer : new md.Renderer(),
+	marked.setOptions({
+		renderer : new marked.Renderer(),
 		gfm : true
 	});
 
@@ -85,7 +86,7 @@ gulp.task('views', ['clean'], function() {
 		title : 'MatchstickJS',
 		year : moment().format('YYYY'),
 		timestamp : moment().format('YYYY-MM-DD-HH-mm-ss'),
-		readme : md.parse(fs.readFileSync('node_modules/matchstick/README.md', 'utf-8'))
+		readme : marked.parse(fs.readFileSync('node_modules/matchstick/README.md', 'utf-8'))
 	};
 
 	var opts = {
