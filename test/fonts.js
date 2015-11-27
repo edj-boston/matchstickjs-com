@@ -4,12 +4,7 @@ var assert = require('assert'),
 	fs     = require('fs');
 
 
-// Test to see if files copied from assets/bower made it okay
-describe('The assets copied from the assets/bower directory...', function() {
-
-	/* *
-	 * Fontawesome
-	 */
+describe('The assets copied from node_modules/font-awesome...', function() {
 
 	it('Should include Font Awesome files', function() {
 		if( !fs.existsSync('build/fonts/fontawesome-webfont.eot') ) {

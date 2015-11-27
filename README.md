@@ -22,26 +22,6 @@ $ npm install
 ```
 
 
-### Globals
-
-The following modules probably need to be installed globally to function properly:
-
-```sh
-$ npm install -g gulp
-$ npm install -g bower
-$ npm install -g mocha
-```
-
-
-### Bower
-
-Bower is a front end dependency manager used to fetch and update assets like Boostrap, jQuery, and Font Awesome.
-
-```sh
-$ bower install
-```
-
-
 ### AWS
 
 The site is designed to be deployed to AWS S3, which serves as an origin for AWS CloudFront CDN. The successfully deploy you will need a file called `aws.json` in the site root which contains the following object:

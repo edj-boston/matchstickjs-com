@@ -20,28 +20,13 @@ describe('The AWS credentials...', function() {
 		}
 	});
 
-	it('Should contain a "key" property', function() {
+	it('Should contain a "key", "secret", and "dist" properties', function() {
 		var str = fs.readFileSync('aws.json', 'utf-8');
 		var obj = JSON.parse(str);
-		if( obj.hasOwnProperty('key') == false ) {
-			throw Error('aws.json does not contain a "key" property');
-		}
-	});
 
-	it('Should contain a "secret" property', function() {
-		var str = fs.readFileSync('aws.json', 'utf-8');
-		var obj = JSON.parse(str);
-		if( obj.hasOwnProperty('secret') == false ) {
-			throw Error('aws.json does not contain a "secret" property');
-		}
-	});
-
-	it('Should contain a "dist" property', function() {
-		var str = fs.readFileSync('aws.json', 'utf-8');
-		var obj = JSON.parse(str);
-		if( obj.hasOwnProperty('dist') == false ) {
-			throw Error('aws.json does not contain a "dist" property');
-		}
+		obj.should.have.property('key').and.be.type('string');
+		obj.should.have.property('secret').and.be.type('string');
+		obj.should.have.property('dist').and.be.type('string');
 	});
 
 });

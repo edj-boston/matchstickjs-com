@@ -1,13 +1,13 @@
 // External dependencies
 var concat = require('gulp-concat'),
-    coveralls = require('gulp-coveralls'),
+//    coveralls = require('gulp-coveralls'),
 	del    = require('del'),
     eslint = require('gulp-eslint');
 	fs     = require('fs'),
 	gulp   = require('gulp'),
 	gulpif = require('gulp-if'),
 	gzip   = require('gulp-gzip'),
-    istanbul = require('gulp-istanbul'),
+ //   istanbul = require('gulp-istanbul'),
 	hb     = require('gulp-compile-handlebars'),
 	marked = require('marked'),
 	moment = require('moment'),
@@ -27,16 +27,19 @@ var aws = JSON.parse(fs.readFileSync('aws.json', 'utf-8'));
  * Helper tasks
  */
 
+
 // Clean the build dir
 gulp.task('clean', function() {
 	return del('build');
 });
+
 
 // Catchall to copy static files to build
 gulp.task('static', ['clean'], function() {
 	return gulp.src('assets/static/**')
 		.pipe(gulp.dest('build'));
 });
+
 
 // Copy fonts from bower packages
 gulp.task('fonts', ['clean'], function() {
@@ -47,6 +50,7 @@ gulp.task('fonts', ['clean'], function() {
 		'node_modules/fontawesome/fonts/fontawesome-webfont.woff'
 	]).pipe(gulp.dest('build/fonts'));
 });
+
 
 // Minify and combine all JavaScript
 gulp.task('scripts', ['clean'], function() {
@@ -62,6 +66,7 @@ gulp.task('scripts', ['clean'], function() {
 		.pipe(gulp.dest('build/js'));
 });
 
+
 // Minify and combine all CSS
 gulp.task('styles', ['clean'], function() {
 	return gulp.src([
@@ -73,6 +78,7 @@ gulp.task('styles', ['clean'], function() {
 		.pipe(concat('all.min.css'))
 		.pipe(gulp.dest('build/css'));
 });
+
 
 // Compile HB template
 gulp.task('views', ['clean'], function() {
@@ -102,13 +108,6 @@ gulp.task('views', ['clean'], function() {
 		.pipe(gulp.dest('build'));
 });
 
-// Test
-gulp.task('test', ['build'], function () {
-    return gulp.src('test/*')
-        .pipe(mocha({
-        	reporter : 'spec'
-        }));
-});
 
 // Prompt
 gulp.task('prompt', ['test'], function() {
@@ -126,6 +125,7 @@ gulp.task('prompt', ['test'], function() {
 		}));
 });
 
+
 // Deploy
 gulp.task('deploy', ['prompt'], function() {
 	var s3MaxAge = function(maxAge) {
@@ -141,9 +141,52 @@ gulp.task('deploy', ['prompt'], function() {
 });
 
 
+// instrument the code
+gulp.task('cover', ['lint'], function () {
+//    return gulp.src(['lib/*.js'])
+//        .pipe(istanbul())
+//        .pipe(istanbul.hookRequire());
+});
+
+
+// Run tests and product coverage
+gulp.task('test', ['cover'], function () {
+    return gulp.src(['test/*.js'])
+        .pipe(mocha())
+//        .pipe(istanbul.writeReports())
+//        .pipe(istanbul.enforceThresholds({
+//            thresholds : {
+//                global : 80
+//            }
+//        }));
+});
+
+
+// Run tests and product coverage
+gulp.task('coveralls', ['test'], function () {
+    return gulp.src('coverage/lcov.info')
+        .pipe(coveralls());
+});
+
+
+// Lint as JS files (including this one)
+gulp.task('lint', function () {
+    return gulp.src([
+            '*.js',
+            'lib/*.js',
+            'test/*.js',
+            '!node_modules/**'
+        ])
+        .pipe(eslint())
+        .pipe(eslint.format())
+        .pipe(eslint.failAfterError());
+});
+
+
 /* *
  * Default tasks
  */
+
 
 // Perform a build
 gulp.task('build', [
@@ -155,6 +198,7 @@ gulp.task('build', [
 	'views'
 ]);
 
+
 // Watch certain files
 gulp.task('watch', ['build'], function() {
 	gulp.watch([
@@ -162,6 +206,7 @@ gulp.task('watch', ['build'], function() {
 		'node_modules/matchstick/**'
 	], ['build']);
 });
+
 
 // What to do when you run `$ gulp`
 gulp.task('default', ['watch']);
