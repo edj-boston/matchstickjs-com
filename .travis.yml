@@ -6,9 +6,7 @@ node_js:
 - '0.11'
 - '0.10'
 before_script:
-- echo -e '{"key":"'$key'","secret":"'$secret'","dist":"'$dist'"}' > aws.json
-- npm install -g bower
-- bower install
+  echo -e '{"key":"'$key'","secret":"'$secret'","dist":"'$dist'"}' > aws.json
 env:
   global:
   - secure: vaaMJ4lKVihhnPlRQ0/qvBlcxFPadvQbPLhKgrOVblLgr6FGZiIH4TrQG9gkQbMJZENgY0nJlGgSz0hheF0qmJS7MtZajSuw1ELAzi2MRkUgHkJ/PoSC9QqIRnt+yIaXV69F4mqJ7l7aTw58abtkhcl5zP/DQ+y+Pun2bDQAp0c=
