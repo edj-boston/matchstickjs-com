@@ -1,9 +1,5 @@
-MatchstickJS.com
+MatchstickJS.com [![Build Status](https://travis-ci.org/edj-boston/matchstickjs-com.svg?branch=master)](https://travis-ci.org/edj-boston/matchstickjs-com) [![Dependency Status](https://david-dm.org/edj-boston/matchstickjs-com.svg)](https://david-dm.org/edj-boston/matchstickjs-com) [![devDependency Status](https://david-dm.org/edj-boston/matchstickjs-com/dev-status.svg)](https://david-dm.org/edj-boston/matchstickjs-com#info=devDependencies)
 ================
-
-[![Build Status](https://travis-ci.org/edj-boston/matchstickjs-com.svg?branch=master)](https://travis-ci.org/edj-boston/matchstickjs-com)
-[![Dependency Status](https://david-dm.org/edj-boston/matchstickjs-com.svg)](https://david-dm.org/edj-boston/matchstickjs-com)
-[![devDependency Status](https://david-dm.org/edj-boston/matchstickjs-com/dev-status.svg)](https://david-dm.org/edj-boston/matchstickjs-com#info=devDependencies)
 
 The homepage for the [Matchstick](https://www.npmjs.org/package/matchstick) NodeJS library. See the site live at [https://matchstickjs.com](https://matchstickjs.com).
 
