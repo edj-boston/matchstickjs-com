@@ -40,18 +40,18 @@ gulp.task('static', ['clean'], function() {
 // Copy fonts from bower packages
 gulp.task('fonts', ['clean'], function() {
 	return gulp.src([
-		'assets/bower/fontawesome/fonts/fontawesome-webfont.eot',
-		'assets/bower/fontawesome/fonts/fontawesome-webfont.svg',
-		'assets/bower/fontawesome/fonts/fontawesome-webfont.ttf',
-		'assets/bower/fontawesome/fonts/fontawesome-webfont.woff'
+		'node_modules/fontawesome/fonts/fontawesome-webfont.eot',
+		'node_modules/fontawesome/fonts/fontawesome-webfont.svg',
+		'node_modules/fontawesome/fonts/fontawesome-webfont.ttf',
+		'node_modules/fontawesome/fonts/fontawesome-webfont.woff'
 	]).pipe(gulp.dest('build/fonts'));
 });
 
 // Minify and combine all JavaScript
 gulp.task('scripts', ['clean'], function() {
 	return gulp.src([
-		'assets/bower/jquery/dist/jquery.js',
-		'assets/bower/bootstrap/dist/js/bootstrap.js',
+		'node_modules/jquery/dist/jquery.js',
+		'node_modules/bootstrap/dist/js/bootstrap.js',
 		'assets/js/custom.js',
 		'assets/js/google-analytics.js'
 	]).pipe(concat('all.min.js'))
@@ -65,8 +65,8 @@ gulp.task('scripts', ['clean'], function() {
 gulp.task('styles', ['clean'], function() {
 	return gulp.src([
 		'assets/scss/*.scss',
-		'assets/bower/bootstrap/dist/css/bootstrap.css',
-		'assets/bower/fontawesome/css/font-awesome.css'
+		'node_modules/bootstrap/dist/css/bootstrap.css',
+		'node_modules/fontawesome/css/font-awesome.css'
 	]).pipe(gulpif(/[.]scss$/, sass()))
 		.pipe(minify())
 		.pipe(concat('all.min.css'))
