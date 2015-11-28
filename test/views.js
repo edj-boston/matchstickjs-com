@@ -1,5 +1,6 @@
 // External dependencies
 var assert = require('assert'),
+	$	   = require('jquery')(require('jsdom').jsdom().defaultView),
 	should = require('should'),
 	fs     = require('fs'),
 	moment = require('moment');
@@ -23,8 +24,8 @@ describe('The dynamically generated HTML index file...', function() {
 
 	it('Should contain an <h1> element from the markdown source', function() {
 		var file = fs.readFileSync('build/index.html', 'utf-8');
-		if(file.indexOf('<h1 id="matchstick">Matchstick</h1>') < 0) {
-			throw Error('/index.html does not contain the right <h1> element');
+		if( $(file).find('h1') == 1 ) {
+			throw Error('/index.html does not contain an <h1> element');
 		}
 	});
 

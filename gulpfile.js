@@ -44,10 +44,10 @@ gulp.task('static', ['clean'], function() {
 // Copy fonts from bower packages
 gulp.task('fonts', ['clean'], function() {
 	return gulp.src([
-		'node_modules/fontawesome/fonts/fontawesome-webfont.eot',
-		'node_modules/fontawesome/fonts/fontawesome-webfont.svg',
-		'node_modules/fontawesome/fonts/fontawesome-webfont.ttf',
-		'node_modules/fontawesome/fonts/fontawesome-webfont.woff'
+		'node_modules/font-awesome/fonts/fontawesome-webfont.eot',
+		'node_modules/font-awesome/fonts/fontawesome-webfont.svg',
+		'node_modules/font-awesome/fonts/fontawesome-webfont.ttf',
+		'node_modules/font-awesome/fonts/fontawesome-webfont.woff'
 	]).pipe(gulp.dest('build/fonts'));
 });
 
@@ -72,7 +72,7 @@ gulp.task('styles', ['clean'], function() {
 	return gulp.src([
 		'assets/scss/*.scss',
 		'node_modules/bootstrap/dist/css/bootstrap.css',
-		'node_modules/fontawesome/css/font-awesome.css'
+		'node_modules/font-awesome/css/font-awesome.css'
 	]).pipe(gulpif(/[.]scss$/, sass()))
 		.pipe(minify())
 		.pipe(concat('all.min.css'))
@@ -141,24 +141,10 @@ gulp.task('deploy', ['prompt'], function() {
 });
 
 
-// instrument the code
-gulp.task('cover', ['lint'], function () {
-//    return gulp.src(['lib/*.js'])
-//        .pipe(istanbul())
-//        .pipe(istanbul.hookRequire());
-});
-
-
-// Run tests and product coverage
-gulp.task('test', ['cover'], function () {
+// Run tests
+gulp.task('test', ['build'], function () {
     return gulp.src(['test/*.js'])
-        .pipe(mocha())
-//        .pipe(istanbul.writeReports())
-//        .pipe(istanbul.enforceThresholds({
-//            thresholds : {
-//                global : 80
-//            }
-//        }));
+        .pipe(mocha());
 });
 
 
@@ -172,8 +158,8 @@ gulp.task('coveralls', ['test'], function () {
 // Lint as JS files (including this one)
 gulp.task('lint', function () {
     return gulp.src([
-            '*.js',
-            'lib/*.js',
+            'assets/js/*.js',
+            'gulpfile.js',
             'test/*.js',
             '!node_modules/**'
         ])
