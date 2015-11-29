@@ -1,22 +1,22 @@
 // External dependencies
-var concat = require('gulp-concat'),
-//    coveralls = require('gulp-coveralls'),
-    del    = require('del'),
-    eslint = require('gulp-eslint');
-    fs     = require('fs'),
-    gulp   = require('gulp'),
-    gulpif = require('gulp-if'),
-    gzip   = require('gulp-gzip'),
- //   istanbul = require('gulp-istanbul'),
-    hb     = require('gulp-compile-handlebars'),
-    marked = require('marked'),
-    moment = require('moment'),
-    minify = require('gulp-minify-css'),
-    mocha  = require('gulp-mocha'),
-    prompt = require('gulp-prompt'),
-    s3     = require('gulp-s3'),
-    sass   = require('gulp-sass'),
-    uglify = require('gulp-uglify');
+var concat  = require('gulp-concat'),
+    del     = require('del'),
+    eslint  = require('gulp-eslint'),
+    express = require('express'),
+    fs      = require('fs'),
+    gulp    = require('gulp'),
+    gulpif  = require('gulp-if'),
+    gzip    = require('gulp-gzip'),
+    hb      = require('gulp-compile-handlebars'),
+    less    = require('gulp-less'),
+    marked  = require('marked'),
+    moment  = require('moment'),
+    minify  = require('gulp-minify-css'),
+    mocha   = require('gulp-mocha'),
+    prompt  = require('gulp-prompt'),
+    runSeq  = require('run-sequence'),
+    s3      = require('gulp-s3'),
+    uglify  = require('gulp-uglify');
 
 
 // Initialize
@@ -30,50 +30,53 @@ var aws = JSON.parse(fs.readFileSync('aws.json', 'utf-8'));
 
 // Clean the build dir
 gulp.task('clean', function() {
-    return del('build');
+    return del([
+        'build/**',
+        '!build'
+    ]);
 });
 
 
 // Catchall to copy static files to build
-gulp.task('static', ['clean'], function() {
+gulp.task('static', function() {
     return gulp.src('assets/static/**')
         .pipe(gulp.dest('build'));
 });
 
 
 // Copy fonts from bower packages
-gulp.task('fonts', ['clean'], function() {
+gulp.task('fonts', function() {
     return gulp.src([
         'node_modules/font-awesome/fonts/fontawesome-webfont.eot',
         'node_modules/font-awesome/fonts/fontawesome-webfont.svg',
         'node_modules/font-awesome/fonts/fontawesome-webfont.ttf',
-        'node_modules/font-awesome/fonts/fontawesome-webfont.woff'
+        'node_modules/font-awesome/fonts/fontawesome-webfont.woff',
+        'node_modules/font-awesome/fonts/fontawesome-webfont.woff2'
     ]).pipe(gulp.dest('build/fonts'));
 });
 
 
 // Minify and combine all JavaScript
-gulp.task('scripts', ['clean'], function() {
+gulp.task('scripts', function() {
     return gulp.src([
-        'node_modules/jquery/dist/jquery.js',
-        'node_modules/bootstrap/dist/js/bootstrap.js',
-        'assets/js/custom.js',
-        'assets/js/google-analytics.js'
-    ]).pipe(concat('all.min.js'))
-        .pipe(uglify({
-            preserveComments : 'some'
-        }))
+            'node_modules/jquery/dist/jquery.js',
+            'node_modules/bootstrap/dist/js/bootstrap.js',
+            'assets/js/*.js'
+        ])
+        .pipe(concat('all.min.js'))
+        .pipe(uglify({ preserveComments: 'some' }))
         .pipe(gulp.dest('build/js'));
 });
 
 
 // Minify and combine all CSS
-gulp.task('styles', ['clean'], function() {
+gulp.task('styles', function() {
     return gulp.src([
-        'assets/scss/*.scss',
-        'node_modules/bootstrap/dist/css/bootstrap.css',
-        'node_modules/font-awesome/css/font-awesome.css'
-    ]).pipe(gulpif(/[.]scss$/, sass()))
+            'node_modules/bootstrap/dist/css/bootstrap.css',
+            'node_modules/font-awesome/css/font-awesome.css',
+            'assets/less/*.less',
+        ])
+        .pipe(gulpif(/[.]less$/, less()))
         .pipe(minify())
         .pipe(concat('all.min.css'))
         .pipe(gulp.dest('build/css'));
@@ -81,7 +84,7 @@ gulp.task('styles', ['clean'], function() {
 
 
 // Compile HB template
-gulp.task('views', ['clean'], function() {
+gulp.task('views', function() {
 
     marked.setOptions({
         renderer : new marked.Renderer(),
@@ -174,28 +177,31 @@ gulp.task('lint', function () {
 });
 
 
+// Serve files for local development
+gulp.task('serve', function() {
+    var app = express();
+    app.use(express.static('build'));
+    app.listen(3000);
+});
+
 /* *
  * Default tasks
  */
 
 
 // Perform a build
-gulp.task('build', [
-    'clean',
-    'static',
-    'fonts',
-    'styles',
-    'scripts',
-    'views'
-]);
+gulp.task('build', function (callback) {
+    runSeq('clean',
+        ['static', 'fonts'],
+        ['styles', 'scripts', 'views'],
+        callback
+    );
+});
 
 
 // Watch certain files
-gulp.task('watch', ['build'], function() {
-    gulp.watch([
-        'assets/**',
-        'node_modules/matchstick/**'
-    ], ['build']);
+gulp.task('watch', ['serve', 'build'], function() {
+    gulp.watch('assets/**', ['build']);
 });
 
 
