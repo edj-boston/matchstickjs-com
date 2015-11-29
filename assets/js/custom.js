@@ -20,15 +20,13 @@ $(document).ready(function() {
 		height : 132,
 		alt : 'Matchstick'
 	});
-	$('h1#matchstick').parent().prepend(img);
+	$('h1').parent().prepend(img);
 
-	// Clickable <h2>'s
+	// Center badges
+	$('p').first().css('text-align', 'center');
+
+	// Clickable H2's
 	$('h2').click(function() {
 		window.location = '#' + $(this).attr('id');
 	});
-
-	// Hide Travis icon
-	var travis = $('a[href="https://travis-ci.org/edj-boston/matchstick"]');
-	var li = $('<li/>').html(travis);
-	$('#share').append(li);
 });
