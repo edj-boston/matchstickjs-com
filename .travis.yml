@@ -11,3 +11,24 @@ env:
   - secure: vaaMJ4lKVihhnPlRQ0/qvBlcxFPadvQbPLhKgrOVblLgr6FGZiIH4TrQG9gkQbMJZENgY0nJlGgSz0hheF0qmJS7MtZajSuw1ELAzi2MRkUgHkJ/PoSC9QqIRnt+yIaXV69F4mqJ7l7aTw58abtkhcl5zP/DQ+y+Pun2bDQAp0c=
   - secure: vWob9i8whgY91L8LGycjmFFJCoLeqZ8qLQ5+UowsRO7UWzY42B9Nhs8OCHUlA1NpIBBr6lQbgSW75oGyGpKODv6TJ6t1xOEr38nGOJsmYvRhALva9bArSyj1r1SZktElxOQP38LMIU5KwziuBytlLixRLz+Bzz+mT5gOk/n47K4=
   - secure: bI6EWog1teHZmfS66xSypLKaoA+oVpr1KPKfi5GDlhvdhztAX4wdLg6jGXYEjTE6FmeGdhSonXSsZhBWdKILIvePqcwVnh90S3UMyAP6AM6wVPpISODsBMh7xw/2f8i1jSOKDG9meqbgASGb/uHMbak3U5vSFf/XxE7UL65yXYc=
+deploy:
+- provider: s3
+  access_key_id:
+    secure: Sh9Fn9VhSIQPf4Bz1anT8DcEbjGXTR76wTGWYGtCRlSFfjBGOtePkQC3TFzG1/DPnbPaxaKUlEYMFLArUq7I6gRHISPDsq451P0xJeV86IEU6gWj/BgSpo05abHgwxkqtApdjUyw9D9rRQVOX58H2d8qxPgJ1T82z1v0cHzh2iA=
+  secret_access_key:
+    secure: NU1dZ49EBuv8SjY0Z+P+rhF2Bsle34BWyOSMdURVhBq8LNccg/O0inj+eBvs3R7EGYuqT9sDSbQNUWRHZMcZSLW/wFkmlT4DeQ3uRWUHSxftV+wn46E7GfN/HL/vR7297GjINIHGGldy4WzYVyH7Kg6igEr4Lkkz5VsVRXTDrfA=
+  bucket: matchstickjs-com
+  local-dir: build
+  on:
+    repo: edj-boston/matchstickjs-com
+    branch: master
+- provider: s3
+  access_key_id:
+    secure: uJtcmNVHvsFdhYQ4CJB5lSDEI+E7RKqiwXZYzbFkxiH3xiidTdw9wn2bbfhxSkXbuIVICfZNYCSKOc6I7pquintO3HfYm06HRbj5WtUHUVw7IMjpMo+uGqX6/NX2TSqZfBItNUkqELN8UbD6Yb1GyxsXSdS2tuMtR++8xFG6I8M=
+  secret_access_key:
+    secure: NU1dZ49EBuv8SjY0Z+P+rhF2Bsle34BWyOSMdURVhBq8LNccg/O0inj+eBvs3R7EGYuqT9sDSbQNUWRHZMcZSLW/wFkmlT4DeQ3uRWUHSxftV+wn46E7GfN/HL/vR7297GjINIHGGldy4WzYVyH7Kg6igEr4Lkkz5VsVRXTDrfA=
+  bucket: stage-matchstickjs-com
+  local-dir: build
+  on:
+    repo: edj-boston/matchstickjs-com
+    branch: develop
