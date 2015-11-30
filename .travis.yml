@@ -19,6 +19,7 @@ deploy:
     secure: NU1dZ49EBuv8SjY0Z+P+rhF2Bsle34BWyOSMdURVhBq8LNccg/O0inj+eBvs3R7EGYuqT9sDSbQNUWRHZMcZSLW/wFkmlT4DeQ3uRWUHSxftV+wn46E7GfN/HL/vR7297GjINIHGGldy4WzYVyH7Kg6igEr4Lkkz5VsVRXTDrfA=
   bucket: matchstickjs-com
   local_dir: build
+  skip_cleanup: true
   on:
     repo: edj-boston/matchstickjs-com
     branch: master
@@ -29,6 +30,7 @@ deploy:
     secure: NU1dZ49EBuv8SjY0Z+P+rhF2Bsle34BWyOSMdURVhBq8LNccg/O0inj+eBvs3R7EGYuqT9sDSbQNUWRHZMcZSLW/wFkmlT4DeQ3uRWUHSxftV+wn46E7GfN/HL/vR7297GjINIHGGldy4WzYVyH7Kg6igEr4Lkkz5VsVRXTDrfA=
   bucket: stage-matchstickjs-com
   local_dir: build
+  skip_cleanup: true
   on:
     repo: edj-boston/matchstickjs-com
     branch: develop
