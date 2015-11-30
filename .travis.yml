@@ -24,10 +24,8 @@ deploy:
     repo: edj-boston/matchstickjs-com
     branch: master
 - provider: s3
-  access_key_id:
-    secure: C7vhBhONxjdxWuO/vmxYZ41BWNl3e8EA9DRZlhhSLy88BCeqqqRIGEBRjdl6esUeOP8xlfQlH11YFcpKYy8Dq6/ERBLWdHjAA4FeeR/Z3eNWGdBao1pQCt35U+kMXZXqW+OGYCB9fPj3qtqT4vj3y4KZW/IWYvMdR4LQ8fUUw5I=
-  secret_access_key:
-    secure: XvYLb75edykthdScHIY3qtOQqmy163IrGNbCLNagBgwPp1hUDuu0LdxcNheJ02exhgskdXThlYRt5+HYmk2g0pGYsNnAOnWpPeNRXm7GHZe0GGXhA+QLCV19oO4f0buU/8TpxuolZBcp05rT7DlRE2qDuhoNjJzjD6RezFyQOIA=    
+  access_key_id: $key
+  secret_access_key: $secret
   bucket: stage-matchstickjs-com
   local_dir: build
   skip_cleanup: true
