@@ -14,9 +14,9 @@ env:
 deploy:
 - provider: s3
   access_key_id:
-    secure: Sh9Fn9VhSIQPf4Bz1anT8DcEbjGXTR76wTGWYGtCRlSFfjBGOtePkQC3TFzG1/DPnbPaxaKUlEYMFLArUq7I6gRHISPDsq451P0xJeV86IEU6gWj/BgSpo05abHgwxkqtApdjUyw9D9rRQVOX58H2d8qxPgJ1T82z1v0cHzh2iA=
+    secure: yYc+88r+WOCzcnNe6rqMTPHv0+mCLz4FwMm5amj4k0K442084UQ7aKmLJ3VD6XRavnL3g2ThjON54han0z+TaDUrwzJAYSwYBOesN4d4v4ZARfzwKJhz4+jVU/zW+n2nxvwrP5KJLt3ghEZMRY+0xKPORev02XPfeyPCgrgHtRA=    
   secret_access_key:
-    secure: NU1dZ49EBuv8SjY0Z+P+rhF2Bsle34BWyOSMdURVhBq8LNccg/O0inj+eBvs3R7EGYuqT9sDSbQNUWRHZMcZSLW/wFkmlT4DeQ3uRWUHSxftV+wn46E7GfN/HL/vR7297GjINIHGGldy4WzYVyH7Kg6igEr4Lkkz5VsVRXTDrfA=
+    secure: ZzTpKHfJOQUF5IVnFL7Ki6PkUuEntN7LQ37Uvfp87Iol6aCtsXmKi5rLN0SQzQ9OvDaNGClzmPt5hLT2pFseuHudiQyU/mowI/92Chzyd9waOxikpxX6iflvbK7Tc/VENhwB/xdRdSnXACKfYwe+NHsladExnaizFOzUoKkoDLM=
   bucket: matchstickjs-com
   local_dir: build
   skip_cleanup: true
@@ -25,9 +25,9 @@ deploy:
     branch: master
 - provider: s3
   access_key_id:
-    secure: uJtcmNVHvsFdhYQ4CJB5lSDEI+E7RKqiwXZYzbFkxiH3xiidTdw9wn2bbfhxSkXbuIVICfZNYCSKOc6I7pquintO3HfYm06HRbj5WtUHUVw7IMjpMo+uGqX6/NX2TSqZfBItNUkqELN8UbD6Yb1GyxsXSdS2tuMtR++8xFG6I8M=
+    secure: C7vhBhONxjdxWuO/vmxYZ41BWNl3e8EA9DRZlhhSLy88BCeqqqRIGEBRjdl6esUeOP8xlfQlH11YFcpKYy8Dq6/ERBLWdHjAA4FeeR/Z3eNWGdBao1pQCt35U+kMXZXqW+OGYCB9fPj3qtqT4vj3y4KZW/IWYvMdR4LQ8fUUw5I=
   secret_access_key:
-    secure: NU1dZ49EBuv8SjY0Z+P+rhF2Bsle34BWyOSMdURVhBq8LNccg/O0inj+eBvs3R7EGYuqT9sDSbQNUWRHZMcZSLW/wFkmlT4DeQ3uRWUHSxftV+wn46E7GfN/HL/vR7297GjINIHGGldy4WzYVyH7Kg6igEr4Lkkz5VsVRXTDrfA=
+    secure: XvYLb75edykthdScHIY3qtOQqmy163IrGNbCLNagBgwPp1hUDuu0LdxcNheJ02exhgskdXThlYRt5+HYmk2g0pGYsNnAOnWpPeNRXm7GHZe0GGXhA+QLCV19oO4f0buU/8TpxuolZBcp05rT7DlRE2qDuhoNjJzjD6RezFyQOIA=    
   bucket: stage-matchstickjs-com
   local_dir: build
   skip_cleanup: true
