@@ -13,14 +13,8 @@ var concat  = require('gulp-concat'),
     moment  = require('moment'),
     minify  = require('gulp-minify-css'),
     mocha   = require('gulp-mocha'),
-    prompt  = require('gulp-prompt'),
     runSeq  = require('run-sequence'),
-    s3      = require('gulp-s3'),
     uglify  = require('gulp-uglify');
-
-
-// Initialize
-var aws = JSON.parse(fs.readFileSync('aws.json', 'utf-8'));
 
 
 /* *
@@ -109,38 +103,6 @@ gulp.task('views', function() {
     return gulp.src('assets/views/*.html')
         .pipe(hb(data, opts))
         .pipe(gulp.dest('build'));
-});
-
-
-// Prompt
-gulp.task('prompt', ['test'], function() {
-    return gulp.src('build', { read : false })
-        .pipe(prompt.prompt({
-            type : 'list',
-            name : 'env',
-            message : 'Which environment would you like to deploy to?',
-            choices : [
-                'Stage',
-                'Live'
-            ]
-        }, function(res) {
-            aws.bucket = ( res.env == 'Live' ) ? 'matchstickjs-com' : 'stage-matchstickjs-com';
-        }));
-});
-
-
-// Deploy
-gulp.task('deploy', ['prompt'], function() {
-    var s3MaxAge = function(maxAge) {
-        return s3(aws, {
-            gzippedOnly : true,
-            headers : { 'Cache-Control': 'max-age=' + maxAge + ', s-maxage=3600' }
-        });
-    };
-
-    return gulp.src('build/**')
-        .pipe(gzip())
-        .pipe(gulpif(/.*(\.html\.gz)$/, s3MaxAge(3600), s3MaxAge(31536000)));
 });
 
 
