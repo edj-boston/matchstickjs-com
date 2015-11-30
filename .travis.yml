@@ -4,31 +4,26 @@ node_js:
 - '4.2'
 - '4.1'
 - '4.0'
-before_script:
-- echo -e '{"key":"'$key'","secret":"'$secret'","dist":"'$dist'"}' > aws.json
 env:
   global:
-  - secure: vaaMJ4lKVihhnPlRQ0/qvBlcxFPadvQbPLhKgrOVblLgr6FGZiIH4TrQG9gkQbMJZENgY0nJlGgSz0hheF0qmJS7MtZajSuw1ELAzi2MRkUgHkJ/PoSC9QqIRnt+yIaXV69F4mqJ7l7aTw58abtkhcl5zP/DQ+y+Pun2bDQAp0c=
-  - secure: vWob9i8whgY91L8LGycjmFFJCoLeqZ8qLQ5+UowsRO7UWzY42B9Nhs8OCHUlA1NpIBBr6lQbgSW75oGyGpKODv6TJ6t1xOEr38nGOJsmYvRhALva9bArSyj1r1SZktElxOQP38LMIU5KwziuBytlLixRLz+Bzz+mT5gOk/n47K4=
-  - secure: bI6EWog1teHZmfS66xSypLKaoA+oVpr1KPKfi5GDlhvdhztAX4wdLg6jGXYEjTE6FmeGdhSonXSsZhBWdKILIvePqcwVnh90S3UMyAP6AM6wVPpISODsBMh7xw/2f8i1jSOKDG9meqbgASGb/uHMbak3U5vSFf/XxE7UL65yXYc=
+  - secure: Ayk4M2uDBTjT+ndV5Kz2s5KS9FNbOT+9bG80YeV063IdjsFU517KEnaKznjJo69XCgm4U2L17Brm9Rgb+Sx1jWhcvDppsVWxc7p6EaH31AyYD1d8w857dat7kexb6tK5iccvDRXP/RTiGcAd0bm6iyyYhbfkaE5sgcQMCUZBVqU=
+  - secure: RbA7o9ttSOoGU1o17IS8gtcaadJVwU0+I06iWcxejfXsDUoGAth+Ypq6pvMyQsbR46qQ826U/MrpLDy2MhGIxGDr/HvnpkcXerHHbxmoOHJQ/RoBt7BLXaDqsfd2Irl/za/1nwjzFf4FjSBC8MwXNwhrFkJa+I9xV06NRHMnrCU=
 deploy:
 - provider: s3
-  access_key_id:
-    secure: yYc+88r+WOCzcnNe6rqMTPHv0+mCLz4FwMm5amj4k0K442084UQ7aKmLJ3VD6XRavnL3g2ThjON54han0z+TaDUrwzJAYSwYBOesN4d4v4ZARfzwKJhz4+jVU/zW+n2nxvwrP5KJLt3ghEZMRY+0xKPORev02XPfeyPCgrgHtRA=    
-  secret_access_key:
-    secure: ZzTpKHfJOQUF5IVnFL7Ki6PkUuEntN7LQ37Uvfp87Iol6aCtsXmKi5rLN0SQzQ9OvDaNGClzmPt5hLT2pFseuHudiQyU/mowI/92Chzyd9waOxikpxX6iflvbK7Tc/VENhwB/xdRdSnXACKfYwe+NHsladExnaizFOzUoKkoDLM=
+  access_key_id: $AWS_ACCESS_KEY_ID
+  secret_access_key: $AWS_SECRET_ACCESS_KEY
+  local_dir: build
+  skip_cleanup: true
   bucket: matchstickjs-com
-  local_dir: build
-  skip_cleanup: true
   on:
-    repo: edj-boston/matchstickjs-com
     branch: master
+    node_js: '4.2'
 - provider: s3
-  access_key_id: $key
-  secret_access_key: $secret
-  bucket: stage-matchstickjs-com
+  access_key_id: $AWS_ACCESS_KEY_ID
+  secret_access_key: $AWS_SECRET_ACCESS_KEY
   local_dir: build
   skip_cleanup: true
+  bucket: stage-matchstickjs-com
   on:
-    repo: edj-boston/matchstickjs-com
     branch: develop
+    node_js: '4.2'
