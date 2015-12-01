@@ -156,7 +156,7 @@ gulp.task('serve', function(callback) {
         .use(express.static('build'))
         .use(function(req, res) {
             res.status(404)
-                .sendFile(__dirname + '/build/404.html');
+                .sendFile(__dirname + '/build/error.html');
         })
         .listen(3000, callback);
 });
