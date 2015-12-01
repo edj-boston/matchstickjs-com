@@ -65,21 +65,8 @@ You should see output like the following:
 ![Gulp Test](/assets/misc/gulp-test.png)
 
 
-Deploy
-------
-
-Run the custom gulp "deploy" task. It will automatically run the tests and stop of one fails. If the tests pass successfully you will be prompted to choose and environment to deploy to.
-
-![Gulp Deploy](/assets/misc/gulp-deploy.png)
-
-
 To Do
 -----
 
-* ~~Convert CSS to SASS~~
 * Wrap my Void module in a stream-friendly gulp module to perform Cloudfront cache ivalidation
-* Serve via Express (rather than NGINX) locally
-* Live reload in browser
-* Continuous deployment?
-* Instanbul
 * More tests
