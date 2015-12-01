@@ -9,7 +9,7 @@ The homepage for the [Matchstick](https://www.npmjs.org/package/matchstick) Node
 Installation
 ------------
 
-These directions assume you already have working versions of [Node](http://nodejs.org/) (0.10 or 0.11) and [NPM](https://www.npmjs.org/) installed.
+These directions assume you already have working versions of [Node](http://nodejs.org/) and [NPM](https://www.npmjs.org/) installed.
 
 
 ### Dependencies
