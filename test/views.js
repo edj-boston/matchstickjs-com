@@ -32,7 +32,7 @@ describe('The dynamically generated HTML index file...', function() {
 	});
 
 	it('Should contain an <ul> element from the share partial', function() {
-		if (file.indexOf('<ul id="share">') < 0) {
+		if (file.indexOf('<ul id=share>') < 0) {
 			throw Error('/index.html does not contain the right <ul> element');
 		}
 	});
@@ -65,7 +65,7 @@ describe('The dynamically generated HTML error file...', function() {
 	});
 
 	it('Should contain an <h1> element with certain text', function() {
-		if (file.indexOf('<h1 id="page-not-found">Page not found</h1>') < 0) {
+		if (file.indexOf('<h1 id=page-not-found>Page not found</h1>') < 0) {
 			throw Error('/404.html does not contain the right <h1> element');
 		}
 	});

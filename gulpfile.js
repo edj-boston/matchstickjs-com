@@ -11,10 +11,11 @@ var concat  = require('gulp-concat'),
     less    = require('gulp-less'),
     marked  = require('marked'),
     moment  = require('moment'),
-    minify  = require('gulp-minify-css'),
+    minCSS  = require('gulp-minify-css'),
+    minHTML = require('gulp-minify-html'),
+    minJS   = require('gulp-uglify'),
     mocha   = require('gulp-mocha'),
     runSeq  = require('run-sequence'),
-    uglify  = require('gulp-uglify'),
     zlib    = require('zlib');
 
 /* *
@@ -33,7 +34,7 @@ gulp.task('clean', function() {
 // Catchall to copy static files to build
 gulp.task('static', function() {
     return gulp.src('assets/static/**')
-        .pipe(gzip({append:false}))
+        .pipe(gzip({ append: false }))
         .pipe(gulp.dest('build'));
 });
 
@@ -47,7 +48,7 @@ gulp.task('fonts', function() {
         'node_modules/font-awesome/fonts/fontawesome-webfont.woff',
         'node_modules/font-awesome/fonts/fontawesome-webfont.woff2'
     ])
-    .pipe(gzip({append:false}))
+    .pipe(gzip({ append: false }))
     .pipe(gulp.dest('build/fonts'));
 });
 
@@ -60,8 +61,8 @@ gulp.task('scripts', function() {
             'assets/js/*.js'
         ])
         .pipe(concat('all.min.js'))
-        .pipe(uglify({ preserveComments: 'some' }))
-        .pipe(gzip({append:false}))
+        .pipe(minJS({ preserveComments: 'some' }))
+        .pipe(gzip({ append: false }))
         .pipe(gulp.dest('build/js'));
 });
 
@@ -74,9 +75,9 @@ gulp.task('styles', function() {
             'assets/less/*.less',
         ])
         .pipe(gulpif(/[.]less$/, less()))
-        .pipe(minify())
+        .pipe(minCSS())
         .pipe(concat('all.min.css'))
-        .pipe(gzip({append:false}))
+        .pipe(gzip({ append: false }))
         .pipe(gulp.dest('build/css'));
 });
 
@@ -106,7 +107,8 @@ gulp.task('views', function() {
 
     return gulp.src('assets/views/*.html')
         .pipe(hb(data, opts))
-        .pipe(gzip({append:false}))
+        .pipe(minHTML())
+        .pipe(gzip({ append: false }))
         .pipe(gulp.dest('build'));
 });
 
