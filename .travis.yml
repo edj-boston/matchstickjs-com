@@ -12,6 +12,7 @@ deploy:
 - provider: s3
   access_key_id: $AWS_ACCESS_KEY_ID
   secret_access_key: $AWS_SECRET_ACCESS_KEY
+  detect_encoding: true
   local_dir: build
   skip_cleanup: true
   bucket: matchstickjs-com
@@ -21,6 +22,7 @@ deploy:
 - provider: s3
   access_key_id: $AWS_ACCESS_KEY_ID
   secret_access_key: $AWS_SECRET_ACCESS_KEY
+  detect_encoding: true
   local_dir: build
   skip_cleanup: true
   bucket: stage-matchstickjs-com

@@ -33,6 +33,7 @@ gulp.task('clean', function() {
 // Catchall to copy static files to build
 gulp.task('static', function() {
     return gulp.src('assets/static/**')
+        .pipe(gzip({append:false}))
         .pipe(gulp.dest('build'));
 });
 
@@ -45,7 +46,9 @@ gulp.task('fonts', function() {
         'node_modules/font-awesome/fonts/fontawesome-webfont.ttf',
         'node_modules/font-awesome/fonts/fontawesome-webfont.woff',
         'node_modules/font-awesome/fonts/fontawesome-webfont.woff2'
-    ]).pipe(gulp.dest('build/fonts'));
+    ])
+    .pipe(gzip({append:false}))
+    .pipe(gulp.dest('build/fonts'));
 });
 
 
@@ -58,6 +61,7 @@ gulp.task('scripts', function() {
         ])
         .pipe(concat('all.min.js'))
         .pipe(uglify({ preserveComments: 'some' }))
+        .pipe(gzip({append:false}))
         .pipe(gulp.dest('build/js'));
 });
 
@@ -72,6 +76,7 @@ gulp.task('styles', function() {
         .pipe(gulpif(/[.]less$/, less()))
         .pipe(minify())
         .pipe(concat('all.min.css'))
+        .pipe(gzip({append:false}))
         .pipe(gulp.dest('build/css'));
 });
 
@@ -101,6 +106,7 @@ gulp.task('views', function() {
 
     return gulp.src('assets/views/*.html')
         .pipe(hb(data, opts))
+        .pipe(gzip({append:false}))
         .pipe(gulp.dest('build'));
 });
 
@@ -142,6 +148,10 @@ gulp.task('lint', function () {
 gulp.task('serve', function(callback) {
     fs.readFile('build/404.html', function(err, buffer) {
         express()
+            .use(function(req, res, next) {
+                res.header('Content-Encoding', 'gzip')
+                next();
+            })
             .use(express.static('build'))
             .use(function(req, res) {
                 res.status(404)
