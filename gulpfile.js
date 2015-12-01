@@ -14,8 +14,8 @@ var concat  = require('gulp-concat'),
     minify  = require('gulp-minify-css'),
     mocha   = require('gulp-mocha'),
     runSeq  = require('run-sequence'),
-    uglify  = require('gulp-uglify');
-
+    uglify  = require('gulp-uglify'),
+    zlib    = require('zlib');
 
 /* *
  * Helper tasks
@@ -146,20 +146,21 @@ gulp.task('lint', function () {
 
 // Serve files for local development
 gulp.task('serve', function(callback) {
-    fs.readFile('build/404.html', function(err, buffer) {
-        express()
-            .use(function(req, res, next) {
-                res.header('Content-Encoding', 'gzip')
-                next();
-            })
-            .use(express.static('build'))
-            .use(function(req, res) {
-                res.status(404)
-                    .send(buffer.toString());
-            })
-            .listen(3000);
-        callback();
-    });
+    express()
+        .use(function(req, res, next) {
+            res.header('Content-Encoding', 'gzip');
+            next();
+        })
+        .use(express.static('build'))
+        .use(function(req, res) {
+            fs.readFile('build/404.html', function(err, buf) {
+                zlib.gunzip(buf, function(err, buf) {
+                    res.status(404).removeHeader('Content-Encoding');
+                    res.send(buf.toString());
+                });
+            });
+        })
+        .listen(3000, callback);
 });
 
 
