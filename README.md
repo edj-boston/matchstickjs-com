@@ -22,19 +22,6 @@ $ npm install
 ```
 
 
-### AWS
-
-The site is designed to be deployed to AWS S3, which serves as an origin for AWS CloudFront CDN. The successfully deploy you will need a file called `aws.json` in the site root which contains the following object:
-
-```js
-{
-	"key" : "...",
-	"secret" : "...",
-    "dist" : "..."
-}
-```
-
-
 Tasks
 -----
 
