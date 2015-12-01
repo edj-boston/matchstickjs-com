@@ -155,12 +155,8 @@ gulp.task('serve', function(callback) {
         })
         .use(express.static('build'))
         .use(function(req, res) {
-            fs.readFile('build/404.html', function(err, buf) {
-                zlib.gunzip(buf, function(err, buf) {
-                    res.status(404).removeHeader('Content-Encoding');
-                    res.send(buf.toString());
-                });
-            });
+            res.status(404)
+                .sendFile(__dirname + '/build/404.html');
         })
         .listen(3000, callback);
 });
