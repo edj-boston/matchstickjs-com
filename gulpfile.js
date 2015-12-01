@@ -21,7 +21,6 @@ var concat  = require('gulp-concat'),
  * Helper tasks
  */
 
-
 // Clean the build dir
 gulp.task('clean', function() {
     return del([
@@ -140,24 +139,29 @@ gulp.task('lint', function () {
 
 
 // Serve files for local development
-gulp.task('serve', function() {
-    var app = express();
-    app.use(express.static('build'));
-    app.listen(3000);
+gulp.task('serve', function(callback) {
+    fs.readFile('build/404.html', function(err, buffer) {
+        express()
+            .use(express.static('build'))
+            .use(function(req, res) {
+                res.status(404)
+                    .send(buffer.toString());
+            })
+            .listen(3000);
+        callback();
+    });
 });
+
 
 /* *
  * Default tasks
  */
 
-
 // Perform a build
 gulp.task('build', function (callback) {
     runSeq('clean',
-        ['static', 'fonts'],
-        ['styles', 'scripts', 'views'],
-        callback
-    );
+        ['static', 'fonts', 'styles', 'scripts', 'views'],
+        callback);
 });
 
 
