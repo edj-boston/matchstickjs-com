@@ -33,7 +33,7 @@ gulp.task('clean', function() {
 
 // Catchall to copy static files to build
 gulp.task('static', function() {
-    return gulp.src('assets/static/**')
+    return gulp.src('src/static/**')
         .pipe(gzip({ append: false }))
         .pipe(gulp.dest('build'));
 });
@@ -58,7 +58,7 @@ gulp.task('scripts', function() {
     return gulp.src([
             'node_modules/jquery/dist/jquery.js',
             'node_modules/bootstrap/dist/js/bootstrap.js',
-            'assets/js/*.js'
+            'src/js/*.js'
         ])
         .pipe(concat('all.min.js'))
         .pipe(minJS({ preserveComments: 'some' }))
@@ -72,7 +72,7 @@ gulp.task('styles', function() {
     return gulp.src([
             'node_modules/bootstrap/dist/css/bootstrap.css',
             'node_modules/font-awesome/css/font-awesome.css',
-            'assets/less/*.less',
+            'src/less/*.less',
         ])
         .pipe(gulpif(/[.]less$/, less()))
         .pipe(minCSS())
@@ -99,13 +99,13 @@ gulp.task('views', function() {
 
     var opts = {
         partials : {
-            header : fs.readFileSync('assets/views/partials/header.html', 'utf-8'),
-            footer : fs.readFileSync('assets/views/partials/footer.html', 'utf-8'),
-            share : fs.readFileSync('assets/views/partials/share.html', 'utf-8')
+            header : fs.readFileSync('src/views/partials/header.html', 'utf-8'),
+            footer : fs.readFileSync('src/views/partials/footer.html', 'utf-8'),
+            share : fs.readFileSync('src/views/partials/share.html', 'utf-8')
         }
     }
 
-    return gulp.src('assets/views/*.html')
+    return gulp.src('src/views/*.html')
         .pipe(hb(data, opts))
         .pipe(minHTML())
         .pipe(gzip({ append: false }))
@@ -130,7 +130,7 @@ gulp.task('coveralls', ['test'], function () {
 // Lint as JS files (including this one)
 gulp.task('lint', function () {
     return gulp.src([
-            'assets/js/*.js',
+            'src/js/*.js',
             'gulpfile.js',
             'test/*.js',
             '!node_modules/**'
@@ -176,7 +176,7 @@ gulp.task('build', function (callback) {
 
 // Watch certain files
 gulp.task('watch', ['serve', 'build'], function() {
-    gulp.watch('assets/**', ['build']);
+    gulp.watch('src/**', ['build']);
 });
 
 

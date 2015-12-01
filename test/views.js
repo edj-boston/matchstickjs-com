@@ -49,31 +49,31 @@ describe('The dynamically generated HTML index file...', function() {
 // Test to see if dynamically created HTML error page is well-formed
 describe('The dynamically generated HTML error file...', function() {
 
- 	var handle = 'build/404.html';
+ 	var handle = 'build/error.html';
 	var file = zlib.gunzipSync(fs.readFileSync(handle));
 
 	it('Should exist', function() {
 		if ( !fs.existsSync(handle) ) {
-			throw Error('/404.html does not exist');
+			throw Error('/error.html does not exist');
 		}
 	});
 
 	it('Should contain a <title> element from the header partial', function() {
 		if (file.indexOf('<title>MatchstickJS</title>') < 0) {
-			throw Error('/404.html does not contain the right <title> element');
+			throw Error('/error.html does not contain the right <title> element');
 		}
 	});
 
 	it('Should contain an <h1> element with certain text', function() {
 		if (file.indexOf('<h1 id=page-not-found>Page not found</h1>') < 0) {
-			throw Error('/404.html does not contain the right <h1> element');
+			throw Error('/error.html does not contain the right <h1> element');
 		}
 	});
 
 	it('Should contain copyright text from the footer partial', function() {
 		var str = '&copy; ' + moment().format('YYYY');
 		if (file.indexOf(str) < 0) {
-			throw Error('/404.html does not contain the right copyright text');
+			throw Error('/error.html does not contain the right copyright text');
 		}
 	});
 
