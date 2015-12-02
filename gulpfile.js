@@ -44,29 +44,29 @@ gulp.task('fonts', function() {
 // Minify and combine all JavaScript
 gulp.task('scripts', function() {
     return gulp.src([
-            'node_modules/jquery/dist/jquery.js',
-            'node_modules/bootstrap/dist/js/bootstrap.js',
-            'src/js/*.js'
-        ])
-        .pipe(concat('all.min.js'))
-        .pipe(minJS({ preserveComments: 'some' }))
-        .pipe(gzip({ append: false }))
-        .pipe(gulp.dest('build/js'));
+        'node_modules/jquery/dist/jquery.js',
+        'node_modules/bootstrap/dist/js/bootstrap.js',
+        'src/js/*.js'
+    ])
+    .pipe(concat('all.min.js'))
+    .pipe(minJS({ preserveComments: 'some' }))
+    .pipe(gzip({ append: false }))
+    .pipe(gulp.dest('build/js'));
 });
 
 
 // Minify and combine all CSS
 gulp.task('styles', function() {
     return gulp.src([
-            'node_modules/bootstrap/dist/css/bootstrap.css',
-            'node_modules/font-awesome/css/font-awesome.css',
-            'src/less/*.less',
-        ])
-        .pipe(gulpif(/[.]less$/, less()))
-        .pipe(minCSS())
-        .pipe(concat('all.min.css'))
-        .pipe(gzip({ append: false }))
-        .pipe(gulp.dest('build/css'));
+        'node_modules/bootstrap/dist/css/bootstrap.css',
+        'node_modules/font-awesome/css/font-awesome.css',
+        'src/less/*.less'
+    ])
+    .pipe(gulpif(/[.]less$/, less()))
+    .pipe(minCSS())
+    .pipe(concat('all.min.css'))
+    .pipe(gzip({ append: false }))
+    .pipe(gulp.dest('build/css'));
 });
 
 
@@ -87,7 +87,7 @@ gulp.task('views', function() {
 
     var opts = {
         batch : ['src/views/partials/']
-    }
+    };
 
     return gulp.src('src/views/*.html')
         .pipe(hb(data, opts))
@@ -114,19 +114,25 @@ gulp.task('coveralls', ['test'], function () {
 // Lint as JS files (including this one)
 gulp.task('lint', ['test'], function () {
     return gulp.src([
-            'src/js/*.js',
-            'gulpfile.js',
-            'test/*.js',
-            '!node_modules/**'
-        ])
+        'src/js/*.js',
+        'gulpfile.js',
+        'test/*.js',
+        '!node_modules/**'
+    ])
         .pipe(eslint({
             rules : {
                 'no-mixed-spaces-and-tabs' : 2,
-                'space-after-keywords' : 2
+                'space-after-keywords' : 2,
+                'semi' : 2,
+                'camelcase' : 1,
+                'curly' : 2,
+                'no-unused-vars' : 0,
+                'comma-dangle' : 2,
+                'quotes' : 0,
+                'indent': 2
             }
         }))
-        .pipe(eslint.format())
-        .pipe(eslint.failAfterError());
+        .pipe(eslint.format());
 });
 
 
@@ -158,7 +164,7 @@ gulp.task('build', [
 
 // Watch certain files
 gulp.task('watch', ['serve', 'lint'], function() {
-    gulp.watch('src/**', ['lint']);
+    gulp.watch(['src/**', 'test/**'], ['lint']);
 });
 
 // What to do when you run `$ gulp`
