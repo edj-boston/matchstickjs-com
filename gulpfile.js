@@ -1,6 +1,5 @@
 // External dependencies
 var concat  = require('gulp-concat'),
-    del     = require('del'),
     eslint  = require('gulp-eslint'),
     express = require('express'),
     fs      = require('fs'),
@@ -15,7 +14,6 @@ var concat  = require('gulp-concat'),
     minHTML = require('gulp-minify-html'),
     minJS   = require('gulp-uglify'),
     mocha   = require('gulp-mocha'),
-    runSeq  = require('run-sequence'),
     zlib    = require('zlib');
 
 
@@ -119,20 +117,20 @@ gulp.task('lint', ['test'], function () {
         'test/*.js',
         '!node_modules/**'
     ])
-        .pipe(eslint({
-            rules : {
-                'no-mixed-spaces-and-tabs' : 2,
-                'space-after-keywords' : 2,
-                'semi' : 2,
-                'camelcase' : 1,
-                'curly' : 2,
-                'no-unused-vars' : 0,
-                'comma-dangle' : 2,
-                'quotes' : 0,
-                'indent': 2
-            }
-        }))
-        .pipe(eslint.format());
+    .pipe(eslint({
+        rules : {
+            'no-mixed-spaces-and-tabs' : 2,
+            'space-after-keywords' : 2,
+            'semi' : 2,
+            'camelcase' : 1,
+            'curly' : 2,
+            'no-unused-vars' : 0,
+            'comma-dangle' : 2,
+            'quotes' : 0,
+            'indent': 2
+        }
+    }))
+    .pipe(eslint.format());
 });
 
 
