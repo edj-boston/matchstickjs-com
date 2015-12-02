@@ -18,18 +18,6 @@ var concat  = require('gulp-concat'),
     runSeq  = require('run-sequence'),
     zlib    = require('zlib');
 
-/* *
- * Helper tasks
- */
-
-// Clean the build dir
-gulp.task('clean', function() {
-    return del([
-        'build/**',
-        '!build'
-    ]);
-});
-
 
 // Catchall to copy static files to build
 gulp.task('static', function() {
@@ -98,11 +86,7 @@ gulp.task('views', function() {
     };
 
     var opts = {
-        partials : {
-            header : fs.readFileSync('src/views/partials/header.html', 'utf-8'),
-            footer : fs.readFileSync('src/views/partials/footer.html', 'utf-8'),
-            share : fs.readFileSync('src/views/partials/share.html', 'utf-8')
-        }
+        batch : ['src/views/partials/']
     }
 
     return gulp.src('src/views/*.html')
@@ -162,16 +146,14 @@ gulp.task('serve', function(callback) {
 });
 
 
-/* *
- * Default tasks
- */
-
 // Perform a build
-gulp.task('build', function (callback) {
-    runSeq('clean',
-        ['static', 'fonts', 'styles', 'scripts', 'views'],
-        callback);
-});
+gulp.task('build', [
+    'static',
+    'fonts',
+    'styles',
+    'scripts',
+    'views'
+]);
 
 
 // Watch certain files
