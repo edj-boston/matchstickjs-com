@@ -5,48 +5,54 @@ var assert = require('assert'),
 
 
 // Test to see if files copied from assets/static made it okay
-describe('The assets copied from the assets/static directory...', function() {
+describe('The assets copied from the src/static directory...', function() {
 
     /* *
      * Root files
      */
 
-    it('Should include a favicon file', function() {
-        if ( !fs.existsSync('build/favicon.ico') ) {
-            throw Error('/favicon.ico does not exist');
-        }
+    it('Should include a favicon file', function(done) {
+        fs.stat('build/favicon.ico', function(err) {
+            if( err) throw err;
+            done();
+        });
     });
 
-    it('Should include a robots.txt file', function() {
-        if ( !fs.existsSync('build/robots.txt') ) {
-            throw Error('/robots.txt does not exist');
-        }
+    it('Should include a robots.txt file', function(done) {
+        fs.stat('build/robots.txt', function(err) {
+            if(err) throw err;
+            done();
+        });
     });
+
 
     /* *
      * Github buttons
      */
 
-    it('Should include a github button include', function() {
-        if ( !fs.existsSync('build/inc/github-btn.html') ) {
-            throw Error('/inc/github-btn.html does not exist');
-        }
+    it('Should include a github button include', function(done) {
+        fs.stat('build/inc/github-btn.html', function(err) {
+            if(err) throw err;
+            done();
+        });
     });
 
     /* *
      * Images
      */
 
-    it('Should include a background image', function() {
-        if ( !fs.existsSync('build/img/bg.png') ) {
-            throw Error('/img/bg.png does not exist');
-        }
+    it('Should include a background image', function(done) {
+        fs.stat('build/img/bg.png', function(err) {
+            if(err) throw err;
+            done();
+        });
     });
 
-    it('Should include a logotype image', function() {
-        if ( !fs.existsSync('build/img/logotype.png') ) {
-            throw Error('/img/logotype.png does not exist');
-        }
+    it('Should include a logotype image', function(done) {
+        fs.stat('build/img/logotype.png', function(err) {
+            if(err) throw err;
+            done();
+        });
     });
 
 });
