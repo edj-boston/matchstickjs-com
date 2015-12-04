@@ -1,38 +1,40 @@
 // External dependencies
-var assert = require('assert'),
-    should = require('should'),
-    fs     = require('fs'),
+var fs   = require('fs'),
     zlib = require('zlib');
 
 // Test to see if dynamically created CSS is well-formed
 describe('The dynamically concatenated and minified CSS...', function() {
 
     var handle = 'build/css/all.min.css';
-    var file = zlib.gunzipSync(fs.readFileSync(handle));
+    var buf = null;
+    var str = '';
 
     it('Should exist', function(done) {
-        fs.stat(handle, function(err) {
+        fs.readFile(handle, function(err, data) {
             if (err) throw err;
+            buf = data;
+            done();
+        });
+    });
+
+    it('Should be gzipped', function(done) {
+        zlib.gunzip(buf, function(err, data) {
+            if (err) throw err;
+            str = data;
             done();
         });
     });
 
     it('Should contain Bootstrap styles', function() {
-        if (file.indexOf('Bootstrap') < 0) {
-            throw Error('/css/all.min.css does not contain Bootstrap styles');
-        }
+        str.indexOf('Bootstrap').should.not.equal(-1);
     });
 
     it('Should contain Custom styles', function() {
-        if (file.indexOf('Custom Styles') < 0) {
-            throw Error('/css/all.min.css does not contain custom styles');
-        }
+        str.indexOf('Custom Styles').should.not.equal(-1);
     });
 
     it('Should contain Font Awesome styles', function() {
-        if (file.indexOf('Font Awesome') < 0) {
-            throw Error('/css/all.min.css does not contain Font Awesome styles');
-        }
+        str.indexOf('Font Awesome').should.not.equal(-1);
     });
 
 });
