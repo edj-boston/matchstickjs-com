@@ -10,10 +10,11 @@ describe('The dynamically concatenated and minified CSS...', function() {
     var handle = 'build/css/all.min.css';
     var file = zlib.gunzipSync(fs.readFileSync(handle));
 
-    it('Should exist', function() {
-        if ( !fs.existsSync(handle) ) {
-            throw Error('/css/all.min.css does not exist');
-        }
+    it('Should exist', function(done) {
+        fs.stat(handle, function(err) {
+            if (err) throw err;
+            done();
+        });
     });
 
     it('Should contain Bootstrap styles', function() {
