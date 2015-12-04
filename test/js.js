@@ -11,10 +11,11 @@ describe('The dynamically concatenated and minified JS...', function() {
     var handle = 'build/js/all.min.js';
     var file = zlib.gunzipSync(fs.readFileSync(handle));
 
-    it('Should exist', function() {
-        if ( !fs.existsSync(handle) ) {
-            throw Error('/js/all.min.js does not exist');
-        }
+    it('Should exist', function(done) {
+        fs.stat(handle, function(err) {
+            if (err) throw err;
+            done();
+        });
     });
 
     it('Should contain jQuery', function() {
