@@ -1,6 +1,5 @@
 // External dependencies
-var assert = require('assert'),
-    should = require('should'),
+var should = require('should'),
     fs     = require('fs');
 
 
