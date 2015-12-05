@@ -9,37 +9,39 @@ var assert = require('assert'),
 describe('The dynamically concatenated and minified JS...', function() {
 
     var handle = 'build/js/all.min.js';
-    var file = zlib.gunzipSync(fs.readFileSync(handle));
+    var buf = null;
+    var str = '';
 
     it('Should exist', function(done) {
-        fs.stat(handle, function(err) {
+        fs.readFile(handle, function(err, data) {
             if (err) throw err;
+            buf = data;
+            done();
+        });
+    });
+
+    it('Should be gzipped', function(done) {
+        zlib.gunzip(buf, function(err, data) {
+            if (err) throw err;
+            str = data;
             done();
         });
     });
 
     it('Should contain jQuery', function() {
-        if (file.indexOf('jQuery JavaScript Library') < 0) {
-            throw Error('/js/all.min.js does not contain jQuery');
-        }
+        str.indexOf('jQuery JavaScript Library').should.not.equal(-1);
     });
 
     it('Should contain Bootstrap', function() {
-        if (file.indexOf('Bootstrap') < 0) {
-            throw Error('/js/all.min.js does not contain Bootstrap');
-        }
+        str.indexOf('Bootstrap').should.not.equal(-1);
     });
 
     it('Should contain custom JavaScript', function() {
-        if (file.indexOf('Custom JavaScript') < 0) {
-            throw Error('/js/all.min.js does not contain custom JavaScript');
-        }
+        str.indexOf('Custom JavaScript').should.not.equal(-1);
     });
 
     it('Should contain Google Analytics', function() {
-        if (file.indexOf('Google Analytics') < 0) {
-            throw Error('/js/all.min.js does not contain Google Analytics');
-        }
+        str.indexOf('Google Analytics').should.not.equal(-1);
     });
 
 });
