@@ -123,7 +123,7 @@ gulp.task('lint', ['test'], function () {
             'space-after-keywords' : 2,
             'semi' : 2,
             'camelcase' : 1,
-            'curly' : 2,
+            'curly' : [2, 'multi'],
             'no-unused-vars' : 0,
             'comma-dangle' : 2,
             'quotes' : 0,
