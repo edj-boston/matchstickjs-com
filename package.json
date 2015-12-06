@@ -10,6 +10,7 @@
     "gulp": "^3.6.2",
     "gulp-compile-handlebars": "^0.5.0",
     "gulp-concat": "^2.2.0",
+    "gulp-coveralls": "^0.1.4",
     "gulp-eslint": "^1.1.1",
     "gulp-gzip": "^1.2.0",
     "gulp-if": "^2.0.0",
@@ -27,30 +28,33 @@
     "moment": "^2.6.0",
     "should": "^7.1.1"
   },
-  "eslintConfig" : {
-        "extends" : "eslint:recommended",
-        "env" : {
-            "node" : true,
-            "es6" : true,
-            "mocha" : true
-        },
-        "globals" : {
-            "$" : true,
-            "window" : true,
-            "document" : true,
-            "ga" : true
-        },
-        "rules" : {
-            "no-mixed-spaces-and-tabs" : 2,
-            "space-after-keywords" : 2,
-            "semi" : 2,
-            "camelcase" : 1,
-            "curly" : [ 2, "multi" ],
-            "no-unused-vars" : 0,
-            "comma-dangle" : 2,
-            "quotes" : 0,
-            "indent": 2
-        }
+  "eslintConfig": {
+    "extends": "eslint:recommended",
+    "env": {
+      "node": true,
+      "es6": true,
+      "mocha": true
+    },
+    "globals": {
+      "$": true,
+      "window": true,
+      "document": true,
+      "ga": true
+    },
+    "rules": {
+      "no-mixed-spaces-and-tabs": 2,
+      "space-after-keywords": 2,
+      "semi": 2,
+      "camelcase": 1,
+      "curly": [
+        2,
+        "multi"
+      ],
+      "no-unused-vars": 0,
+      "comma-dangle": 2,
+      "quotes": 0,
+      "indent": 2
+    }
   },
   "scripts": {
     "test": "gulp test"
