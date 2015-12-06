@@ -14,8 +14,8 @@ var assert = require('assert'),
 // Helper to instantiate JSDom
 function loadDocument(data) {
     return jsdom(data.toString(), {
-            url : 'http://localhost:3000/',
-        }).defaultView.document;
+        url : 'http://localhost:3000/'
+    }).defaultView.document;
 }
 
 
@@ -27,7 +27,7 @@ describe('The dynamically generated HTML index file...', function() {
 
     it('Should exist', function(done) {
         fs.readFile(handle, function(err, data) {
-            if (err) { throw err; }
+            if (err) throw err;
             buf = data;
             done();
         });
@@ -35,7 +35,7 @@ describe('The dynamically generated HTML index file...', function() {
 
     it('Should be gzipped', function(done) {
         zlib.gunzip(buf, function(err, data) {
-            if (err) { throw err; }
+            if (err) throw err;
             document = loadDocument(data);
             done();
         });
@@ -70,7 +70,7 @@ describe('The dynamically generated HTML error file...', function() {
 
     it('Should exist', function(done) {
         fs.readFile(handle, function(err, data) {
-            if (err) { throw err; }
+            if (err) throw err;
             buf = data;
             done();
         });
@@ -78,7 +78,7 @@ describe('The dynamically generated HTML error file...', function() {
 
     it('Should be gzipped', function(done) {
         zlib.gunzip(buf, function(err, data) {
-            if (err) { throw err; }
+            if (err) throw err;
             document = loadDocument(data);
             done();
         });

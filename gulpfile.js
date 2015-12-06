@@ -1,20 +1,21 @@
 // External dependencies
-var concat  = require('gulp-concat'),
-    eslint  = require('gulp-eslint'),
-    express = require('express'),
-    fs      = require('fs'),
-    gulp    = require('gulp'),
-    gulpif  = require('gulp-if'),
-    gzip    = require('gulp-gzip'),
-    hb      = require('gulp-compile-handlebars'),
-    less    = require('gulp-less'),
-    marked  = require('marked'),
-    moment  = require('moment'),
-    minCSS  = require('gulp-minify-css'),
-    minHTML = require('gulp-minify-html'),
-    minJS   = require('gulp-uglify'),
-    mocha   = require('gulp-mocha'),
-    zlib    = require('zlib');
+var concat    = require('gulp-concat'),
+    coveralls = require('gulp-coveralls'),
+    eslint    = require('gulp-eslint'),
+    express   = require('express'),
+    fs        = require('fs'),
+    gulp      = require('gulp'),
+    gulpif    = require('gulp-if'),
+    gzip      = require('gulp-gzip'),
+    hb        = require('gulp-compile-handlebars'),
+    less      = require('gulp-less'),
+    marked    = require('marked'),
+    moment    = require('moment'),
+    minCSS    = require('gulp-minify-css'),
+    minHTML   = require('gulp-minify-html'),
+    minJS     = require('gulp-uglify'),
+    mocha     = require('gulp-mocha'),
+    zlib      = require('zlib');
 
 
 // Catchall to copy static files to build
@@ -117,19 +118,7 @@ gulp.task('lint', ['test'], function () {
         'test/*.js',
         '!node_modules/**'
     ])
-    .pipe(eslint({
-        rules : {
-            'no-mixed-spaces-and-tabs' : 2,
-            'space-after-keywords' : 2,
-            'semi' : 2,
-            'camelcase' : 1,
-            'curly' : [2, 'multi'],
-            'no-unused-vars' : 0,
-            'comma-dangle' : 2,
-            'quotes' : 0,
-            'indent': 2
-        }
-    }))
+    .pipe(eslint())
     .pipe(eslint.format());
 });
 
