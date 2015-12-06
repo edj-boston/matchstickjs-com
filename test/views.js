@@ -2,7 +2,6 @@
 
 // External dependencies
 var assert = require('assert'),
-    expect = require('expect'),
     jquery = require('jquery'),
     jsdom  = require('jsdom').jsdom,
     should = require('should'),
