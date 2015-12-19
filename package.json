@@ -21,12 +21,14 @@
     "gulp-prompt": "^0.1.1",
     "gulp-s3": "^0.3.0",
     "gulp-uglify": "^1.4.2",
+    "gulp-util": "^3.0.7",
     "jquery": "^2.1.4",
     "jsdom": "^7.1.0",
     "marked": "^0.3.5",
     "matchstick": "^1.0.1",
     "moment": "^2.6.0",
-    "should": "^7.1.1"
+    "should": "^7.1.1",
+    "yargs": "^3.31.0"
   },
   "eslintConfig": {
     "extends": "eslint:recommended",

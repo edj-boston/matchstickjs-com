@@ -31,10 +31,10 @@ Run the default gulp task to watch source files and dynamically rebuild the site
 $ gulp
 ```
 
-Run the "build" task to do a one-time build. This task is also used by Travis CI for continuous integration.
+Optionally pass a port option to control the local server.
 
 ```sh
-$ gulp build
+$ gulp -p 3001
 ```
 
 
@@ -55,5 +55,4 @@ You should see output like the following:
 To Do
 -----
 
-* Wrap my Void module in a stream-friendly gulp module to perform Cloudfront cache ivalidation
 * More tests

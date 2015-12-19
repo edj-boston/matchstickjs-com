@@ -1,11 +1,12 @@
-// External dependencies
-var concat    = require('gulp-concat'),
+var argv      = require('yargs').argv,
+    concat    = require('gulp-concat'),
     coveralls = require('gulp-coveralls'),
     eslint    = require('gulp-eslint'),
     express   = require('express'),
     fs        = require('fs'),
     gulp      = require('gulp'),
     gulpif    = require('gulp-if'),
+    gutil     = require('gulp-util'),
     gzip      = require('gulp-gzip'),
     hb        = require('gulp-compile-handlebars'),
     less      = require('gulp-less'),
@@ -97,8 +98,8 @@ gulp.task('views', function() {
 
 
 // Run tests
-gulp.task('test', ['build'], function () {
-    return gulp.src(['test/*.js'])
+gulp.task('test', ['build'], function (done) {
+    return gulp.src('test/*.js')
         .pipe(mocha());
 });
 
@@ -125,6 +126,8 @@ gulp.task('lint', ['test'], function () {
 
 // Serve files for local development
 gulp.task('serve', function(callback) {
+    var port = argv.p || 3000;
+
     express()
         .use(function(req, res, next) {
             res.header('Content-Encoding', 'gzip');
@@ -135,7 +138,10 @@ gulp.task('serve', function(callback) {
             res.status(404)
                 .sendFile(__dirname + '/build/error.html');
         })
-        .listen(3000, callback);
+        .listen(port, function() {
+            gutil.log('Server listening on port', port);
+            callback();
+        });
 });
 
 
@@ -151,7 +157,10 @@ gulp.task('build', [
 
 // Watch certain files
 gulp.task('watch', ['serve', 'lint'], function() {
-    gulp.watch(['src/**', 'test/**'], ['lint']);
+    gulp.watch([
+        'src/**',
+        'test/**'
+    ], ['lint']);
 });
 
 // What to do when you run `$ gulp`
