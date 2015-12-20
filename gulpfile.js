@@ -71,29 +71,26 @@ gulp.task('styles', function() {
 
 
 // Compile HB template
-gulp.task('views', function() {
+gulp.task('views', function(done) {
+    fs.readFile('node_modules/matchstick/README.md', 'utf-8', function(err, file) {
+        var data = {
+            title     : 'MatchstickJS',
+            year      : moment().format('YYYY'),
+            timestamp : moment().format('YYYY-MM-DD-HH-mm-ss'),
+            readme    : marked(file)
+        };
 
-    marked.setOptions({
-        renderer : new marked.Renderer(),
-        gfm : true
+        var opts = {
+            batch : ['src/views/partials/']
+        };
+
+        gulp.src('src/views/*.html')
+            .pipe(hb(data, opts))
+            .pipe(minHTML())
+            .pipe(gzip({ append: false }))
+            .pipe(gulp.dest('build'))
+            .on('end', done);
     });
-
-    var data = {
-        title : 'MatchstickJS',
-        year : moment().format('YYYY'),
-        timestamp : moment().format('YYYY-MM-DD-HH-mm-ss'),
-        readme : marked.parse(fs.readFileSync('node_modules/matchstick/README.md', 'utf-8'))
-    };
-
-    var opts = {
-        batch : ['src/views/partials/']
-    };
-
-    return gulp.src('src/views/*.html')
-        .pipe(hb(data, opts))
-        .pipe(minHTML())
-        .pipe(gzip({ append: false }))
-        .pipe(gulp.dest('build'));
 });
 
 
