@@ -1,28 +1,26 @@
-'use strict';
-
-// External dependencies
-var assert = require('assert'),
+var argv   = require('yargs').argv,
+    fs     = require('fs'),
     jquery = require('jquery'),
     jsdom  = require('jsdom').jsdom,
-    should = require('should'),
-    fs     = require('fs'),
     moment = require('moment'),
+    should = require('should'),
     zlib   = require('zlib');
 
 
 // Helper to instantiate JSDom
 function loadDocument(data) {
+    var port = argv.p || 3000;
+
     return jsdom(data.toString(), {
-        url : 'http://localhost:3000/'
+        url : 'http://localhost:' + port + '/'
     }).defaultView.document;
 }
 
 
-// Test to see if dynamically created HTML index is well-formed
 describe('The dynamically generated HTML index file...', function() {
 
-    const handle = 'build/index.html';
-    let buf, document;
+    var handle = 'build/index.html';
+    var buf, document;
 
     it('Should exist', function(done) {
         fs.readFile(handle, function(err, data) {
@@ -61,11 +59,11 @@ describe('The dynamically generated HTML index file...', function() {
 
 });
 
-// Test to see if dynamically created HTML error page is well-formed
+
 describe('The dynamically generated HTML error file...', function() {
 
-    const handle = 'build/error.html';
-    let buf, document;
+    var handle = 'build/error.html';
+    var buf, document;
 
     it('Should exist', function(done) {
         fs.readFile(handle, function(err, data) {

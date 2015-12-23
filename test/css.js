@@ -1,8 +1,8 @@
-// External dependencies
-var fs   = require('fs'),
-    zlib = require('zlib');
+var fs     = require('fs'),
+    should = require('should'),
+    zlib   = require('zlib');
 
-// Test to see if dynamically created CSS is well-formed
+
 describe('The dynamically concatenated and minified CSS...', function() {
 
     var handle = 'build/css/all.min.css';

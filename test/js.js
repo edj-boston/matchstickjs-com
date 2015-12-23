@@ -1,11 +1,7 @@
-// External dependencies
-var assert = require('assert'),
-    should = require('should'),
-    fs     = require('fs'),
-    zlib   = require('zlib');
+var fs   = require('fs'),
+    zlib = require('zlib');
 
 
-// Test to see if dynamically created JS is well-formed
 describe('The dynamically concatenated and minified JS...', function() {
 
     var handle = 'build/js/all.min.js';

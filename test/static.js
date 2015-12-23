@@ -1,8 +1,6 @@
-// External dependencies
 var fs = require('fs');
 
 
-// Test to see if files copied from assets/static made it okay
 describe('The assets copied from the src/static directory...', function() {
 
     /* *
