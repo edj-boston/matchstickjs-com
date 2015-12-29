@@ -1,5 +1,4 @@
 var fs     = require('fs'),
-    should = require('should'),
     zlib   = require('zlib');
 
 

@@ -1,6 +1,5 @@
 var argv   = require('yargs').argv,
     fs     = require('fs'),
-    jquery = require('jquery'),
     jsdom  = require('jsdom').jsdom,
     moment = require('moment'),
     should = require('should'),

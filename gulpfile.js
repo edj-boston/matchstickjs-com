@@ -15,8 +15,7 @@ var argv      = require('yargs').argv,
     minCSS    = require('gulp-minify-css'),
     minHTML   = require('gulp-minify-html'),
     minJS     = require('gulp-uglify'),
-    mocha     = require('gulp-mocha'),
-    zlib      = require('zlib');
+    mocha     = require('gulp-mocha');
 
 
 // Catchall to copy static files to build
@@ -95,7 +94,7 @@ gulp.task('views', function(done) {
 
 
 // Run tests
-gulp.task('test', ['build'], function (done) {
+gulp.task('test', ['build'], function () {
     return gulp.src('test/*.js')
         .pipe(mocha());
 });
