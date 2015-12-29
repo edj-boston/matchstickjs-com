@@ -8,14 +8,21 @@ var argv      = require('yargs').argv,
     gulpif    = require('gulp-if'),
     gutil     = require('gulp-util'),
     gzip      = require('gulp-gzip'),
-    hb        = require('gulp-compile-handlebars'),
+    hb        = require('handlebars'),
+    layouts   = require('handlebars-layouts'),
     less      = require('gulp-less'),
     marked    = require('marked'),
     moment    = require('moment'),
     minCSS    = require('gulp-minify-css'),
     minHTML   = require('gulp-minify-html'),
     minJS     = require('gulp-uglify'),
-    mocha     = require('gulp-mocha');
+    mocha     = require('gulp-mocha'),
+    path      = require('path'),
+    tap       = require('gulp-tap');
+
+
+// Configure handlebars
+layouts.register(hb);
 
 
 // Catchall to copy static files to build
@@ -68,6 +75,18 @@ gulp.task('styles', function() {
     .pipe(gulp.dest('build/css'));
 });
 
+// Partials
+gulp.task('partials', function() {
+    return gulp.src([
+        'src/views/partials/*',
+        'src/views/layouts/*'
+    ])
+    .pipe(tap(function(file) {
+        var name = path.parse(file.path).name;
+        hb.registerPartial(name, file.contents.toString());
+    }));
+});
+
 
 // Compile HB template
 gulp.task('views', function(done) {
@@ -79,12 +98,11 @@ gulp.task('views', function(done) {
             readme    : marked(file)
         };
 
-        var opts = {
-            batch : ['src/views/partials/']
-        };
-
         gulp.src('src/views/*.html')
-            .pipe(hb(data, opts))
+            .pipe(tap(function(file) {
+                var template = hb.compile(file.contents.toString());
+                file.contents = new Buffer(template(data));
+            }))
             .pipe(minHTML())
             .pipe(gzip({ append: false }))
             .pipe(gulp.dest('build'))
@@ -147,6 +165,7 @@ gulp.task('build', [
     'fonts',
     'styles',
     'scripts',
+    'partials',
     'views'
 ]);
 

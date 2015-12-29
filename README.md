@@ -56,5 +56,4 @@ To Do
 -----
 
 * More tests
-* Convert gulp-compile handlebars to vanilla handlebars
 * Gulp David
