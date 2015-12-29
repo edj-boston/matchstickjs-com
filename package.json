@@ -25,6 +25,7 @@
     "marked": "^0.3.5",
     "matchstick": "^1.0.1",
     "moment": "^2.6.0",
+    "npm-font-open-sans": "0.0.3",
     "should": "^8.0.2",
     "yargs": "^3.31.0"
   },

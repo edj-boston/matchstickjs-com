@@ -39,11 +39,8 @@ gulp.task('static', function() {
 // Copy fonts from bower packages
 gulp.task('fonts', function() {
     return gulp.src([
-        'node_modules/font-awesome/fonts/fontawesome-webfont.eot',
-        'node_modules/font-awesome/fonts/fontawesome-webfont.svg',
-        'node_modules/font-awesome/fonts/fontawesome-webfont.ttf',
-        'node_modules/font-awesome/fonts/fontawesome-webfont.woff',
-        'node_modules/font-awesome/fonts/fontawesome-webfont.woff2'
+        'node_modules/font-awesome/fonts/*',
+        'node_modules/npm-font-open-sans/fonts/Regular/*'
     ])
     .pipe(gzip({ append: false }))
     .pipe(gulp.dest('build/fonts'));
