@@ -27,7 +27,7 @@
     "marked": "^0.3.5",
     "matchstick": "^1.0.1",
     "moment": "^2.6.0",
-    "should": "^7.1.1",
+    "should": "^8.0.2",
     "yargs": "^3.31.0"
   },
   "eslintConfig": {
