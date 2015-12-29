@@ -1,5 +1,6 @@
 var argv      = require('yargs').argv,
     concat    = require('gulp-concat'),
+    del       = require('del'),
     eslint    = require('gulp-eslint'),
     express   = require('express'),
     fs        = require('fs'),
@@ -25,11 +26,22 @@ layouts.register(hb);
 
 
 /* *
+ * Build step 0
+ */
+
+// Catchall to copy static files to build
+gulp.task('clean', function(done) {
+    del(['build/**', '!build'])
+        .then(done());
+});
+
+
+/* *
  * Build step 1
  */
 
 // Catchall to copy static files to build
-gulp.task('static', function() {
+gulp.task('static', ['clean'], function() {
     return gulp.src('src/static/**')
         .pipe(gzip({ append: false }))
         .pipe(gulp.dest('build'));
@@ -37,7 +49,7 @@ gulp.task('static', function() {
 
 
 // Copy fonts from bower packages
-gulp.task('fonts', function() {
+gulp.task('fonts', ['clean'], function() {
     return gulp.src([
         'node_modules/font-awesome/fonts/*',
         'node_modules/npm-font-open-sans/fonts/Regular/*'
@@ -48,7 +60,7 @@ gulp.task('fonts', function() {
 
 
 // Minify and combine all JavaScript
-gulp.task('scripts', function() {
+gulp.task('scripts', ['clean'], function() {
     return gulp.src([
         'node_modules/jquery/dist/jquery.js',
         'node_modules/bootstrap/dist/js/bootstrap.js',
@@ -62,7 +74,7 @@ gulp.task('scripts', function() {
 
 
 // Minify and combine all CSS
-gulp.task('styles', function() {
+gulp.task('styles', ['clean'], function() {
     return gulp.src([
         'node_modules/bootstrap/dist/css/bootstrap.css',
         'node_modules/font-awesome/css/font-awesome.css',
@@ -76,7 +88,7 @@ gulp.task('styles', function() {
 });
 
 // Partials
-gulp.task('partials', function() {
+gulp.task('partials', ['clean'], function() {
     return gulp.src([
         'src/views/partials/*',
         'src/views/layouts/*'
@@ -170,6 +182,7 @@ gulp.task('serve', function(callback) {
 
 // Perform a build
 gulp.task('build', [
+    // Step 0: clean
     // Step 1: static, fonts, scripts, styles, partials
     // Step 2: views
     // Step 3: test
@@ -178,11 +191,11 @@ gulp.task('build', [
 
 
 // Watch certain files
-gulp.task('watch', ['serve', 'lint'], function() {
+gulp.task('watch', ['serve', 'build'], function() {
     gulp.watch([
         'src/**',
         'test/**'
-    ], ['lint']);
+    ], ['build']);
 });
 
 // What to do when you run `$ gulp`
