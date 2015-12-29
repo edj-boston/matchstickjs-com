@@ -1,6 +1,5 @@
 var argv      = require('yargs').argv,
     concat    = require('gulp-concat'),
-    coveralls = require('gulp-coveralls'),
     eslint    = require('gulp-eslint'),
     express   = require('express'),
     fs        = require('fs'),
@@ -24,6 +23,10 @@ var argv      = require('yargs').argv,
 // Configure handlebars
 layouts.register(hb);
 
+
+/* *
+ * Build step 1
+ */
 
 // Catchall to copy static files to build
 gulp.task('static', function() {
@@ -88,8 +91,12 @@ gulp.task('partials', function() {
 });
 
 
+/* *
+ * Build step 2
+ */
+
 // Compile HB template
-gulp.task('views', function(done) {
+gulp.task('views', ['static', 'fonts', 'scripts', 'styles', 'partials'], function(done) {
     fs.readFile('node_modules/matchstick/README.md', 'utf-8', function(err, file) {
         var data = {
             title     : 'MatchstickJS',
@@ -111,19 +118,20 @@ gulp.task('views', function(done) {
 });
 
 
+/* *
+ * Build step 3
+ */
+
 // Run tests
-gulp.task('test', ['build'], function () {
+gulp.task('test', ['views'], function () {
     return gulp.src('test/*.js')
         .pipe(mocha());
 });
 
 
-// Run tests and product coverage
-gulp.task('coveralls', ['test'], function () {
-    return gulp.src('coverage/lcov.info')
-        .pipe(coveralls());
-});
-
+/* *
+ * Build step 4
+ */
 
 // Lint as JS files (including this one)
 gulp.task('lint', ['test'], function () {
@@ -137,6 +145,10 @@ gulp.task('lint', ['test'], function () {
     .pipe(eslint.format());
 });
 
+
+/* *
+ * Helper tasks
+ */
 
 // Serve files for local development
 gulp.task('serve', function(callback) {
@@ -161,12 +173,10 @@ gulp.task('serve', function(callback) {
 
 // Perform a build
 gulp.task('build', [
-    'static',
-    'fonts',
-    'styles',
-    'scripts',
-    'partials',
-    'views'
+    // Step 1: static, fonts, scripts, styles, partials
+    // Step 2: views
+    // Step 3: test
+    'lint'
 ]);
 
 
