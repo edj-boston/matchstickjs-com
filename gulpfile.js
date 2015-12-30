@@ -10,11 +10,11 @@ var argv    = require('yargs').argv,
     gutil   = require('gulp-util'),
     gzip    = require('gulp-gzip'),
     hb      = require('handlebars'),
+    htmlMin = require('gulp-htmlmin'),
     layouts = require('handlebars-layouts'),
     less    = require('gulp-less'),
     marked  = require('marked'),
     moment  = require('moment'),
-    minHTML = require('gulp-minify-html'),
     minJS   = require('gulp-uglify'),
     mocha   = require('gulp-mocha'),
     path    = require('path'),
@@ -120,7 +120,7 @@ gulp.task('views', ['static', 'fonts', 'scripts', 'styles', 'partials'], functio
                 var template = hb.compile(file.contents.toString());
                 file.contents = new Buffer(template(data));
             }))
-            .pipe(minHTML())
+            .pipe(htmlMin({ collapseWhitespace: true }))
             .pipe(gzip({ append: false }))
             .pipe(gulp.dest('build'))
             .on('end', done);
