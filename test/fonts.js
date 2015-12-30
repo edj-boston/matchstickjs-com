@@ -13,7 +13,7 @@ describe('The build/fonts directory...', function() {
         });
     });
 
-    it('Should include the right font files', function() {
+    it('Should include Font Awesome font files', function() {
         files.should.containEql('fontawesome-webfont.eot');
         files.should.containEql('fontawesome-webfont.svg');
         files.should.containEql('fontawesome-webfont.ttf');
