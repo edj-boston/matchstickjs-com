@@ -33,7 +33,9 @@ describe('The dynamically concatenated and minified CSS...', function() {
     });
 
     it('Should contain custom fonts', function() {
-        str.indexOf('Custom Fonts').should.not.equal(-1);
+        str.indexOf('font-family:Open-Sans;').should.not.equal(-1);
+        str.indexOf('font-family:Merriweather;').should.not.equal(-1);
+        str.indexOf('font-family:SourceCodePro;').should.not.equal(-1);
     });
 
     it('Should contain Font Awesome styles', function() {

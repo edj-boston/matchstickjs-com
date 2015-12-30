@@ -1,5 +1,6 @@
 var argv    = require('yargs').argv,
     concat  = require('gulp-concat'),
+    cssNano = require('gulp-cssnano'),
     del     = require('del'),
     eslint  = require('gulp-eslint'),
     express = require('express'),
@@ -13,7 +14,6 @@ var argv    = require('yargs').argv,
     less    = require('gulp-less'),
     marked  = require('marked'),
     moment  = require('moment'),
-    minCSS  = require('gulp-minify-css'),
     minHTML = require('gulp-minify-html'),
     minJS   = require('gulp-uglify'),
     mocha   = require('gulp-mocha'),
@@ -79,10 +79,10 @@ gulp.task('styles', ['clean'], function() {
     return gulp.src([
         'node_modules/bootstrap/dist/css/bootstrap.css',
         'node_modules/font-awesome/css/font-awesome.css',
-        'src/less/*.less'
+        'src/less/custom.less'
     ])
     .pipe(gulpif(/[.]less$/, less()))
-    .pipe(minCSS())
+    .pipe(cssNano())
     .pipe(concat('all.min.css'))
     .pipe(gzip({ append: false }))
     .pipe(gulp.dest('build/css'));
