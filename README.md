@@ -3,7 +3,7 @@ MatchstickJS.com [![Build Status](https://travis-ci.org/edj-boston/matchstickjs-
 
 The homepage for the [Matchstick](https://www.npmjs.org/package/matchstick) NodeJS library. See the site live at [https://matchstickjs.com](https://matchstickjs.com).
 
-![Screen Shot](/assets/misc/screen-shot.png)
+![Screen Shot](/src/misc/screen-shot.png)
 
 
 Installation
@@ -49,7 +49,7 @@ $ gulp test
 
 You should see output like the following:
 
-![Gulp Test](/assets/misc/gulp-test.png)
+![Gulp Test](/src/misc/gulp-test.png)
 
 
 To Do
