@@ -3,10 +3,6 @@ var fs = require('fs');
 
 describe('The assets copied from the src/static directory...', function() {
 
-    /* *
-     * Root files
-     */
-
     it('Should include a favicon file', function(done) {
         fs.stat('build/favicon.ico', function(err) {
             if ( err) throw err;
@@ -20,23 +16,6 @@ describe('The assets copied from the src/static directory...', function() {
             done();
         });
     });
-
-
-    /* *
-     * Github buttons
-     */
-
-    it('Should include a github button include', function(done) {
-        fs.stat('build/inc/github-btn.html', function(err) {
-            if (err) throw err;
-            done();
-        });
-    });
-
-
-    /* *
-     * Images
-     */
 
     it('Should include a background image', function(done) {
         fs.stat('build/img/bg.png', function(err) {
