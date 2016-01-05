@@ -1,6 +1,7 @@
 var argv    = require('yargs').argv,
     concat  = require('gulp-concat'),
     cssNano = require('gulp-cssnano'),
+    david   = require('gulp-david'),
     del     = require('del'),
     eslint  = require('gulp-eslint'),
     express = require('express'),
@@ -155,6 +156,18 @@ gulp.task('lint', ['test'], function () {
     .pipe(eslint.format());
 });
 
+/* *
+ * Build step 5
+ */
+
+// Check deps with David service
+gulp.task('deps', ['lint'], function() {
+    return gulp.src('package.json')
+        .pipe(david({ update: true }))
+        .pipe(david.reporter)
+        .pipe(gulp.dest('.'));
+});
+
 
 /* *
  * Helper tasks
@@ -187,7 +200,8 @@ gulp.task('build', [
     // Step 1: static, fonts, scripts, styles, partials
     // Step 2: views
     // Step 3: test
-    'lint'
+    // Step 4: lint
+    'deps'
 ]);
 
 
