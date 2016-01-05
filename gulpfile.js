@@ -156,25 +156,13 @@ gulp.task('lint', ['test'], function () {
     .pipe(eslint.format());
 });
 
-/* *
- * Build step 5
- */
-
-// Check deps with David service
-gulp.task('deps', ['lint'], function() {
-    return gulp.src('package.json')
-        .pipe(david({ update: true }))
-        .pipe(david.reporter)
-        .pipe(gulp.dest('.'));
-});
-
 
 /* *
  * Helper tasks
  */
 
 // Serve files for local development
-gulp.task('serve', function(callback) {
+gulp.task('serve', function(done) {
     var port = argv.p || 3000;
 
     express()
@@ -189,29 +177,42 @@ gulp.task('serve', function(callback) {
         })
         .listen(port, function() {
             gutil.log('Server listening on port', port);
-            callback();
+            done();
         });
 });
 
 
-// Perform a build
-gulp.task('build', [
-    // Step 0: clean
-    // Step 1: static, fonts, scripts, styles, partials
-    // Step 2: views
-    // Step 3: test
-    // Step 4: lint
-    'deps'
-]);
+// Check deps with David service
+gulp.task('deps', function() {
+    return gulp.src('package.json')
+        .pipe(david({ update: true }))
+        .pipe(david.reporter)
+        .pipe(gulp.dest('.'));
+});
 
 
 // Watch certain files
-gulp.task('watch', ['serve', 'build'], function() {
-    gulp.watch([
+gulp.task('watch', ['build'], function() {
+    return gulp.watch([
         'src/**',
         'test/**'
     ], ['build']);
 });
 
+
+// Build macro
+gulp.task('build', [
+    // Step 0: clean
+    // Step 1: static, fonts, scripts, styles, partials
+    // Step 2: views
+    // Step 3: test
+    'lint'
+]);
+
+
 // What to do when you run `$ gulp`
-gulp.task('default', ['watch']);
+gulp.task('default', [
+    'watch',
+    'serve',
+    'deps'
+]);
