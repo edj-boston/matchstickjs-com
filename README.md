@@ -56,4 +56,3 @@ To Do
 -----
 
 * More tests
-* Gulp David
