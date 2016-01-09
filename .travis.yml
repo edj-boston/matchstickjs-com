@@ -2,9 +2,7 @@ sudo: false
 language: node_js
 node_js:
 - '5'
-- '4.2'
-- '4.1'
-- '4.0'
+- '4'
 env:
   global:
   - secure: Ayk4M2uDBTjT+ndV5Kz2s5KS9FNbOT+9bG80YeV063IdjsFU517KEnaKznjJo69XCgm4U2L17Brm9Rgb+Sx1jWhcvDppsVWxc7p6EaH31AyYD1d8w857dat7kexb6tK5iccvDRXP/RTiGcAd0bm6iyyYhbfkaE5sgcQMCUZBVqU=
@@ -20,7 +18,7 @@ deploy:
   bucket: matchstickjs-com
   on:
     branch: master
-    node_js: '4.2'
+    node_js: '4'
 - provider: s3
   region: us-west-2
   access_key_id: $AWS_ACCESS_KEY_ID
@@ -31,4 +29,4 @@ deploy:
   bucket: stage-matchstickjs-com
   on:
     branch: develop
-    node_js: '4.2'
+    node_js: '4'
