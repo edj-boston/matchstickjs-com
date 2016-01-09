@@ -2,41 +2,41 @@ var fs   = require('fs'),
     zlib = require('zlib');
 
 
-describe('The dynamically concatenated and minified JS...', function() {
+describe('The dynamically concatenated and minified JS...', () => {
 
     var handle = 'build/js/all.min.js';
     var buf = null;
     var str = '';
 
-    it('Should exist', function(done) {
-        fs.readFile(handle, function(err, data) {
+    it('Should exist', (done) => {
+        fs.readFile(handle, (err, data) => {
             if (err) throw err;
             buf = data;
             done();
         });
     });
 
-    it('Should be gzipped', function(done) {
-        zlib.gunzip(buf, function(err, data) {
+    it('Should be gzipped', (done) => {
+        zlib.gunzip(buf, (err, data) => {
             if (err) throw err;
             str = data;
             done();
         });
     });
 
-    it('Should contain jQuery', function() {
+    it('Should contain jQuery', () => {
         str.indexOf('jQuery JavaScript Library').should.not.equal(-1);
     });
 
-    it('Should contain Bootstrap', function() {
+    it('Should contain Bootstrap', () => {
         str.indexOf('Bootstrap').should.not.equal(-1);
     });
 
-    it('Should contain custom JavaScript', function() {
+    it('Should contain custom JavaScript', () => {
         str.indexOf('Custom JavaScript').should.not.equal(-1);
     });
 
-    it('Should contain Google Analytics', function() {
+    it('Should contain Google Analytics', () => {
         str.indexOf('Google Analytics').should.not.equal(-1);
     });
 

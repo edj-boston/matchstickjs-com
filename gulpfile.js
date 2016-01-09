@@ -20,7 +20,7 @@ layouts.register(hb);
  */
 
 // Catchall to copy static files to build
-gulp.task('clean', function(done) {
+gulp.task('clean', (done) => {
     del(['build/**', '!build'])
         .then(done());
 });
@@ -31,7 +31,7 @@ gulp.task('clean', function(done) {
  */
 
 // Catchall to copy static files to build
-gulp.task('static', ['clean'], function() {
+gulp.task('static', ['clean'], () => {
     return gulp.src('src/static/**')
         .pipe(g.gzip({ append: false }))
         .pipe(gulp.dest('build'));
@@ -39,7 +39,7 @@ gulp.task('static', ['clean'], function() {
 
 
 // Copy fonts from bower packages
-gulp.task('fonts', ['clean'], function() {
+gulp.task('fonts', ['clean'], () => {
     return gulp.src([
         'node_modules/font-awesome/fonts/*',
         'node_modules/npm-font-open-sans/fonts/Regular/*',
@@ -51,7 +51,7 @@ gulp.task('fonts', ['clean'], function() {
 
 
 // Minify and combine all JavaScript
-gulp.task('scripts', ['clean'], function() {
+gulp.task('scripts', ['clean'], () => {
     return gulp.src([
         'node_modules/jquery/dist/jquery.js',
         'node_modules/bootstrap/dist/js/bootstrap.js',
@@ -65,7 +65,7 @@ gulp.task('scripts', ['clean'], function() {
 
 
 // Minify and combine all CSS
-gulp.task('styles', ['clean'], function() {
+gulp.task('styles', ['clean'], () => {
     return gulp.src([
         'node_modules/bootstrap/dist/css/bootstrap.css',
         'node_modules/font-awesome/css/font-awesome.css',
@@ -79,12 +79,12 @@ gulp.task('styles', ['clean'], function() {
 });
 
 // Partials
-gulp.task('partials', ['clean'], function() {
+gulp.task('partials', ['clean'], () => {
     return gulp.src([
         'src/views/partials/*',
         'src/views/layouts/*'
     ])
-    .pipe(g.tap(function(file) {
+    .pipe(g.tap((file) => {
         var name = path.parse(file.path).name;
         hb.registerPartial(name, file.contents.toString());
     }));
@@ -96,8 +96,8 @@ gulp.task('partials', ['clean'], function() {
  */
 
 // Compile HB template
-gulp.task('views', ['static', 'fonts', 'scripts', 'styles', 'partials'], function(done) {
-    fs.readFile('node_modules/matchstick/README.md', 'utf-8', function(err, file) {
+gulp.task('views', ['static', 'fonts', 'scripts', 'styles', 'partials'], (done) => {
+    fs.readFile('node_modules/matchstick/README.md', 'utf-8', (err, file) => {
         var data = {
             title     : 'MatchstickJS',
             year      : moment().format('YYYY'),
@@ -106,7 +106,7 @@ gulp.task('views', ['static', 'fonts', 'scripts', 'styles', 'partials'], functio
         };
 
         gulp.src('src/views/*.html')
-            .pipe(g.tap(function(file) {
+            .pipe(g.tap((file) => {
                 var template = hb.compile(file.contents.toString());
                 file.contents = new Buffer(template(data));
             }))
@@ -123,7 +123,7 @@ gulp.task('views', ['static', 'fonts', 'scripts', 'styles', 'partials'], functio
  */
 
 // Run tests
-gulp.task('test', ['views'], function () {
+gulp.task('test', ['views'], () => {
     return gulp.src('test/*.js')
         .pipe(g.mocha());
 });
@@ -134,7 +134,7 @@ gulp.task('test', ['views'], function () {
  */
 
 // Lint as JS files (including this one)
-gulp.task('lint', ['test'], function () {
+gulp.task('lint', ['test'], () => {
     return gulp.src([
         'src/js/*.js',
         'gulpfile.js',
@@ -151,20 +151,20 @@ gulp.task('lint', ['test'], function () {
  */
 
 // Serve files for local development
-gulp.task('serve', function(done) {
+gulp.task('serve', (done) => {
     var port = argv.p || 3000;
 
     express()
-        .use(function(req, res, next) {
+        .use((req, res, next) => {
             res.header('Content-Encoding', 'gzip');
             next();
         })
         .use(express.static('build'))
-        .use(function(req, res) {
+        .use((req, res) => {
             res.status(404)
                 .sendFile(__dirname + '/build/error.html');
         })
-        .listen(port, function() {
+        .listen(port, () => {
             g.util.log('Server listening on port', port);
             done();
         });
@@ -172,7 +172,7 @@ gulp.task('serve', function(done) {
 
 
 // Check deps with David service
-gulp.task('deps', function() {
+gulp.task('deps', () => {
     return gulp.src('package.json')
         .pipe(g.david({ update: true }))
         .pipe(g.david.reporter)
@@ -181,7 +181,7 @@ gulp.task('deps', function() {
 
 
 // Watch certain files
-gulp.task('watch', ['build'], function() {
+gulp.task('watch', ['build'], () => {
     return gulp.watch([
         'src/**',
         'test/**'

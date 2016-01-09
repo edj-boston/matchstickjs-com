@@ -16,42 +16,42 @@ function loadDocument(data) {
 }
 
 
-describe('The dynamically generated HTML index file...', function() {
+describe('The dynamically generated HTML index file...', () => {
 
     var handle = 'build/index.html';
     var buf, document;
 
-    it('Should exist', function(done) {
-        fs.readFile(handle, function(err, data) {
+    it('Should exist', (done) => {
+        fs.readFile(handle, (err, data) => {
             if (err) throw err;
             buf = data;
             done();
         });
     });
 
-    it('Should be gzipped', function(done) {
-        zlib.gunzip(buf, function(err, data) {
+    it('Should be gzipped', (done) => {
+        zlib.gunzip(buf, (err, data) => {
             if (err) throw err;
             document = loadDocument(data);
             done();
         });
     });
 
-    it('Should contain a <title> element from the header partial', function() {
+    it('Should contain a <title> element from the header partial', () => {
         document.getElementsByTagName('title')[0].innerHTML
             .should.equal('MatchstickJS');
     });
 
-    it('Should contain only one <h1> element from the markdown source', function() {
+    it('Should contain only one <h1> element from the markdown source', () => {
         document.getElementsByTagName('h1').length
             .should.equal(1);
     });
 
-    it('Should contain an <ul> element from the share partial with the id "share"', function() {
+    it('Should contain an <ul> element from the share partial with the id "share"', () => {
         should.exist(document.getElementById('share'));
     });
 
-    it('Should contain copyright text from the footer partial', function() {
+    it('Should contain copyright text from the footer partial', () => {
         document.getElementById('copyright').innerHTML
             .should.containEql(moment().format('YYYY'));
     });
@@ -59,38 +59,38 @@ describe('The dynamically generated HTML index file...', function() {
 });
 
 
-describe('The dynamically generated HTML error file...', function() {
+describe('The dynamically generated HTML error file...', () => {
 
     var handle = 'build/error.html';
     var buf, document;
 
-    it('Should exist', function(done) {
-        fs.readFile(handle, function(err, data) {
+    it('Should exist', (done) => {
+        fs.readFile(handle, (err, data) => {
             if (err) throw err;
             buf = data;
             done();
         });
     });
 
-    it('Should be gzipped', function(done) {
-        zlib.gunzip(buf, function(err, data) {
+    it('Should be gzipped', (done) => {
+        zlib.gunzip(buf, (err, data) => {
             if (err) throw err;
             document = loadDocument(data);
             done();
         });
     });
 
-    it('Should contain a <title> element from the header partial', function() {
+    it('Should contain a <title> element from the header partial', () => {
         document.getElementsByTagName('title')[0].innerHTML
             .should.equal('MatchstickJS');
     });
 
-    it('Should contain an <h1> element with certain text', function() {
+    it('Should contain an <h1> element with certain text', () => {
         document.getElementById('page-not-found').innerHTML
             .should.equal('Oops! Nothing here');
     });
 
-    it('Should contain copyright text from the footer partial', function() {
+    it('Should contain copyright text from the footer partial', () => {
         document.getElementById('copyright').innerHTML
             .should.containEql(moment().format('YYYY'));
     });
