@@ -14,10 +14,11 @@ These directions assume you already have working versions of [Node](http://nodej
 
 ### Dependencies
 
-Install the dependancies with [NPM](https://www.npmjs.org/). you may need to use `sudo` depending on your local setup.
+Install the dependancies with [NPM](https://www.npmjs.org/). Install gulp globally.
 
 ```sh
 $ cd matchstickjs.com
+$ npm install -g gulp
 $ npm install
 ```
 
@@ -37,17 +38,7 @@ Optionally pass a port option to control the local server.
 $ gulp -p 3001
 ```
 
-
-Test
-----
-
-Run the custom gulp "test" task. It will call mocha with the spec reporter option.
-
-```sh
-$ gulp test
-```
-
-You should see output like the following:
+Gulp will watch files and automatically build, test, lint, and check dependencies for you.
 
 ![Gulp Test](/src/misc/gulp-test.png)
 
