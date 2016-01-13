@@ -15,10 +15,6 @@ var argv    = require('yargs').argv,
 layouts.register(hb);
 
 
-/* *
- * Build step 0
- */
-
 // Catchall to copy static files to build
 gulp.task('clean', (done) => {
     del(['build/**', '!build'])
@@ -26,12 +22,8 @@ gulp.task('clean', (done) => {
 });
 
 
-/* *
- * Build step 1
- */
-
 // Catchall to copy static files to build
-gulp.task('static', ['clean'], () => {
+gulp.task('static', () => {
     return gulp.src('src/static/**')
         .pipe(g.gzip({ append: false }))
         .pipe(gulp.dest('build'));
@@ -39,7 +31,7 @@ gulp.task('static', ['clean'], () => {
 
 
 // Copy fonts from bower packages
-gulp.task('fonts', ['clean'], () => {
+gulp.task('fonts', () => {
     return gulp.src([
         'node_modules/font-awesome/fonts/*',
         'node_modules/npm-font-open-sans/fonts/Regular/*',
@@ -51,7 +43,7 @@ gulp.task('fonts', ['clean'], () => {
 
 
 // Minify and combine all JavaScript
-gulp.task('scripts', ['clean'], () => {
+gulp.task('scripts', () => {
     return gulp.src([
         'node_modules/jquery/dist/jquery.js',
         'node_modules/bootstrap/dist/js/bootstrap.js',
@@ -65,7 +57,7 @@ gulp.task('scripts', ['clean'], () => {
 
 
 // Minify and combine all CSS
-gulp.task('styles', ['clean'], () => {
+gulp.task('styles', () => {
     return gulp.src([
         'node_modules/bootstrap/dist/css/bootstrap.css',
         'node_modules/font-awesome/css/font-awesome.css',
@@ -79,7 +71,7 @@ gulp.task('styles', ['clean'], () => {
 });
 
 // Partials
-gulp.task('partials', ['clean'], () => {
+gulp.task('partials', () => {
     return gulp.src([
         'src/views/partials/*',
         'src/views/layouts/*'
@@ -91,12 +83,8 @@ gulp.task('partials', ['clean'], () => {
 });
 
 
-/* *
- * Build step 2
- */
-
 // Compile HB template
-gulp.task('views', ['static', 'fonts', 'scripts', 'styles', 'partials'], (done) => {
+gulp.task('views', (done) => {
     fs.readFile('node_modules/matchstick/README.md', 'utf-8', (err, file) => {
         var data = {
             title     : 'MatchstickJS',
@@ -118,23 +106,15 @@ gulp.task('views', ['static', 'fonts', 'scripts', 'styles', 'partials'], (done) 
 });
 
 
-/* *
- * Build step 3
- */
-
 // Run tests
-gulp.task('test', ['views'], () => {
+gulp.task('test', () => {
     return gulp.src('test/*.js')
         .pipe(g.mocha());
 });
 
 
-/* *
- * Build step 4
- */
-
 // Lint as JS files (including this one)
-gulp.task('lint', ['test'], () => {
+gulp.task('lint', () => {
     return gulp.src([
         'src/js/*.js',
         'gulpfile.js',
@@ -145,10 +125,6 @@ gulp.task('lint', ['test'], () => {
     .pipe(g.eslint.format());
 });
 
-
-/* *
- * Helper tasks
- */
 
 // Serve files for local development
 gulp.task('serve', (done) => {
@@ -181,7 +157,7 @@ gulp.task('deps', () => {
 
 
 // Watch certain files
-gulp.task('watch', ['build'], () => {
+gulp.task('watch', () => {
     return gulp.watch([
         'src/**',
         'test/**'
@@ -190,18 +166,22 @@ gulp.task('watch', ['build'], () => {
 
 
 // Build macro
-gulp.task('build', [
-    // Step 0: clean
-    // Step 1: static, fonts, scripts, styles, partials
-    // Step 2: views
-    // Step 3: test
-    'lint'
-]);
+gulp.task('build', (done) => {
+    g.sequence(
+        'clean',
+        ['static', 'fonts', 'scripts', 'styles', 'partials'],
+        'views',
+        'test',
+        'lint'
+    )(done);
+});
 
 
 // What to do when you run `$ gulp`
-gulp.task('default', [
-    'watch',
-    'serve',
-    'deps'
-]);
+gulp.task('default', (done) => {
+    g.sequence(
+        'watch',
+        'serve',
+        'deps'
+    )(done);
+});
