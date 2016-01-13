@@ -185,9 +185,8 @@ gulp.task('build', (done) => {
 // What to do when you run `$ gulp`
 gulp.task('default', (done) => {
     g.sequence(
+        ['deps', 'build'],
         'watch',
-        'serve',
-        'deps',
-        'build'
+        'serve'
     )(done);
 });
