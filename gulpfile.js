@@ -158,15 +158,15 @@ gulp.task('deps', () => {
 
 // Watch certain files
 gulp.task('watch', () => {
-    var paths = [
+    var globs = [
         'src/**/*',
-        'test/*.js'
+        'test/*'
     ];
 
-    gulp.watch(paths, (e) => {
-        g.util.log('File', e.type, e.path);
-    });
-    gulp.watch(paths, ['build']);
+    gulp.watch(globs, ['build'])
+        .on('change', (e) => {
+            g.util.log('File', e.type, e.path);
+        });
 });
 
 
