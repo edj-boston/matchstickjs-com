@@ -3,9 +3,7 @@
 var argv   = require('yargs').argv,
     fs     = require('fs'),
     jsdom  = require('jsdom').jsdom,
-    moment = require('moment'),
-    should = require('should'),
-    zlib   = require('zlib');
+    moment = require('moment');
 
 
 // Helper to instantiate JSDom
@@ -20,19 +18,10 @@ function loadDocument(data) {
 
 describe('The dynamically generated HTML index file...', () => {
 
-    var handle = 'build/index.html';
-    var buf, document;
+    var document;
 
     it('Should exist', (done) => {
-        fs.readFile(handle, (err, data) => {
-            if (err) throw err;
-            buf = data;
-            done();
-        });
-    });
-
-    it('Should be gzipped', (done) => {
-        zlib.gunzip(buf, (err, data) => {
+        fs.readFile('build/index.html', (err, data) => {
             if (err) throw err;
             document = loadDocument(data);
             done();
@@ -50,7 +39,8 @@ describe('The dynamically generated HTML index file...', () => {
     });
 
     it('Should contain an <ul> element from the share partial with the id "share"', () => {
-        should.exist(document.getElementById('share'));
+        document.getElementById('share')
+            .should.exist;
     });
 
     it('Should contain copyright text from the footer partial', () => {
@@ -63,19 +53,10 @@ describe('The dynamically generated HTML index file...', () => {
 
 describe('The dynamically generated HTML error file...', () => {
 
-    var handle = 'build/error.html';
-    var buf, document;
+    var document;
 
     it('Should exist', (done) => {
-        fs.readFile(handle, (err, data) => {
-            if (err) throw err;
-            buf = data;
-            done();
-        });
-    });
-
-    it('Should be gzipped', (done) => {
-        zlib.gunzip(buf, (err, data) => {
+        fs.readFile('build/error.html', (err, data) => {
             if (err) throw err;
             document = loadDocument(data);
             done();

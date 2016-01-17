@@ -1,27 +1,16 @@
 'use strict';
 
-var fs   = require('fs'),
-    zlib = require('zlib');
+var fs = require('fs');
 
 
 describe('The dynamically concatenated and minified JS...', () => {
 
-    var handle = 'build/js/all.min.js';
-    var buf = null;
-    var str = '';
+    var str;
 
     it('Should exist', (done) => {
-        fs.readFile(handle, (err, data) => {
+        fs.readFile('build/js/all.min.js', (err, data) => {
             if (err) throw err;
-            buf = data;
-            done();
-        });
-    });
-
-    it('Should be gzipped', (done) => {
-        zlib.gunzip(buf, (err, data) => {
-            if (err) throw err;
-            str = data;
+            str = data.toString();
             done();
         });
     });

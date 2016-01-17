@@ -19,8 +19,7 @@ layouts.register(hb);
 
 // Catchall to copy static files to build
 gulp.task('clean', (done) => {
-    del(['build/**', '!build'])
-        .then(done());
+    del('build').then(done());
 });
 
 
@@ -31,7 +30,6 @@ gulp.task('static', () => {
             if ( process.env.TRAVIS_BRANCH == 'master' )
                 file.contents = new Buffer('');
         })))
-        .pipe(g.gzip({ append: false }))
         .pipe(gulp.dest('build'));
 });
 
@@ -43,7 +41,6 @@ gulp.task('fonts', () => {
         'node_modules/npm-font-open-sans/fonts/Regular/*',
         'node_modules/connect-fonts-sourcecodepro/fonts/default/sourcecodepro-regular.*'
     ])
-    .pipe(g.gzip({ append: false }))
     .pipe(gulp.dest('build/fonts'));
 });
 
@@ -57,7 +54,6 @@ gulp.task('scripts', () => {
     ])
     .pipe(g.concat('all.min.js'))
     .pipe(g.uglify({ preserveComments: 'some' }))
-    .pipe(g.gzip({ append: false }))
     .pipe(gulp.dest('build/js'));
 });
 
@@ -72,7 +68,6 @@ gulp.task('styles', () => {
     .pipe(g.if(/[.]less$/, g.less()))
     .pipe(g.cssnano())
     .pipe(g.concat('all.min.css'))
-    .pipe(g.gzip({ append: false }))
     .pipe(gulp.dest('build/css'));
 });
 
@@ -105,7 +100,6 @@ gulp.task('views', (done) => {
                 file.contents = new Buffer(template(data));
             }))
             .pipe(g.htmlmin({ collapseWhitespace: true }))
-            .pipe(g.gzip({ append: false }))
             .pipe(gulp.dest('build'))
             .on('end', done);
     });
@@ -115,7 +109,9 @@ gulp.task('views', (done) => {
 // Run tests
 gulp.task('test', () => {
     return gulp.src('test/*.js')
-        .pipe(g.mocha());
+        .pipe(g.mocha({
+            require : ['should']
+        }));
 });
 
 
@@ -137,10 +133,6 @@ gulp.task('serve', (done) => {
     var port = argv.p || 3000;
 
     express()
-        .use((req, res, next) => {
-            res.header('Content-Encoding', 'gzip');
-            next();
-        })
         .use(express.static('build'))
         .use((req, res) => {
             res.status(404)
@@ -188,10 +180,30 @@ gulp.task('build', (done) => {
 });
 
 
+// Deploy to AWS S3
+gulp.task('deploy', () => {
+    var publisher = g.awspublish.create({
+        accessKeyId     : process.env.AWS_ACCESS_KEY_ID,
+        secretAccessKey : process.env.AWS_SECRET_ACCESS_KEY,
+        region          : 'us-west-2',
+        params : {
+            Bucket : argv.b
+        }
+    });
+
+    return gulp.src('build/**')
+        .pipe(g.awspublish.gzip())
+        .pipe(publisher.publish())
+        .pipe(publisher.sync())
+        .pipe(g.awspublish.reporter());
+});
+
+
 // What to do when you run `$ gulp`
 gulp.task('default', (done) => {
     g.sequence(
-        ['deps', 'build'],
+        'deps',
+        'build',
         'watch',
         'serve'
     )(done);
