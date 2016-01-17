@@ -1,3 +1,5 @@
+'use strict';
+
 var argv    = require('yargs').argv,
     del     = require('del'),
     express = require('express'),
