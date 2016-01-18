@@ -1,6 +1,6 @@
 'use strict';
 
-let argv   = require('yargs').argv,
+const argv = require('yargs').argv,
     fs     = require('fs'),
     jsdom  = require('jsdom').jsdom,
     moment = require('moment');
@@ -8,7 +8,7 @@ let argv   = require('yargs').argv,
 
 // Helper to instantiate JSDom
 function loadDocument(data) {
-    let port = argv.p || 3000;
+    const port = argv.p || 3000;
 
     return jsdom(data.toString(), {
         url : 'http://localhost:' + port + '/'
@@ -20,7 +20,7 @@ describe('The dynamically generated HTML index file...', () => {
 
     let document;
 
-    it('Should exist', (done) => {
+    it('Should exist', done => {
         fs.readFile('build/index.html', (err, data) => {
             if (err) throw err;
             document = loadDocument(data);
@@ -55,7 +55,7 @@ describe('The dynamically generated HTML error file...', () => {
 
     let document;
 
-    it('Should exist', (done) => {
+    it('Should exist', done => {
         fs.readFile('build/error.html', (err, data) => {
             if (err) throw err;
             document = loadDocument(data);
