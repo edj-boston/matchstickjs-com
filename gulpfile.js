@@ -1,6 +1,6 @@
 'use strict';
 
-var argv    = require('yargs').argv,
+let argv    = require('yargs').argv,
     del     = require('del'),
     express = require('express'),
     fs      = require('fs'),
@@ -18,7 +18,7 @@ layouts.register(hb);
 
 
 // Catchall to copy static files to build
-gulp.task('clean', (done) => {
+gulp.task('clean', () => {
     del('build').then(done());
 });
 
@@ -78,7 +78,7 @@ gulp.task('partials', () => {
         'src/views/layouts/*'
     ])
     .pipe(g.tap((file) => {
-        var name = path.parse(file.path).name;
+        let name = path.parse(file.path).name;
         hb.registerPartial(name, file.contents.toString());
     }));
 });
@@ -87,7 +87,7 @@ gulp.task('partials', () => {
 // Compile HB template
 gulp.task('views', (done) => {
     fs.readFile('node_modules/matchstick/README.md', 'utf-8', (err, file) => {
-        var data = {
+        let data = {
             title     : 'MatchstickJS',
             year      : moment().format('YYYY'),
             timestamp : moment().format('YYYY-MM-DD-HH-mm-ss'),
@@ -96,7 +96,7 @@ gulp.task('views', (done) => {
 
         gulp.src('src/views/*.html')
             .pipe(g.tap((file) => {
-                var template = hb.compile(file.contents.toString());
+                let template = hb.compile(file.contents.toString());
                 file.contents = new Buffer(template(data));
             }))
             .pipe(g.htmlmin({ collapseWhitespace: true }))
@@ -130,7 +130,7 @@ gulp.task('lint', () => {
 
 // Serve files for local development
 gulp.task('serve', (done) => {
-    var port = argv.p || 3000;
+    let port = argv.p || 3000;
 
     express()
         .use(express.static('build'))
@@ -156,7 +156,7 @@ gulp.task('deps', () => {
 
 // Watch certain files
 gulp.task('watch', () => {
-    var globs = [
+    let globs = [
         'src/**/*',
         'test/*'
     ];
@@ -182,7 +182,7 @@ gulp.task('build', (done) => {
 
 // Deploy to AWS S3
 gulp.task('deploy', () => {
-    var publisher = g.awspublish.create({
+    let publisher = g.awspublish.create({
         accessKeyId     : process.env.AWS_ACCESS_KEY_ID,
         secretAccessKey : process.env.AWS_SECRET_ACCESS_KEY,
         region          : 'us-west-2',
