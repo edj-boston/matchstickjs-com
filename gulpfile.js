@@ -19,7 +19,10 @@ layouts.register(hb);
 
 // Catchall to copy static files to build
 gulp.task('clean', () => {
-    del('build').then(done());
+    return del([
+        'build/**',
+        '!build'
+    ]);
 });
 
 
