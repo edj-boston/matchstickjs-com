@@ -199,10 +199,26 @@ gulp.task('deploy', () => {
 });
 
 
+// Examine package.json for unused deps (except for frontend and gulp)
+gulp.task('package', g.depcheck({
+    ignoreMatches: [
+        'bootstrap',
+        'connect-fonts-sourcecodepro',
+        'font-awesome',
+        'gulp-*',
+        'jquery',
+        'matchstick',
+        'npm-font-open-sans',
+        'should'
+    ]
+}));
+
+
 // What to do when you run `$ gulp`
 gulp.task('default', (done) => {
     g.sequence(
         'deps',
+        'package',
         'build',
         'watch',
         'serve'
