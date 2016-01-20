@@ -7,17 +7,15 @@ const argv = require('yargs').argv,
 
 
 // Helper to instantiate JSDom
-function loadDocument(data) {
+function loadDocument (data) {
     const port = argv.p || 3000;
-
     return jsdom(data.toString(), {
-        url : 'http://localhost:' + port + '/'
+        url : `http://localhost:${port}/`
     }).defaultView.document;
 }
 
 
 describe('The dynamically generated HTML index file...', () => {
-
     let document;
 
     it('Should exist', done => {
@@ -47,12 +45,10 @@ describe('The dynamically generated HTML index file...', () => {
         document.getElementById('copyright').innerHTML
             .should.containEql(moment().format('YYYY'));
     });
-
 });
 
 
 describe('The dynamically generated HTML error file...', () => {
-
     let document;
 
     it('Should exist', done => {
@@ -77,5 +73,4 @@ describe('The dynamically generated HTML error file...', () => {
         document.getElementById('copyright').innerHTML
             .should.containEql(moment().format('YYYY'));
     });
-
 });

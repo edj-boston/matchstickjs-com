@@ -31,8 +31,9 @@ gulp.task('clean', () => {
 gulp.task('static', () => {
     return gulp.src('src/static/**')
         .pipe(g.if('robots.txt', g.tap(file => {
-            if ( process.env.TRAVIS_BRANCH == 'master' )
+            if (process.env.TRAVIS_BRANCH == 'master') {
                 file.contents = new Buffer('');
+            }
         })))
         .pipe(gulp.dest('build'));
 });
@@ -51,14 +52,18 @@ gulp.task('fonts', () => {
 
 // Minify and combine all JavaScript
 gulp.task('scripts', () => {
-    return gulp.src([
-        'node_modules/jquery/dist/jquery.js',
-        'node_modules/bootstrap/dist/js/bootstrap.js',
-        'src/js/*.js'
-    ])
-    .pipe(g.concat('all.min.js'))
-    .pipe(g.uglify({ preserveComments: 'some' }))
-    .pipe(gulp.dest('build/js'));
+    return gulp.src('src/js/*.js')
+        .pipe(g.babel({
+            presets  : [ 'es2015' ],
+            comments : true
+        }))
+        .pipe(g.addSrc.prepend([
+            'node_modules/jquery/dist/jquery.js',
+            'node_modules/bootstrap/dist/js/bootstrap.js'
+        ]))
+        .pipe(g.concat('all.min.js'))
+        .pipe(g.uglify({ preserveComments : 'some' }))
+        .pipe(gulp.dest('build/js'));
 });
 
 
@@ -90,12 +95,14 @@ gulp.task('partials', () => {
 
 // Compile HB template
 gulp.task('views', done => {
-    fs.readFile('node_modules/matchstick/README.md', 'utf-8', (err, file) => {
+    fs.readFile('node_modules/matchstick/README.md', 'utf-8', (err, readme) => {
+        if (err) throw err;
+
         const data = {
             title     : 'MatchstickJS',
             year      : moment().format('YYYY'),
             timestamp : moment().format('YYYY-MM-DD-HH-mm-ss'),
-            readme    : marked(file)
+            readme    : marked(readme)
         };
 
         gulp.src('src/views/*.html')
@@ -103,7 +110,7 @@ gulp.task('views', done => {
                 const template = hb.compile(file.contents.toString());
                 file.contents = new Buffer(template(data));
             }))
-            .pipe(g.htmlmin({ collapseWhitespace: true }))
+            .pipe(g.htmlmin({ collapseWhitespace : true }))
             .pipe(gulp.dest('build'))
             .on('end', done);
     });
@@ -114,7 +121,7 @@ gulp.task('views', done => {
 gulp.task('test', () => {
     return gulp.src('test/*.js')
         .pipe(g.mocha({
-            require : ['should']
+            require : [ 'should' ]
         }));
 });
 
@@ -140,7 +147,7 @@ gulp.task('serve', done => {
         .use(express.static('build'))
         .use((req, res) => {
             res.status(404)
-                .sendFile(__dirname + '/build/error.html');
+                .sendFile(path.join(__dirname, '/build/error.html'));
         })
         .listen(port, () => {
             g.util.log('Server listening on port', port);
@@ -152,7 +159,7 @@ gulp.task('serve', done => {
 // Check deps with David service
 gulp.task('deps', () => {
     return gulp.src('package.json')
-        .pipe(g.david({ update: true }))
+        .pipe(g.david({ update : true }))
         .pipe(g.david.reporter)
         .pipe(gulp.dest('.'));
 });
@@ -165,7 +172,7 @@ gulp.task('watch', () => {
         'test/*'
     ];
 
-    gulp.watch(globs, ['build'])
+    gulp.watch(globs, [ 'build' ])
         .on('change', e => {
             g.util.log('File', e.type, e.path);
         });
@@ -176,7 +183,7 @@ gulp.task('watch', () => {
 gulp.task('build', done => {
     g.sequence(
         'clean',
-        ['static', 'fonts', 'scripts', 'styles', 'partials'],
+        [ 'static', 'fonts', 'scripts', 'styles', 'partials' ],
         'views',
         'test',
         'lint'
@@ -190,9 +197,7 @@ gulp.task('deploy', () => {
         accessKeyId     : process.env.AWS_ACCESS_KEY_ID,
         secretAccessKey : process.env.AWS_SECRET_ACCESS_KEY,
         region          : 'us-west-2',
-        params : {
-            Bucket : argv.b
-        }
+        params          : { Bucket : argv.b }
     });
 
     return gulp.src('build/**')
@@ -205,7 +210,8 @@ gulp.task('deploy', () => {
 
 // Examine package.json for unused deps (except for frontend and gulp)
 gulp.task('package', g.depcheck({
-    ignoreMatches: [
+    ignoreMatches : [
+        'babel-preset-es2015',
         'bootstrap',
         'connect-fonts-sourcecodepro',
         'font-awesome',
