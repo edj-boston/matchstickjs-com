@@ -10,8 +10,7 @@ const argv  = require('yargs').argv,
     layouts = require('handlebars-layouts'),
     marked  = require('marked'),
     moment  = require('moment'),
-    path    = require('path'),
-    rules   = require('eslint-rules-es2015');
+    path    = require('path');
 
 
 // Configure handlebars
@@ -134,7 +133,7 @@ gulp.task('lint', () => {
         'test/*.js',
         '!node_modules/**'
     ])
-    .pipe(g.eslint({ rules }))
+    .pipe(g.eslint())
     .pipe(g.eslint.format());
 });
 

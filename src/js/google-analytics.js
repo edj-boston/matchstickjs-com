@@ -1,5 +1,3 @@
-/* eslint no-var: 0 */
-
 /*!
  * Google Analytics
  */
