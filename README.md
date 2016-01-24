@@ -41,3 +41,6 @@ To Do
 -----
 
 * More tests
+* Upgrade to Bootstrap 4
+* Upgrade to Gulp 4
+* Redesign
