@@ -1,7 +1,8 @@
 {
   "name": "matchstickjs.com",
+  "private": true,
+  "version": "1.0.0",
   "description": "MatchstickJS.com",
-  "version": "0.0.1",
   "main": "gulpfile.js",
   "dependencies": {
     "babel-preset-es2015": "^6.3.13",
