@@ -3,16 +3,16 @@
  */
 
 // jQuery behaviors
-$(document).ready(function () {
+$(document).ready(() => {
     // Open external links in new window
     $('a.external').click(function () {
-        var url = $(this).attr('href');
+        const url = $(this).attr('href');
         window.open(url, 'new');
         return false;
     });
 
     // Replace <h1> text with image
-    var img = $('<img/>').attr({
+    const img = $('<img/>').attr({
         src    : '/img/logotype.png',
         class  : 'img-responsive',
         width  : 710,
