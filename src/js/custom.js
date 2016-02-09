@@ -4,6 +4,9 @@
 
 // jQuery behaviors
 $(document).ready(() => {
+    // Hide default H1
+    $('h1#matchstick').css('display', 'none');
+
     // Open external links in new window
     $('a.external').click(function () {
         const url = $(this).attr('href');

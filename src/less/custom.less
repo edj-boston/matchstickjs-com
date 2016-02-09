@@ -18,8 +18,7 @@
 @import 'fonts';
 
 /* Base styles */
-* { font-family:'Merriweather'; }
-html, body { margin:0; padding:0; background:@orange url('/img/bg.png'); }
+html, body { font-family:'Merriweather'; margin:0; padding:0; background:@orange url('/img/bg.png'); }
 a { color:@orange; }
 a:hover { color:@orange-dark; text-decoration:underline; }
 pre code { font-family:'SourceCodePro'; border:0; }
@@ -28,29 +27,26 @@ code { font-family:'SourceCodePro'; color:@orange; background-color:@gray-light;
 
 /* Header */
 header { color:@gray-dark; }
-#links { text-align:center;
+.links { text-align:center;
     ul { list-style:none; margin:0; padding:0; font-size:1.1em;
         li { display:inline-block; margin:0 0.5em; line-height:1.5em; }
     }
 }
 
 /* Share buttons */
-ul#share { list-style:none; text-align:center; margin:10px; padding:0;
+.share { list-style:none; text-align:center; margin:10px; padding:0;
     li { display:inline-block; margin:0 3px;
-        .twitter-share-button { width:80px !important; }
-        a img { display:block; vertical-align:middle; }
+        .twitter-share-button { width:80px; }
+        a img { display:block; }
     }
 }
 
 /* Main Section */
 main.container { color:@black; padding-top:0; }
-h1 { text-align:center; margin-top:0;
-    &#matchstick { display:none; }
-    &#page-not-found { margin-top:2em; }
-}
+h1 { text-align:center; margin-top:0; }
 h2 { font-family:'Open-Sans',sans-serif; background-color:@gray-dark; color:@white; padding:10px 35px; margin-top:40px; margin-left:-35px; margin-right:-20px; position:relative;
     &:before { content:''; display:block; bottom:-15px; left:0; position:absolute;
-        width: 0; z-index:0; height: 0; 
+        width: 0; z-index:0; height: 0;
         border-bottom:15px solid transparent;
         border-right:15px solid @black; }
     &:hover { color:@gray-white; text-decoration:none; cursor:pointer; }
@@ -58,9 +54,11 @@ h2 { font-family:'Open-Sans',sans-serif; background-color:@gray-dark; color:@whi
 }
 h3 { font-family:'Open-Sans',sans-serif; margin-top:28px; font-weight:bold; }
 h4 { margin-top:28px; font-weight:bold; }
+.matchstick { display:none; }
+.page-not-found { margin-top:2em; }
 
 /* Error */
-#error { margin-bottom:4em; }
+.error { margin-bottom:4em; }
 
 /* Footer */
 footer { text-align:center; color:@gray-dark; border-top:dashed 1px @gray-med; margin:auto 1em; }
