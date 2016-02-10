@@ -52,10 +52,11 @@
   },
   "keywords": [
     "matchstick",
+    "matchstickjs",
+    "matchstickjs.com",
+    "static",
     "site",
-    "gulp",
-    "s3",
-    "cloudfront"
+    "gulp"
   ],
   "author": "Eric Johnson",
   "license": "MIT",
