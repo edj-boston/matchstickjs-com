@@ -110,6 +110,12 @@ gulp.task('views', done => {
             readme    : marked(readme)
         };
 
+        if (process.env.TRAVIS_BRANCH == undefined) {
+            data.env = 'local';
+        } else if (process.env.TRAVIS_BRANCH != 'master') {
+            data.env = process.env.TRAVIS_BRANCH;
+        }
+
         gulp.src('src/views/*.html')
             .pipe(g.tap(file => {
                 const template = hb.compile(file.contents.toString());
@@ -156,7 +162,8 @@ gulp.task('lint-less', () => {
         .pipe(g.less())
         .pipe(g.csslint({
             'qualified-headings' : false,
-            'unique-headings'    : false
+            'unique-headings'    : false,
+            'adjoining-classes'  : false
         }))
         .pipe(g.csslintLessReporter());
 });

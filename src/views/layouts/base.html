@@ -8,6 +8,11 @@
 		<link href="/css/all.min.css?{{timestamp}}" rel="stylesheet">
 	</head>
 	<body>
+		{{#if env}}
+            <div class="env-badge {{env}}">
+                <span>{{env}}</span>
+            </div>
+        {{/if}}
 
 		{{#block "body"}}{{/block}}
 

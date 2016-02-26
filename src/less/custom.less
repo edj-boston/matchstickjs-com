@@ -13,6 +13,9 @@
 @orange-dark: #cc6633;
 @tan:         #ffffee;
 @white:       #ffffff;
+@yellow:      #f1df3a;
+@purple:      #7262B4;
+@blue:        #3c94e3;
 
 /* Fonts */
 @import 'fonts';
@@ -26,6 +29,13 @@ code { font-family:'SourceCodePro'; color:@orange; background-color:@gray-light;
 .container { padding:20px; background-color:@tan; }
 
 /* Header */
+.env-badge { position:fixed; width:200px; margin-left:-100px; left:50%; z-index:1000; box-shadow:0 1px 4px 0 rgba(0, 0, 0, 0.5); text-align:center; opacity:0.5; background-color: @yellow;
+  &.local { background-color: @purple; }
+  &.develop { background-color: @blue; }
+
+  span { color:#fff; text-transform:uppercase; }
+}
+
 header { color:@gray-dark; }
 .links { text-align:center;
     ul { list-style:none; margin:0; padding:0; font-size:1.1em;
