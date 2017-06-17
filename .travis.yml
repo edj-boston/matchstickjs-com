@@ -1,8 +1,8 @@
 sudo: false
 language: node_js
 node_js:
-- '5'
-- '4'
+- 'node'
+- '6'
 env:
   global:
   - secure: Ayk4M2uDBTjT+ndV5Kz2s5KS9FNbOT+9bG80YeV063IdjsFU517KEnaKznjJo69XCgm4U2L17Brm9Rgb+Sx1jWhcvDppsVWxc7p6EaH31AyYD1d8w857dat7kexb6tK5iccvDRXP/RTiGcAd0bm6iyyYhbfkaE5sgcQMCUZBVqU=
@@ -14,10 +14,10 @@ deploy:
   skip_cleanup: true
   on:
     branch: master
-    node_js: '4'
+    node_js: '6'
 - provider: script
   script: gulp deploy -b stage-matchstickjs-com
   skip_cleanup: true
   on:
     branch: develop
-    node_js: '4'
+    node_js: '6'
