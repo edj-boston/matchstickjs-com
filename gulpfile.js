@@ -41,59 +41,67 @@ gulp.task('static', () => {
 
 // Copy fonts from bower packages
 gulp.task('fonts', () => {
-    return gulp.src([
+    const globs = [
         'node_modules/font-awesome/fonts/*',
         'node_modules/npm-font-open-sans/fonts/Regular/*',
         'node_modules/connect-fonts-sourcecodepro/fonts/default/sourcecodepro-regular.*'
-    ])
-    .pipe(gulp.dest('build/fonts'));
+    ];
+
+    return gulp.src(globs)
+        .pipe(gulp.dest('build/fonts'));
 });
 
 
 // Minify and combine all JavaScript
 gulp.task('scripts', () => {
-    return gulp.src([
+    const globs = [
         'node_modules/jquery/dist/jquery.js',
         'node_modules/bootstrap/dist/js/bootstrap.js',
         'src/js/*.js'
-    ])
-    .pipe(g.sourcemaps.init({ loadMaps : true }))
-    .pipe(g.babel({
-        presets  : [ 'es2015' ],
-        comments : true,
-        minified : true
-    }))
-    .pipe(g.concat('all.min.js'))
-    .pipe(g.sourcemaps.write('.'))
-    .pipe(gulp.dest('build/js'));
+    ];
+
+    return gulp.src(globs)
+        .pipe(g.sourcemaps.init({ loadMaps : true }))
+        .pipe(g.babel({
+            presets  : [ 'es2015' ],
+            comments : true,
+            minified : true
+        }))
+        .pipe(g.concat('all.min.js'))
+        .pipe(g.sourcemaps.write('.'))
+        .pipe(gulp.dest('build/js'));
 });
 
 
 // Minify and combine all CSS
 gulp.task('styles', () => {
-    return gulp.src([
+    const globs = [
         'node_modules/bootstrap/dist/css/bootstrap.css',
         'node_modules/font-awesome/css/font-awesome.css',
         'src/less/custom.less'
-    ])
-    .pipe(g.sourcemaps.init({ loadMaps : true }))
-    .pipe(g.if('*.less', g.less()))
-    .pipe(g.cssnano())
-    .pipe(g.concat('all.min.css'))
-    .pipe(g.sourcemaps.write('.'))
-    .pipe(gulp.dest('build/css'));
+    ];
+
+    return gulp.src(globs)
+        .pipe(g.sourcemaps.init({ loadMaps : true }))
+        .pipe(g.if('*.less', g.less()))
+        .pipe(g.cssnano())
+        .pipe(g.concat('all.min.css'))
+        .pipe(g.sourcemaps.write('.'))
+        .pipe(gulp.dest('build/css'));
 });
 
 // Partials
 gulp.task('partials', () => {
-    return gulp.src([
+    const globs = [
         'src/views/partials/*',
         'src/views/layouts/*'
-    ])
-    .pipe(g.tap(file => {
-        const name = path.parse(file.path).name;
-        hb.registerPartial(name, file.contents.toString());
-    }));
+    ];
+
+    return gulp.src(globs)
+        .pipe(g.tap(file => {
+            const name = path.parse(file.path).name;
+            hb.registerPartial(name, file.contents.toString());
+        }));
 });
 
 
@@ -138,19 +146,20 @@ gulp.task('test', () => {
 
 // Lint as JS files (including this one)
 gulp.task('lint-js', () => {
-    return gulp.src([
+    const globs = [
         'src/js/*.js',
         'gulpfile.js',
         'test/*.js',
         '!node_modules/**'
-    ])
-    .pipe(g.eslint({
-        extends : 'eslint:recommended',
-        env     : { node : true, es6 : true, mocha : true },
-        globals : { $ : true, window : true, document : true, ga : true },
-        rules
-    }))
-    .pipe(g.eslint.format());
+    ];
+
+    return gulp.src(globs)
+        .pipe(g.eslint({
+            extends       : 'eslint:recommended',
+            parserOptions : { 'ecmaVersion' : 6 },
+            rules
+        }))
+        .pipe(g.eslint.format());
 });
 
 
