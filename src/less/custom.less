@@ -21,15 +21,15 @@
 @import 'fonts';
 
 /* Base styles */
-html, body { font-family:'Merriweather'; margin:0; padding:0; background:@orange url('/img/bg.png'); }
+html, body { background:@orange url('/img/bg.png'); font-family:'Merriweather'; margin:0; padding:0; }
 a { color:@orange; }
 a:hover { color:@orange-dark; text-decoration:underline; }
-pre code { font-family:'SourceCodePro'; border:0; }
-code { font-family:'SourceCodePro'; color:@orange; background-color:@gray-light; border:1px solid @gray-med; }
-.container { padding:20px; background-color:@tan; }
+pre code { border:0; font-family:'SourceCodePro'; }
+code { background-color:@gray-light; border:1px solid @gray-med; color:@orange; font-family:'SourceCodePro'; }
+.container { background-color:@tan; padding:20px; }
 
 /* Header */
-.env-badge { position:fixed; width:200px; margin-left:-100px; left:50%; z-index:1000; box-shadow:0 1px 4px 0 rgba(0, 0, 0, 0.5); text-align:center; opacity:0.5; background-color: @yellow;
+.env-badge { background-color: @yellow; box-shadow:0 1px 4px 0 rgba(0, 0, 0, 0.5); left:50%; margin-left:-100px; opacity:0.5; position:fixed; text-align:center; width:200px; z-index:1000;
   &.local { background-color: @purple; }
   &.develop { background-color: @blue; }
 
@@ -38,13 +38,13 @@ code { font-family:'SourceCodePro'; color:@orange; background-color:@gray-light;
 
 header { color:@gray-dark; }
 .links { text-align:center;
-    ul { list-style:none; margin:0; padding:0; font-size:1.1em;
-        li { display:inline-block; margin:0 0.5em; line-height:1.5em; }
+    ul { font-size:1.1em; list-style:none; margin:0; padding:0;
+        li { display:inline-block; line-height:1.5em; margin:0 0.5em; }
     }
 }
 
 /* Share buttons */
-.share { list-style:none; text-align:center; margin:10px; padding:0;
+.share { list-style:none; margin:10px; padding:0; text-align:center;
     li { display:inline-block; margin:0 3px;
         .twitter-share-button { width:80px; }
         a img { display:block; }
@@ -53,17 +53,14 @@ header { color:@gray-dark; }
 
 /* Main Section */
 main.container { color:@black; padding-top:0; }
-h1 { text-align:center; margin-top:0; }
-h2 { font-family:'Open-Sans',sans-serif; background-color:@gray-dark; color:@white; padding:10px 35px; margin-top:40px; margin-left:-35px; margin-right:-20px; position:relative;
-    &:before { content:''; display:block; bottom:-15px; left:0; position:absolute;
-        width: 0; z-index:0; height: 0;
-        border-bottom:15px solid transparent;
-        border-right:15px solid @black; }
-    &:hover { color:@gray-white; text-decoration:none; cursor:pointer; }
-    &:hover:after { content:'\f0c1'; font-family:'FontAwesome'; font-weight:normal; font-size:0.8em; margin-left:10px; color:@gray-white; }
+h1 { margin-top:0; text-align:center; }
+h2 { background-color:@gray-dark; color:@white; font-family:'Open-Sans',sans-serif; margin-left:-35px; margin-right:-20px; margin-top:40px; padding:10px 35px; position:relative;
+    &:before { border-bottom:15px solid transparent; border-right:15px solid @black; bottom:-15px; content:''; display:block; height:0; left:0; position:absolute; width: 0; z-index:0; }
+    &:hover { color:@gray-white; cursor:pointer; text-decoration:none; }
+    &:hover:after { color:@gray-white; content:'\f0c1'; font-family:'FontAwesome'; font-size:0.8em; font-weight:normal; margin-left:10px; }
 }
-h3 { font-family:'Open-Sans',sans-serif; margin-top:28px; font-weight:bold; }
-h4 { margin-top:28px; font-weight:bold; }
+h3 { font-family:'Open-Sans',sans-serif; font-weight:bold; margin-top:28px; }
+h4 { font-weight:bold; margin-top:28px; }
 .matchstick { display:none; }
 .page-not-found { margin-top:2em; }
 
@@ -71,7 +68,7 @@ h4 { margin-top:28px; font-weight:bold; }
 .error { margin-bottom:4em; }
 
 /* Footer */
-footer { text-align:center; color:@gray-dark; border-top:dashed 1px @gray-med; margin:auto 1em; }
+footer { border-top:dashed 1px @gray-med; color:@gray-dark; margin:auto 1em; text-align:center; }
 
 /* Media Queries */
 @media (min-width: 1200px) {
