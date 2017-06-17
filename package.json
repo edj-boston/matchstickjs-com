@@ -41,7 +41,7 @@
     "moment": "^2.6.0",
     "npm-font-open-sans": "0.0.3",
     "should": "^8.0.2",
-    "yargs": "^4.1.0"
+    "yargs": "^8.0.2"
   },
   "scripts": {
     "test": "gulp test"
